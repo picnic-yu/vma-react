@@ -15,26 +15,29 @@ const logo = require('./logo.svg');
 interface FormData {
   companyName: string;
   companyInfo: string;
-  [index:string]: string;
+  companyCode: number;
+  [index: string]: string|number;
 }
-class App extends React.Component<any, FormData> {
+class App extends React.Component<{}, FormData> {
   // state = {companyName: ''};
-  constructor(props: any, data: FormData) {
-    super(props);
+  constructor(props: {}, data: FormData) {
+    super();
     this.state = data;
     this.handleChange = this.handleChange.bind(this);
   }
   handleClick(e: MouseEvent) {
-    // eslint-disable-next-line
     e.preventDefault();
+    // tslint:disable-next-line:no-console
     console.log('handleChange:' + e.type);
   }
   handleChange(name: string, value: string|number) {
+    // tslint:disable-next-line:no-console
     console.log(name + ':' + value);
     if (name.length !== 0) {
       let data = {};
-      data[name] = value.toString();
+      data[name] = value;
       this.setState(data, () => {
+        // tslint:disable-next-line:no-console
         console.log(this.state);
       });
     }
@@ -51,9 +54,23 @@ class App extends React.Component<any, FormData> {
         </p>
         <Button type="btn-primary" handler={this.handleClick}>确认</Button>
         <form className="col-12 col-offset-6">
-        <Input type="text" prompt="文本" placeholder="请输入公司名称" isRequire={true}  name="companyName" value={this.state.companyName} handler={this.handleChange}/>
+        <Input 
+          type="text" 
+          prompt="文本" 
+          placeholder="请输入公司名称" 
+          isRequire={true}  
+          name="companyName" 
+          value={this.state.companyName} 
+          handler={this.handleChange}
+        />
         <Input type="email" prompt="邮箱" />
-        <Input type="number" prompt="数字密码"/>
+        <Input 
+          type="number" 
+          prompt="数字密码" 
+          name="companycode" 
+          value={this.state.companyCode} 
+          handler={this.handleChange}
+        />
         <RadioGroup prompt="输入项" isRequire={true}>
           <CheckBox type="checkbox" name="test" prompt="选择项目" value="0"/>
           <CheckBox type="checkbox" name="test" prompt="选择项目" value="1" disabled={true}/>
@@ -64,7 +81,13 @@ class App extends React.Component<any, FormData> {
           <CheckBox type="radio" name="test" prompt="选择项目" value="1" disabled={true}/>
           <CheckBox type="radio" name="test" prompt="选择项目" value="2"/>
         </RadioGroup>
-        <TextArea prompt="输入项" isRequire={true} name="companyInfo" value={this.state.companyInfo} handler={this.handleChange}/>
+        <TextArea 
+          prompt="输入项" 
+          isRequire={true} 
+          name="companyInfo" 
+          value={this.state.companyInfo} 
+          handler={this.handleChange}
+        />
         <Select prompt="输入项" isRequire={true} disabled={true}>
           <Option name="请选择" value=""/>
           <Option name="选择项1" value="1"/>
