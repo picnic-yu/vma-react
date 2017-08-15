@@ -9,6 +9,7 @@ import TextArea from './components/TextArea';
 import Select from './components/Select';
 import Option from './components/Option';
 import Tag from './components/Tag';
+import { FormItem, FormItemState } from './components/FormItem';
 
 const logo = require('./logo.svg');
 
@@ -42,6 +43,17 @@ class App extends React.Component<{}, FormData> {
       });
     }
   }
+
+  onchange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // tslint:disable-next-line:no-console
+    console.log(e.target.value);
+  }
+
+  watchValue = (data: FormItemState) => {
+    // tslint:disable-next-line:no-console
+    console.log(data.value);
+  }
+
   render() {
     return (
       <div className="">
@@ -52,6 +64,13 @@ class App extends React.Component<{}, FormData> {
         <p className="App App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <FormItem 
+          className="col-24 btn btn-default" 
+          labelName="测试" 
+          required={true}
+          onChange={this.onchange} 
+          watchValue={this.watchValue} 
+        />
         <Button type="btn-primary" handler={this.handleClick}>确认</Button>
         <form className="col-12 col-offset-6">
         <Input 
