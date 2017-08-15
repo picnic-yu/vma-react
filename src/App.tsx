@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './App.css';
+import './assets/icomoon/style.css';
 import Button from './components/Button';
 import ButtonGroup from './components/ButtonGroup';
 import Input from './components/Input';
@@ -10,6 +11,8 @@ import Select from './components/Select';
 import Option from './components/Option';
 import Tag from './components/Tag';
 import { FormItem, FormItemState } from './components/FormItem';
+import Dialog from './components/Dialog';
+import Panel from './components/Panel';
 
 const logo = require('./logo.svg');
 
@@ -55,8 +58,11 @@ class App extends React.Component<{}, FormData> {
   }
 
   render() {
+    const classStyle = {
+      borderBottom: '1px solid #ddd'
+    }
     return (
-      <div className="">
+      <div className="container">
         <div className="App App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
@@ -64,6 +70,24 @@ class App extends React.Component<{}, FormData> {
         <p className="App App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <h3 style={classStyle}>蒙图层类</h3>
+        <Dialog/>
+        <h3 style={classStyle}>面板类</h3>
+        <div className="row-24">
+          <Panel/>
+        </div>
+        <h3 style={classStyle}>标签类</h3>
+        <div style={{marginBottom: 14}}>
+          <Tag prompt="标签1" icon="cross"/>
+          <Tag prompt="标签2" icon="cross"/>
+          <Tag prompt="标签3" icon="cross"/>
+        </div>
+        <h3 style={classStyle}>按钮类</h3>
+        <ButtonGroup>
+        <Button type="btn-default" disabled={true}>取消</Button>
+        <Button type="btn-primary" handler={this.handleClick}>确认</Button>
+        </ButtonGroup>
+        <h3 style={classStyle}>输入类</h3>
         <FormItem 
           className="col-24 btn btn-default" 
           labelName="测试" 
@@ -72,6 +96,7 @@ class App extends React.Component<{}, FormData> {
           watchValue={this.watchValue} 
         />
         <Button type="btn-primary" handler={this.handleClick}>确认</Button>
+        <h3 style={classStyle}>表单类</h3>
         <form className="col-12 col-offset-6">
         <Input 
           type="text" 
@@ -107,17 +132,12 @@ class App extends React.Component<{}, FormData> {
           value={this.state.companyInfo} 
           handler={this.handleChange}
         />
-        <Select prompt="输入项" isRequire={true} disabled={true}>
+        <Select prompt="输入项" isRequire={true} disabled={false}>
           <Option name="请选择" value=""/>
           <Option name="选择项1" value="1"/>
           <Option name="选择项2" value="2"/>
           <Option name="选择项3" value="3"/>
         </Select>
-        <div style={{marginBottom: 14}}>
-        <Tag prompt="标签1" icon="cross"/>
-        <Tag prompt="标签2" icon="cross"/>
-        <Tag prompt="标签3" icon="cross"/>
-        </div>
         <ButtonGroup>
         <Button type="btn-default" disabled={true}>取消</Button>
         <Button type="btn-primary" handler={this.handleClick}>确认</Button>

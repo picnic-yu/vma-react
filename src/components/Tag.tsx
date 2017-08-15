@@ -18,7 +18,7 @@ class Tag extends React.Component<Data> {
     render() {
         let className = '';
         if (this.props.icon) {
-            className = 'icon-${this.props.icon}';
+            className = `icon-${this.props.icon}`;
         }
         return (
             <span className="tag">{this.props.prompt}

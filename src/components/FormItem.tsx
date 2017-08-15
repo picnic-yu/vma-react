@@ -16,6 +16,8 @@ export interface FormItemProps {
     disabled?: boolean;
     required?: boolean;
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
+    onSelect?: React.SyntheticEvent<HTMLSelectElement>;
+    onClick?: React.MouseEvent<HTMLButtonElement>;
     watchValue?: WatchHandler;
 }
 
@@ -33,6 +35,8 @@ export class FormItem extends React.Component<FormItemProps, FormItemState> {
         name: PropTypes.string,
         value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         onChange: PropTypes.func,
+        onSelect: PropTypes.func,
+        onClick: PropTypes.func,
         watchValue: PropTypes.func
     };
     static defaultProps = {

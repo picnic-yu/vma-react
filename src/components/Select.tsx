@@ -4,12 +4,17 @@ interface Data {
     prompt: string;
     isRequire?: boolean;
     disabled?: boolean;
+    onChange?: React.ChangeEvent<HTMLSelectElement>;
 }
 
 class Select extends React.Component<Data> {
     state = {  };
     constructor(props: Data) {
         super(props);
+    }
+
+    onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(e.target.value);
     }
     render() {
         let className = 'vma-form-item ';
@@ -26,7 +31,7 @@ class Select extends React.Component<Data> {
         <div className={className}>
             <label className="vma-form-label" style={labelStyle}>{this.props.prompt}</label>
             <div className="vma-wapper" style={wapperStyle}>
-                <select className="vma-input" disabled={this.props.disabled}>
+                <select className="vma-input" disabled={this.props.disabled} onChange={this.onChange}>
                   {this.props.children}
                 </select>
               {this.props.isRequire && 

@@ -14,6 +14,10 @@ class CheckBox extends React.Component<Data> {
     constructor(props: Data) {
         super(props);
     }
+    onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(this.props.value + ' is checked:' + event.target.checked);
+    }
+
     render() {
         let className = 'vma-inline-label ';
         if (this.props.disabled) {
@@ -26,6 +30,7 @@ class CheckBox extends React.Component<Data> {
                     name={this.props.name} 
                     value={this.props.value} 
                     disabled={this.props.disabled}
+                    onChange={this.onChange}
                 />
                 <span>{this.props.prompt}</span>
             </label>
