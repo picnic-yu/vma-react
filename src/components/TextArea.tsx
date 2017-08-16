@@ -6,6 +6,7 @@ interface Data {
     placeholder?: string;
     disabled?: boolean;
     isRequire?: boolean;
+    row?:number;
     handler?(name: string, value: string|number): void;
 }
 class TextArea extends React.Component<Data> {
@@ -40,7 +41,8 @@ class TextArea extends React.Component<Data> {
             <label className="vma-form-label" style={{width: 80}}>{this.props.prompt}</label>
             <div className="vma-wapper" style={{marginLeft: 80}}>
                 <textarea 
-                    className="vma-input vma-area" 
+                    className="vma-area"
+                    rows={this.props.row}
                     name={this.props.name} 
                     value={this.state.value} 
                     onChange={this.handleChange}

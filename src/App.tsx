@@ -129,6 +129,7 @@ class App extends React.Component<{}, FormData> {
           prompt="输入项" 
           isRequire={true} 
           name="companyInfo" 
+          row={3}
           value={this.state.companyInfo} 
           handler={this.handleChange}
         />
