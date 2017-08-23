@@ -333,11 +333,12 @@ li {
   }
   
   /* 设计一级菜单的内边距 */
-  .menu > li > a {
+  .menu > li > a, .menu > li > span {
     display: block;     
     padding: 8px 15px;
     color: #585858;
     position: relative;
+    cursor: pointer;
   }
   
   /* 当前激活一级菜单显示右边线 */
@@ -387,7 +388,7 @@ li {
   }
   
   /* 设置当前激活或者鼠标悬浮时一级菜单的字体、底色、颜色 */
-  .menu > li.active > a, .menu > li > a:hover {
+  .menu > li.active > a, .menu > li > a:hover, .menu > li > span:hover {
     font-weight: bold;
     color: #2b7dbc;
     background-color: #fff;

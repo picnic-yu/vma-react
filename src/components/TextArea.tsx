@@ -6,7 +6,7 @@ interface Data {
     placeholder?: string;
     disabled?: boolean;
     isRequire?: boolean;
-    row?:number;
+    row?: number;
     handler?(name: string, value: string|number): void;
 }
 class TextArea extends React.Component<Data> {

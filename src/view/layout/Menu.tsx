@@ -20,7 +20,7 @@ class Menu extends React.Component<MenuNode> {
     }
 
     onClick = () => {
-        if (this.props.children && this.props.children.length > 0) {
+        if (this.isFolder()) {
             this.setState({open: !this.state.open});
         }
     }
@@ -31,18 +31,26 @@ class Menu extends React.Component<MenuNode> {
         return <Menu key={menuID} menuID={menuID} name={name} url={url} children={children}/>;
     }
 
+    isFolder = () => {
+        return this.props.children && this.props.children.length > 0;
+    }
+
     render() {
         const listItems = this.props.children.map((menuItem: MenuNode) =>
             this.renderSub(menuItem)
         );
         return (
         <li className={ClassName({'active': this.state.open})} onClick={this.onClick}>
-            <a href={this.props.children && this.props.children.length ? '#' : this.props.url}>{this.props.name}
-                { this.props.children && this.props.children.length > 0 &&
-                <i className={ClassName('arrow', this.state.open ? 'icon-circle-down' : 'icon-circle-right')}/>
-                }
-            </a>
-            { this.state.open && this.props.children && this.props.children.length > 0 && 
+            {this.isFolder() ? (
+                <span>{this.props.name}
+                <i 
+                    className={ClassName('arrow', this.state.open ? 'icon-circle-down' : 'icon-circle-right')}
+                />                    
+                </span>
+            ) : (
+                <a href={this.props.url}>{this.props.name}</a>
+            )}
+            { this.state.open && this.isFolder() && 
                 <ul className="sub-menu">
                     {listItems}
                 </ul>
