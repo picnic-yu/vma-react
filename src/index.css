@@ -1034,7 +1034,7 @@ li {
 }
 
 .vma-wapper {
-  line-height: 36px;
+  line-height: 1;
   font-size: 14px;
   position: relative;
 }
@@ -1049,10 +1049,14 @@ li {
 }
 
 .vma-area {
-  height: auto;
+  width: 100%;
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid #bfcbd9;
+  font-size: 14px;
 }
 
-.vma-input:hover, .vma-input:focus {
+.vma-input:hover, .vma-input:focus, .vma-area:hover, .vma-area:focus {
   border-color: #8391a5;
   outline: none;
 }
