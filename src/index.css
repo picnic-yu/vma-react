@@ -10,10 +10,13 @@ html {
 }
 
 body {
-  background-color: #e4e6e9;
+  /* background-color: #e4e6e9; */
   min-height: 100%;
   padding-bottom: 0;
-  font-family: 'Open Sans';
+  /* font-family: 'Open Sans'; */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+  SimSun, sans-serif;
   font-size: 13px;
   color: #393939;
   line-height: 1.5;
@@ -254,6 +257,12 @@ li {
   border-width: inherit;    
 }
 
+/* .sider:after, .split:after {
+  display: table;
+  clear: both;
+  content: "";
+} */
+
 /* 一级菜单 */
 /*.menu {
 
@@ -388,7 +397,7 @@ li {
   }
   
   /* 设置当前激活或者鼠标悬浮时一级菜单的字体、底色、颜色 */
-  .menu > li.active > a, .menu > li > a:hover, .menu > li > span:hover {
+  .menu > li.active > a, .menu > li > a:hover, .menu > li.active > span, .menu > li > span:hover {
     font-weight: bold;
     color: #2b7dbc;
     background-color: #fff;
@@ -481,18 +490,18 @@ li {
 /* 尾部内容区 */
 .footer {
   /*padding-top: 64px;*/
-  height: 0;
+  /* height: 0;
   display: block;
   width: 0;
 
 
   border-style: solid;
   border-color: #ccc;
-  border-width: 0 1px 0 0
+  border-width: 0 1px 0 0 */
 }
 .footer-inner {
   text-align: center;
-  position: absolute;
+  position: fixed;
   border-top: 1px solid #e2e2e2;
   /*font-size: 120%;*/
   z-index: auto;
@@ -1063,6 +1072,7 @@ li {
 }
 
 .vma-inline-label {
+  display: inline-block;
   font-size: 14px;
   position: relative;
   height: 36px;
@@ -1070,7 +1080,7 @@ li {
 }
 
 .vma-inline-label input[type=radio], .vma-inline-label input[type=checkbox] {
-  margin: 0 4px 0 0;
+  margin: 11px 4px 0 0;
 }
 
 .vma-inline-label.is-disabled, .vma-inline-label.is-disabled input[type=checkbox][disabled], .vma-inline-label.is-disabled input[type=radio][disabled], select[disabled] {
@@ -1338,6 +1348,7 @@ th {
   background-color: #8391a5;
   display: inline-block;
   padding: 0 5px;
+  margin-right: 14px;
   height: 24px;
   line-height: 22px;
   font-size: 12px;
