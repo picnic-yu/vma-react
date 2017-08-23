@@ -15,6 +15,7 @@ class CheckBox extends React.Component<Data> {
         super(props);
     }
     onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // tslint:disable-next-line:no-console
         console.log(this.props.value + ' is checked:' + event.target.checked);
     }
 

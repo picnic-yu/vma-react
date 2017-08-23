@@ -20,6 +20,7 @@ class TextArea extends React.Component<Data> {
         this.handleChange = this.handleChange.bind(this);
     }
     handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
+        // tslint:disable-next-line:no-console
         console.log(event.target.value);
         this.setState({value: event.target.value});
         if (this.props.handler !== undefined) {

@@ -14,6 +14,7 @@ class Select extends React.Component<Data> {
     }
 
     onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        // tslint:disable-next-line:no-console
         console.log(e.target.value);
     }
     render() {

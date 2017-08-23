@@ -2,6 +2,13 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import * as ClassName from 'classnames';
 
+interface Permit {
+    url: string;
+    oper?: Array<string>;
+}
+
+export type PERMIT = Permit;
+
 export type InputType = 'text' | 'email' | 'number';
 export type WatchHandler = (value: FormItemState) => void;
 export interface FormItemProps {
@@ -37,7 +44,11 @@ export class FormItem extends React.Component<FormItemProps, FormItemState> {
         onChange: PropTypes.func,
         onSelect: PropTypes.func,
         onClick: PropTypes.func,
-        watchValue: PropTypes.func
+        watchValue: PropTypes.func,
+        permit: PropTypes.arrayOf(PropTypes.shape({
+            url: PropTypes.string,
+            oper: PropTypes.arrayOf(PropTypes.string)
+        }))
     };
     static defaultProps = {
         type: 'text',
