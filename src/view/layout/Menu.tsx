@@ -23,7 +23,7 @@ class Menu extends React.Component<MenuNode> {
 
     componentWillReceiveProps(nextProps: MenuNode) {
         if (nextProps.activeMenuID !== this.props.menuID && (nextProps.curDeep || 0) <= (this.props.deep || 0)) {
-            this.setState({active: false});
+            this.setState({active: false, open: false});
         }
     }
     constructor(props: MenuNode) {
