@@ -1,16 +1,16 @@
 import * as React from 'react';
-import Button from '../../components/Button';
-import ButtonGroup from '../../components/ButtonGroup';
-import Input from '../../components/Input';
-import RadioGroup from '../../components/RadioGroup';
-import CheckBox from '../../components/CheckBox';
-import TextArea from '../../components/TextArea';
-import Select from '../../components/Select';
-import Option from '../../components/Option';
-import Tag from '../../components/Tag';
-import { FormItem, FormItemState } from '../../components/FormItem';
-import Dialog from '../../components/Dialog';
-import Panel from '../../components/Panel';
+import Button from '../components/Button';
+import ButtonGroup from '../components/ButtonGroup';
+import Input from '../components/Input';
+import RadioGroup from '../components/RadioGroup';
+import CheckBox from '../components/CheckBox';
+import TextArea from '../components/TextArea';
+import Select from '../components/Select';
+import Option from '../components/Option';
+import Tag from '../components/Tag';
+import { FormItem, FormItemState } from '../components/FormItem';
+import Dialog from '../components/Dialog';
+import Panel from '../components/Panel';
 
 interface FormData {
     companyName: string;
@@ -19,8 +19,8 @@ interface FormData {
     [index: string]: string|number;
   }
 
-const logo = require('../../logo.svg');
-class Goods extends React.Component<{}, FormData> {
+const logo = require('../logo.svg');
+class Form extends React.Component<{}, FormData> {
     constructor(props: {}, data: FormData) {
         super();
         this.state = data;
@@ -148,4 +148,4 @@ class Goods extends React.Component<{}, FormData> {
     }
 }
 
-export default Goods;
+export default Form;

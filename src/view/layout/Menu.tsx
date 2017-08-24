@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
+import { Link } from 'react-router-dom';
 
 interface MenuNode {
     menuID: number;
@@ -7,6 +8,10 @@ interface MenuNode {
     url: string;
     // children: Array<MenuNode>;
     children: MenuNode[];
+    deep?: number;
+    watchValue?: (menuID: number, deep: number) => void;
+    activeMenuID?: number;
+    curDeep?: number;
 }
 
 class Menu extends React.Component<MenuNode> {
@@ -14,21 +19,43 @@ class Menu extends React.Component<MenuNode> {
     // tslint:disable-next-line:max-line-length
     // Warning: Menu(...): When calling super() in `Menu`, make sure to pass up the same props that your component's constructor was passed.
     // props: MenuNode = {menuID: 0, name: '', url: '', children: []};
-    state = { open: false};
+    state = { open: false, active: false};
+
+    componentWillReceiveProps(nextProps: MenuNode) {
+        if (nextProps.activeMenuID !== this.props.menuID && (nextProps.curDeep || 0) <= (this.props.deep || 0)) {
+            this.setState({active: false});
+        }
+    }
     constructor(props: MenuNode) {
         super(props);
     }
-
     onClick = () => {
         if (this.isFolder()) {
             this.setState({open: !this.state.open});
         }
+        this.setState({active: true});
+        if (this.props.watchValue) {
+            this.props.watchValue(this.props.menuID, this.props.deep || 0);
+        }
     }
 
-    renderSub(menuItem: MenuNode): JSX.Element {
+    renderSub = (menuItem: MenuNode): JSX.Element => {
         let {menuID, name, url} = menuItem;
         let children = menuItem.children;
-        return <Menu key={menuID} menuID={menuID} name={name} url={url} children={children}/>;
+        let deep: number = 0;
+        if (this.props.deep) {
+            deep = this.props.deep;
+        }
+        return (
+        <Menu 
+                key={menuID} 
+                menuID={menuID} 
+                name={name} 
+                url={url} 
+                children={children} 
+                deep={deep + 1} 
+                watchValue={this.props.watchValue}
+        />);
     }
 
     isFolder = () => {
@@ -40,15 +67,18 @@ class Menu extends React.Component<MenuNode> {
             this.renderSub(menuItem)
         );
         return (
-        <li className={ClassName({'active': this.state.open})} onClick={this.onClick}>
+        <li 
+            className={ClassName({'active': this.state.active})} 
+            
+        >
             {this.isFolder() ? (
-                <span>{this.props.name}
+                <span onClick={this.onClick}>{this.props.name}
                 <i 
                     className={ClassName('arrow', this.state.open ? 'icon-circle-down' : 'icon-circle-right')}
                 />                    
                 </span>
             ) : (
-                <a href={this.props.url}>{this.props.name}</a>
+                <Link to={this.props.url} onClick={this.onClick}>{this.props.name}</Link>
             )}
             { this.state.open && this.isFolder() && 
                 <ul className="sub-menu">
