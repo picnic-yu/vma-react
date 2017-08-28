@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, withRouter, RouteComponentProps } from 'react-router-dom';
 import { Switch } from 'react-router';
-class Company extends React.Component {
+class Company extends React.Component<RouteComponentProps<{}>> {
     state = {  };
     render() {
         return (
             <div>
-                <p>company infor</p>
+                <p>company infor {this.props.match.url}</p>
                 <Switch>
                 <Route path="/company/list" component={List}/>
                 <Route path="/company/audit" component={Audit}/>
@@ -28,4 +28,4 @@ const Audit = () => (
     </div>
 );
 
-export default Company;
+export default withRouter(Company);

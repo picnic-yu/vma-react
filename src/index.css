@@ -351,7 +351,7 @@ li {
   }
   
   /* 当前激活一级菜单显示右边线 */
-  .menu >li.active:after {
+  .menu >li.active:after, .menu >li > a.active:after{
     display: block;
     content: "";
     position: absolute;
@@ -365,7 +365,7 @@ li {
   }
   
   /* 未知 */
-  .menu > li.active > a:after {
+  .menu > li.active > a:after, .menu > li > a.active:after {
     border-right-color: #2b7dbc;
   }
   
@@ -397,7 +397,7 @@ li {
   }
   
   /* 设置当前激活或者鼠标悬浮时一级菜单的字体、底色、颜色 */
-  .menu > li.active > a, .menu > li > a:hover, .menu > li.active > span, .menu > li > span:hover {
+  .menu > li.active > a, .menu > li > a:hover, .menu > li.active > span, .menu > li > span:hover, .menu > li > a.active {
     font-weight: bold;
     color: #2b7dbc;
     background-color: #fff;

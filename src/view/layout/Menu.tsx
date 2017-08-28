@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 interface MenuNode {
     menuID: number;
@@ -28,6 +28,11 @@ class Menu extends React.Component<MenuNode> {
     }
     constructor(props: MenuNode) {
         super(props);
+        if (window.location.pathname.indexOf(this.props.url) !== -1) {
+            this.state.open = true;
+            this.state.active =  true;
+        }
+        // console.log(this.props.url + ' : ' +  window.location.pathname);
     }
     onClick = () => {
         if (this.isFolder()) {
@@ -72,13 +77,15 @@ class Menu extends React.Component<MenuNode> {
             
         >
             {this.isFolder() ? (
-                <span onClick={this.onClick}>{this.props.name}
+                <NavLink to={this.props.url} activeClassName="active" onClick={this.onClick}>{this.props.name}
+                {/* <span onClick={this.onClick}>{this.props.name} */}
                 <i 
                     className={ClassName('arrow', this.state.open ? 'icon-circle-down' : 'icon-circle-right')}
                 />                    
-                </span>
+                {/* </span> */}
+                </NavLink>
             ) : (
-                <Link to={this.props.url} onClick={this.onClick}>{this.props.name}</Link>
+                <NavLink to={this.props.url} activeClassName="active" onClick={this.onClick}>{this.props.name}</NavLink>
             )}
             { this.state.open && this.isFolder() && 
                 <ul className="sub-menu">
