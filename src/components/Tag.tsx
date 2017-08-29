@@ -22,7 +22,9 @@ class Tag extends React.Component<Data> {
         }
         return (
             <span className="tag">{this.props.prompt}
+                {className.length > 0 &&
                 <i className={className}/>
+                }
             </span>
         );
     }

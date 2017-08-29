@@ -79,7 +79,7 @@ class Form extends React.Component<{}, FormData> {
             <div style={{marginBottom: 14}}>
               <Tag prompt="标签1" icon="cross"/>
               <Tag prompt="标签2" icon="cross"/>
-              <Tag prompt="标签3" icon="cross"/>
+              <Tag prompt="标签3"/>
             </div>
             <h3 style={classStyle}>按钮类</h3>
             <ButtonGroup>
