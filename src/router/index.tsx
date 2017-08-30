@@ -75,35 +75,53 @@ const menues = [
 const routes = [
     {
         path: '/',
-        component: Home
+        component: Home,
+        name: '首页'
     },
     {
         path: '/login',
-        component: Login
+        component: Login,
+        name: '登录'
     },
     {
         path: '/profile',
-        component: Profile
+        component: Profile,
+        name: '简介'
     },
     {
         path: '/company',
-        component: Company
+        component: Company,
+        name: '公司'
+    },
+    {
+        path: '/company/list',
+        component: Company,
+        name: '公司查询'
+    },
+    {
+        path: '/company/audit',
+        component: Company,
+        name: '公司审核'
     },
     {
         path: '/catalog',
-        component: Catalog
+        component: Catalog,
+        name: '目录'
     },
     {
         path: '/goods',
-        component: Goods
+        component: Goods,
+        name: '商品'
     },
     {
         path: '/order',
-        component: Order
+        component: Order,
+        name: '订单'
     },
     {
         path: '/storage',
-        component: Storage
+        component: Storage,
+        name: '仓储'
     }
 ];
 

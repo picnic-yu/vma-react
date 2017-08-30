@@ -117,12 +117,12 @@ class Form extends React.Component<{}, FormData> {
             <RadioGroup prompt="输入项" isRequire={true}>
               <CheckBox type="checkbox" name="test" prompt="选择项目" value="0"/>
               <CheckBox type="checkbox" name="test" prompt="选择项目" value="1" disabled={true}/>
-              <CheckBox type="checkbox" name="test" prompt="选择项目" value="2"/>
+              <CheckBox type="checkbox" name="test" prompt="选择项目" value="2" checked={true}/>
             </RadioGroup>
             <RadioGroup prompt="输入项">
               <CheckBox type="radio" name="test" prompt="选择项目" value="0"/>
               <CheckBox type="radio" name="test" prompt="选择项目" value="1" disabled={true}/>
-              <CheckBox type="radio" name="test" prompt="选择项目" value="2"/>
+              <CheckBox type="radio" name="test" prompt="选择项目" value="2" checked={true}/>
             </RadioGroup>
             <TextArea 
               prompt="输入项" 

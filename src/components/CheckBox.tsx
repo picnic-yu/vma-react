@@ -3,6 +3,7 @@ interface Data {
     type: string;
     name: string;
     value: string;
+    checked?: boolean;
     prompt: string;
     placeholder?: string;
     disabled?: boolean;
@@ -29,7 +30,8 @@ class CheckBox extends React.Component<Data> {
                 <input 
                     type={this.props.type} 
                     name={this.props.name} 
-                    value={this.props.value} 
+                    value={this.props.value}
+                    checked={this.props.checked}
                     disabled={this.props.disabled}
                     onChange={this.onChange}
                 />
