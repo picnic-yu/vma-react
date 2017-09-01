@@ -8,3 +8,11 @@ export interface UserAction {
     type: UserHandle;
     state: State.User;
 }
+
+export function userLogin(loginResult: State.User): UserAction {
+    console.log(loginResult);
+    return {
+        type: LOGIN,
+        state: loginResult
+    }
+}

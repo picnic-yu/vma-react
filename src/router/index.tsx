@@ -1,5 +1,6 @@
 import Home from '../view/Home';
-import Login from '../view/Login';
+import { Login } from '../view/Login';
+// import Login from '../containers/Login';
 import Profile from '../view/Profile';
 import Company from '../view/Company';
 import Catalog from '../view/Catalog';

@@ -95,5 +95,9 @@
             "check-type",
             "check-typecast"
         ]
-    }
+    },
+    "exclude": [
+        "tsconfig.json",
+        "tslint.json"
+    ]
 }

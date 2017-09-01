@@ -1,7 +1,27 @@
 // import 'fetch';
+import 'whatwg-fetch';
 
-export async function login(userName: string, password: string) {
-    let response = await fetch('http://localhost:8080/login.json', {mode: 'cors'});
+export interface RemoteResult {
+    code: number;
+    codeMsg: string;
+    data: {
+        name: string;
+        icon?: string;
+        token: string;
+    };
+};
+
+export async function login(userName: string, password: string): Promise<RemoteResult> {
+    let response = await fetch('http://localhost:8080/login.json', {mode: 'cors',
+    // method: 'POST',
+    // headers: {
+    //     'Cotent-Type': 'application/json'
+    // },
+    // body: JSON.stringify({
+    //     userName: userName,
+    //     password: password
+    // })
+    });
     // let response = await fetch('/login.json');
     let data = response.json();
     return data;        

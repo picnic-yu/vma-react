@@ -3,8 +3,26 @@ import Button from '../components/Button';
 // import ButtonGroup from '../components/ButtonGroup';
 import Input from '../components/Input';
 import * as Remote from '../remote/Remote';
+import * as State from '../redux/State';
+// import * as Action from '../redux/Action';
 
-class Login extends React.Component {
+export interface LoginProp {
+    userName?: string;
+    icon?: string;
+    token?: string;
+    userLogin?: (user: State.User) => void;
+    // userLogin?: () => Action.UserAction;
+};
+// interface LoginState {
+//     userName: string;
+//     password: string;
+//     disable: boolean;
+// };
+
+export class Login extends React.Component<LoginProp, {}> {
+    constructor(prop: LoginProp) {
+        super(prop)
+    }
     state = { userName: '', password: '', disable: true};
 
     handleChange = (name: string, value: string|number) => {
@@ -32,6 +50,16 @@ class Login extends React.Component {
         Remote.login(this.state.userName, this.state.password).then((data) => {
             // tslint:disable-next-line:no-console
             console.log(data);
+            let name = data.data.name;
+            let icon = data.data.icon;
+            let token =  data.data.token;
+            console.log(name);
+            console.log(icon);
+            console.log(token);
+            
+            if (this.props.userLogin) {
+                this.props.userLogin({name , icon, token});                
+            }
         });
     }
     render() {
@@ -59,4 +87,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+// export {Login, LoginProp} ;
