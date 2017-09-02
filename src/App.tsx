@@ -4,8 +4,6 @@ import './assets/icomoon/style.css';
 // import Login from './view/Login';
 import Login from './containers/Login';
 // import Hello from './components/Hello';
-
-
 // import Layout from './view/layout/Layout';
 
 class App extends React.Component {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import Button from '../components/Button';
 // import ButtonGroup from '../components/ButtonGroup';
 import Input from '../components/Input';
-import * as Remote from '../remote/Remote';
+// import * as Remote from '../remote/Remote';
 import * as State from '../redux/State';
 // import * as Action from '../redux/Action';
 
@@ -12,18 +12,18 @@ export interface LoginProp {
     token?: string;
     userLogin?: (user: State.User) => void;
     // userLogin?: () => Action.UserAction;
-};
-// interface LoginState {
-//     userName: string;
-//     password: string;
-//     disable: boolean;
-// };
+}
+interface LoginState {
+    userName: string;
+    password: string;
+    disable: boolean;
+}
 
-export class Login extends React.Component<LoginProp, {}> {
+export class Login extends React.Component<LoginProp, LoginState> {
+    state: LoginState = { userName: '', password: '', disable: true};
     constructor(prop: LoginProp) {
-        super(prop)
+        super(prop);
     }
-    state = { userName: '', password: '', disable: true};
 
     handleChange = (name: string, value: string|number) => {
         // tslint:disable-next-line:no-console
@@ -47,20 +47,30 @@ export class Login extends React.Component<LoginProp, {}> {
         e.preventDefault();
         // tslint:disable-next-line:no-console
         console.log('handleChange:' + e.type);
-        Remote.login(this.state.userName, this.state.password).then((data) => {
+        if (this.props.userLogin) {
             // tslint:disable-next-line:no-console
-            console.log(data);
-            let name = data.data.name;
-            let icon = data.data.icon;
-            let token =  data.data.token;
-            console.log(name);
-            console.log(icon);
-            console.log(token);
+            console.log('call before action');
+            let result: State.User = { name: 'lixf', icon: 'test', token: 'xxxxx' };
+            this.props.userLogin(result);
+            // tslint:disable-next-line:no-console
+            console.log('call after action');
+        }
+        // Remote.login(this.state.userName, this.state.password).then((data) => {
+        //     // tslint:disable-next-line:no-console
+        //     console.log(data);
+        //     // let name = data.data.name;
+        //     // let icon = data.data.icon;
+        //     // let token =  data.data.token;
+        //     // console.log(name);
+        //     // console.log(icon);
+        //     // console.log(token);
+        //     let loginResult: State.User = data.data;
             
-            if (this.props.userLogin) {
-                this.props.userLogin({name , icon, token});                
-            }
-        });
+        //     if (this.props.userLogin) {
+        //         // this.props.userLogin({name , icon, token});
+        //         this.props.userLogin(loginResult);
+        //     }
+        // });
     }
     render() {
         return (
@@ -80,7 +90,12 @@ export class Login extends React.Component<LoginProp, {}> {
                     handler={this.handleChange}
                 />
                 <div style={{marginLeft: 80}}>
-                    <Button type="btn-primary" disabled={this.state.disable} handler={this.handleClick}>登录</Button>
+                    <Button 
+                        type="btn-primary" 
+                        disabled={this.state.disable} 
+                        handler={this.handleClick}
+                    >登录{this.props.token}
+                    </Button>
                 </div>
             </div>
         );

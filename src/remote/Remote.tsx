@@ -12,7 +12,8 @@ export interface RemoteResult {
 };
 
 export async function login(userName: string, password: string): Promise<RemoteResult> {
-    let response = await fetch('http://localhost:8080/login.json', {mode: 'cors',
+    // let response = await fetch('http://localhost:8080/login.json', {mode: 'cors',
+    let response = await fetch('/login.json', {mode: 'cors',
     // method: 'POST',
     // headers: {
     //     'Cotent-Type': 'application/json'
