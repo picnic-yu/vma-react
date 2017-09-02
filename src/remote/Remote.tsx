@@ -9,7 +9,7 @@ export interface RemoteResult {
         icon?: string;
         token: string;
     };
-};
+}
 
 export async function login(userName: string, password: string): Promise<RemoteResult> {
     // let response = await fetch('http://localhost:8080/login.json', {mode: 'cors',

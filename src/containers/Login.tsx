@@ -23,4 +23,4 @@ export function mapDispatchToProps(dispatch: Dispatch<Action.UserAction>) {
 }
 
 // export default connect<{}, Dispatch<Action.UserAction>, LoginProp>( mapDispatchToProps)(Login);
-export default connect<{}, {}, LoginProp>(mapStateToProps, mapDispatchToProps)(Login) as React.ComponentClass;
+export default connect<{}, {}, LoginProp>(null, mapDispatchToProps)(Login) as React.ComponentClass;

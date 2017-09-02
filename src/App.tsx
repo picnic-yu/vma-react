@@ -1,21 +1,44 @@
 import * as React from 'react';
+import { Route } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './App.css';
 import './assets/icomoon/style.css';
 // import Login from './view/Login';
 import Login from './containers/Login';
-// import Hello from './components/Hello';
-// import Layout from './view/layout/Layout';
+import Layout from './view/layout/Layout';
+import * as State from './redux/State';
 
-class App extends React.Component {
+export function mapStateToProps(state: State.User) {
+    return {
+        userName: state.name,
+        icon: state.icon,
+        token: state.token
+    };
+}
+
+class App extends React.Component<{token: string} & RouteComponentProps<{}>> {
   render() {
-    return (
-      <div className="container">
-        {/* <Layout/> */}
-        {/* <Hello enthusiasmLevel={10} name="TypeScript"/> */}
-        <Login/>
+    
+  // tslint:disable-next-line:no-console
+  console.log(this.props.match);
+  // tslint:disable-next-line:no-console
+  console.log(this.props.token);
+  return (      
+    <div className="container">
+      <Route 
+          path="/"
+          render={() => (
+            this.props.token.length > 0 ? (
+              <Layout/>
+            ) : (
+            <Login/>
+            )
+          )}
+      />
       </div>
     );
   }
 }
 
-export default App;
+export default connect<{}, {}, {}>(mapStateToProps)(withRouter(App));
