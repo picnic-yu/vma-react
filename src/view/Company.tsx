@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { Route, withRouter, RouteComponentProps } from 'react-router-dom';
 import { Switch } from 'react-router';
+
+import NoMatch from './NoMatch';
+
 class Company extends React.Component<RouteComponentProps<{}>> {
     state = {  };
     render() {
@@ -10,6 +13,7 @@ class Company extends React.Component<RouteComponentProps<{}>> {
                 <Switch>
                 <Route path="/company/list" component={List}/>
                 <Route path="/company/audit" component={Audit}/>
+                <Route component={NoMatch}/>
                 </Switch>
             </div>
         );

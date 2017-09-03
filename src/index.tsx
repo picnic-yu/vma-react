@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 import App from './App';
-// import { default as Login } from './containers/Login';
+import { default as Login } from './containers/Login';
 import * as State from './redux/State';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
@@ -17,7 +17,21 @@ const store = createStore<State.User>(reducer);
 ReactDOM.render(
   <Provider store={store}>
   <BrowserRouter>
-    <Route path="/" component={App}/>
+    <Switch>
+      {store.getState().token.length === 0 &&
+        <Route path="/login" component={Login}/>
+      }
+      <Route 
+        path="/" 
+        render={(props) => (
+        store.getState().token.length !== 0 ? (
+          <App {...props}/>
+        ) : (
+          <Redirect to="/login"/>
+        )
+        )}
+      />
+    </Switch>
   {/* <App /> */}
   </BrowserRouter>
   </Provider>,

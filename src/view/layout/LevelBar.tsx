@@ -1,19 +1,18 @@
 import * as React from 'react';
-// import * as PropTypes from 'prop-types';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import * as PropTypes from 'prop-types';
 import * as ClassName from 'classnames';
-
 import { NavLink } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+
 import { routes } from '../../router/index';
 
 class LevelBar extends React.Component<RouteComponentProps<{}>> {
-    // static propTypes = {
-    //     match: PropTypes.object.isRequired,
-    //     location: PropTypes.object.isRequired,
-    //     history: PropTypes.object.isRequired
-    // };
+    static propTypes = {
+        match: PropTypes.object.isRequired,
+        location: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired
+    };
     
-    // state = {  };
     render() {
         var urls = [{ url: '/', name: '首页' }];
         var path = this.props.match.url.split('/').filter(i => i);
@@ -22,7 +21,10 @@ class LevelBar extends React.Component<RouteComponentProps<{}>> {
             urls.push({url, name: ''});
         });
         urls.forEach((item) => {
-            item.name = routes.filter(value => value.path === item.url)[0].name;
+            var matchs = routes.filter(value => value.path === item.url);
+            if (matchs && matchs.length > 0) {
+                item.name = matchs[0].name;
+            }
         });
         
         return (
@@ -43,4 +45,3 @@ class LevelBar extends React.Component<RouteComponentProps<{}>> {
 }
 
 export default withRouter(LevelBar);
-// export default LevelBar;
