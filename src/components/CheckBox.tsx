@@ -1,4 +1,6 @@
 import * as React from 'react';
+import * as ClassName from 'classnames';
+
 interface Data {
     type: string;
     name: string;
@@ -21,12 +23,8 @@ class CheckBox extends React.Component<Data> {
     }
 
     render() {
-        let className = 'vma-inline-label ';
-        if (this.props.disabled) {
-            className += 'is-disabled';
-        }
         return (
-            <label className={className}>
+            <label className={ClassName('vma-inline-label', {'is-disabled': this.props.disabled})}>
                 <input 
                     type={this.props.type} 
                     name={this.props.name} 

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ClassName from 'classnames';
 
 interface Data {
     type: string;
@@ -32,33 +33,27 @@ class Input extends React.Component<Data> {
         }
     }
     render() {
-        const labelStyle = {
-            width: '80px'
-        };
-        const inputStyle = {
-            marginLeft: '80px'
-        };
-        let className = 'vma-form-item ';
-        if (this.props.isRequire) {
-            className += 'is-required';
-        }
         return (
-            <div className={className}>
-                <label className="vma-form-label" style={labelStyle}>{this.props.prompt}</label>
-                <div className="vma-wapper" style={inputStyle}>
-                    <input 
-                        type={this.props.type} 
-                        className="vma-input" 
-                        placeholder={this.props.placeholder} 
-                        name={this.props.name} 
-                        value={this.state.value} 
-                        onChange={this.handleChange}
-                    />
-                    {this.props.isRequire && 
-                    <div className="vma-form-item-error">输入格式错误</div>
-                    }
-                </div>
+        <div className={ClassName('vma-form-item', {'is-required': this.props.isRequire})}>
+            <label 
+                className="vma-form-label" 
+                style={{width: '80px'}}
+            >{this.props.prompt}
+            </label>
+            <div className="vma-wapper" style={{marginLeft: '80px'}}>
+                <input 
+                    type={this.props.type} 
+                    className="vma-input" 
+                    placeholder={this.props.placeholder} 
+                    name={this.props.name} 
+                    value={this.state.value} 
+                    onChange={this.handleChange}
+                />
+                {this.props.isRequire && 
+                <div className="vma-form-item-error">输入格式错误</div>
+                }
             </div>
+        </div>
         );
     }
 }

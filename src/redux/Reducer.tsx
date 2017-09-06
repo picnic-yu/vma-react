@@ -1,3 +1,5 @@
+import 'whatwg-fetch';
+
 import * as State from './State';
 import * as Action from './Action';
 
