@@ -5,9 +5,8 @@ import Input from '../../components/Input';
 import * as Action from '../../redux/actions/auth/AuthAction';
 // import IFormItemActions from '../../interfaces/IFormItemActions';
 
-
 export default class Login extends React.Component<Action.AuthResponse & Action.AccountDispatch> {
-    state = {userName: '', password: '', disable: true}
+    state = {userName: '', password: '', disable: true};
     handleChange = (name: string, value: string|number) => {
         if (name.length !== 0) {
           let data = {};
@@ -24,7 +23,6 @@ export default class Login extends React.Component<Action.AuthResponse & Action.
         }
     }
 
-
     handleClick = (e: MouseEvent) => {
         e.preventDefault();
         let authRequest: Action.AuthRequest = {userName: this.state.userName, password: this.state.password};
@@ -33,6 +31,7 @@ export default class Login extends React.Component<Action.AuthResponse & Action.
 
     render() {
         const token = this.props.token || '';
+        // tslint:disable-next-line:no-console
         console.log('token:' + token);
         if (token.length > 0) {
             return (

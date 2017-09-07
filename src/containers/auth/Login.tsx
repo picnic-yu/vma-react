@@ -3,6 +3,7 @@ import * as Action from '../../redux/actions/auth/AuthAction';
 import Login from '../../view/auth/Login';
 
 export function mapStateToProps(state: Action.AuthResponse) {
+    // tslint:disable-next-line:no-console
     console.log('mapStateToProps:' + JSON.stringify(state));
     return state;
 }

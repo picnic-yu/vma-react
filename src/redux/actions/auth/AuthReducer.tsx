@@ -16,14 +16,15 @@ export function reducer(state: Action.AuthResponse = initAuthState, action: Acti
                     console.log('登录:' + JSON.stringify(response));
                     if (response.data) {
                         let data: Action.AuthResponse = {...response.data};
-                        console.log(data);
                         result = data;
+                        // tslint:disable-next-line:no-console
                         console.log('result:' + JSON.stringify(result));
                         localStorage.setItem('token', result.token || '');
                     }
                 }
             });
             result = {userName: 'xuefli', token: 'yyyyy'};
+            // tslint:disable-next-line:no-console
             console.log('----------------------');
             break;
 
