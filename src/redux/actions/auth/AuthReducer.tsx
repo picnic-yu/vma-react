@@ -23,7 +23,7 @@ export function reducer(state: Action.AuthResponse = initAuthState, action: Acti
                     }
                 }
             });
-            result = {userName: 'xuefli', token: 'yyyyy'};
+            // result = {userName: 'xuefli', token: 'yyyyy'};
             // tslint:disable-next-line:no-console
             console.log('----------------------');
             break;
