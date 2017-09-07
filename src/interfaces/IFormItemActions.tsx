@@ -1,5 +1,5 @@
 // tslint:disable-next-line:interface-name
-export interface IFormActions {
+export default interface IFormActions {
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     onSelect?: React.SyntheticEvent<HTMLSelectElement>;
     onClick?: React.MouseEvent<HTMLButtonElement>;

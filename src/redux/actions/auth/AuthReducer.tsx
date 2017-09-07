@@ -3,7 +3,7 @@ import * as Action from './AuthAction';
 import IResponse from '../../../interfaces/IResponse';
 
 const initAuthState: Action.AuthResponse = {
-    token: ''
+    token: localStorage.getItem('token') || ''
 };
 
 export function reducer(state: Action.AuthResponse = initAuthState, action: Action.AuthAction): Action.AuthResponse {
@@ -14,10 +14,17 @@ export function reducer(state: Action.AuthResponse = initAuthState, action: Acti
                 if (response.code === 0) {
                     // tslint:disable-next-line:no-console
                     console.log('登录:' + JSON.stringify(response));
-                    let data: Action.AuthResponse = response;
-                    result = {...data};
+                    if (response.data) {
+                        let data: Action.AuthResponse = {...response.data};
+                        console.log(data);
+                        result = data;
+                        console.log('result:' + JSON.stringify(result));
+                        localStorage.setItem('token', result.token || '');
+                    }
                 }
             });
+            result = {userName: 'xuefli', token: 'yyyyy'};
+            console.log('----------------------');
             break;
 
         case Auth.authLogout:
@@ -42,13 +49,13 @@ export function reducer(state: Action.AuthResponse = initAuthState, action: Acti
     return result;
 }
 
-async function login(req: Action.AuthRequest | string): Promise<IResponse & Action.AuthResponse> {
+async function login(req: Action.AuthRequest | string): Promise<IResponse<Action.AuthResponse>> {
     let response = await fetch('/login.json', {mode: 'cors'});
     let data = response.json();
     return data;        
 }
 
-async function logout(req: string): Promise<IResponse & Action.AuthResponse> {
+async function logout(req: string): Promise<IResponse<Action.AuthResponse>> {
     let response = await fetch('/logout.json', { method: 'POST', headers: {'token': req }, credentials: 'include'});
     let data = response.json();
     return data;        

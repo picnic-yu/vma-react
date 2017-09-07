@@ -29,9 +29,18 @@ export function accountLogin(authRequest: AuthRequest): AuthAction {
     };
 }
 
+export type AccountLogin = typeof accountLogin;
+
 export function accountLogout(token: string): AuthAction {
     return {
         type: Auth.authLogout,
         req: token
     };
+}
+
+export type AccountLogout = typeof accountLogout;
+
+export interface AccountDispatch {
+    accountLogin: AccountLogin;
+    accountLogout: AccountLogout;
 }
