@@ -3,6 +3,8 @@
 在命令行启动node，输入以下代码
 
 ```js
+
+//模拟部分代码：https://github.com/reactjs/redux/blob/master/src/applyMiddleware.js 
 let dispatch = {type: 'event', playload: {x:10, y: 20}}
 
 let middleware1= function(dispatch) {
@@ -33,24 +35,31 @@ let middleware4 = function(dispatch) {
 let funcs = [middleware1, middleware2, middleware3, middleware4];
 
 //funcs.reduce((a,b) => () => a(b()))();
-funcs.reduce((a,b) => (...arg) => b(a(...arg)))(dispatch);
+//funcs.reduce((a,b) => (...arg) => b(a(...arg)))(dispatch);
+//模拟 https://github.com/reactjs/redux/blob/master/src/compose.js
+function compose(...funcs) {
+  if (funcs.length === 0) {
+    return arg => arg
+  }
+
+  if (funcs.length === 1) {
+    return funcs[0]
+  }
+
+  return funcs.reduce((a, b) => (...args) => a(b(...args)))
+}
+
+compose(middleware1, middleware2, middleware3, middleware4)(dispatch);
+
 ```
 
 得到以下输出
 ```sh
 
-> funcs.reduce((a,b) => (...arg) => b(a(...arg)))(dispatch);
-x+y: x:20 y:20 type:+
+x/y: x:2 y:20 type:/
+x*y: x:20 y:20 type:*
 x-y: x:10 y:20 type:-
-x*y: x:100 y:20 type:*
-x/y: x:10 y:20 type:/
-{ type: '/', playload: { x: 10, y: 20 } }
-> 
-> 
-> funcs.reduce((a,b) => (...arg) => a(b(...arg)))(dispatch);
-x/y: x:1 y:20 type:/
-x*y: x:10 y:20 type:*
-x-y: x:0 y:20 type:-
-x+y: x:10 y:20 type:+
-{ type: '+', playload: { x: 10, y: 20 } }
+x+y: x:20 y:20 type:+
+{ type: '+', playload: { x: 20, y: 20 } }
+
 ```
