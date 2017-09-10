@@ -2,5 +2,5 @@
 export default interface IFormItemStates<T> {
     code: number;
     codeMsg?: string;
-    data?: T
+    data?: T;
 }

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p>测试中间件的运行机制</p>
+    <script>
+console.log('middleware demo');
+let action = {type: 'event', playload: {x:10, y: 20}};
+let dispatch = function(action) {
+  console.log('dispatch.action:');
+  console.log(action);
+  console.log('-----------------------------');
+  return action;
+}
+
+let middleware1= function(next) {
+  console.log('middleware1.next:' + next);
+  console.log('-----------------------------');
+  return function(action) {
+    console.log('middleware1.action:' + action);
+    next(action)
+  }
+}
+
+let middleware2 =  function(next) {
+  console.log('middleware2.next:' + next);
+  console.log('-----------------------------');
+  return function(action) {
+    console.log('middleware2.action:' + action);
+    next(action)
+  }
+}
+let middleware3 =  function(next) {
+  console.log('middleware3.next:' + next);
+  console.log('-----------------------------');
+  return function(action) {
+    console.log('middleware3.action:' + action);
+    next(action)
+  }
+}
+let middleware4 = function(next) {
+  console.log('middleware4.next:' + next);
+  console.log('-----------------------------');
+  return function(action) {
+    console.log('middleware4.action:' + action);
+    next(action)
+  }
+}
+
+let funcs = [middleware1, middleware2, middleware3, middleware4];
+
+//funcs.reduce((a,b) => () => a(b()))();
+//funcs.reduce((a,b) => (...arg) => b(a(...arg)))(dispatch);
+function compose(...funcs) {
+  if (funcs.length === 0) {
+    return arg => arg
+  }
+
+  if (funcs.length === 1) {
+    return funcs[0]
+  }
+
+  return funcs.reduce((a, b) => (...args) => a(b(...args)))
+}
+
+let invoke = compose(middleware1, middleware2, middleware3, middleware4)(dispatch);
+
+invoke(action);
+    </script>
+</body>
+</html>
