@@ -1,8 +1,10 @@
-export const authLogin = 'login';
-export type AUTH_LOGIN = typeof authLogin;
+export const authLogin = 'accountLogin';
+export const tokenLogin = 'tokenLogin';
 export const authLogout = 'logout';
-export type AUTH_LOGOUT = typeof authLogout;
-export const authNotify = 'notify';
-export type AUTH_NOTIFY = typeof authNotify;
+export const authNotify = 'authNotify';
 
-export type AUTH = AUTH_LOGIN | AUTH_LOGOUT | AUTH_NOTIFY;
+export type AUTH_LoginByAccount = typeof authLogin;
+export type AUTH_LoginByToken = typeof tokenLogin;
+export type AUTH_LOGOUT = typeof authLogout;
+export type AUTH_NOTIFY = typeof authNotify;
+export type AUTH = AUTH_LoginByAccount | AUTH_LoginByToken | AUTH_LOGOUT | AUTH_NOTIFY;

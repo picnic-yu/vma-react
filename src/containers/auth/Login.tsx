@@ -10,7 +10,7 @@ interface MapStateToProps<TStateProps, TOwnProps> {
 }
 */
 
-export function mapStateToProps(state: Action.AuthResponse) {
+export function mapStateToProps(state: Action.AuthResp): Action.AuthResp {
     // tslint:disable-next-line:no-console
     console.log('mapStateToProps:' + JSON.stringify(state));
     return state;
@@ -24,10 +24,10 @@ interface MapDispatchToPropsFunction<TDispatchProps, TOwnProps> {
     (dispatch: Dispatch<any>, ownProps?: TOwnProps): TDispatchProps;
 }
 */
-export function mapDispatchToProps(dispatch: Dispatch<Action.AuthResponse>) {
+export function mapDispatchToProps(dispatch: Dispatch<Action.AuthResp>): Action.AccountDispatch {
     return {
-        accountLogin: (request: Action.AuthRequest) => dispatch(Action.accountLogin(request)),
+        accountLogin: (request: Action.AuthReqByAccount) => dispatch(Action.accountLogin(request)),
     };
 }
 
-export default connect<{}, {}, Action.AuthResponse>(mapStateToProps, mapDispatchToProps)(Login);
+export default connect<{}, {}, Action.AuthResp>(mapStateToProps, mapDispatchToProps)(Login);

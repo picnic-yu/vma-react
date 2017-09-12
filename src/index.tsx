@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
 import App from './App';
@@ -13,8 +13,11 @@ import './index.css';
 // import { reducer } from './redux/Reducer';
 import { reducer } from './redux/actions/auth/AuthReducer';
 import * as Action from './redux/actions/auth/AuthAction';
+import { default as middleware } from './middleware';
 
-const store = createStore<Action.AuthResponse>(reducer);
+const store = createStore<Action.AuthResp>(reducer, applyMiddleware(middleware));
+// tslint:disable-next-line:max-line-length
+// store.dispatch({type: 'authNotify', payload: { userName: 'xuefli', portrait: 'http://lorempixel.com/45/45/people', token: 'xxxx'}});
 
 ReactDOM.render(
   <Provider store={store}>
