@@ -2,10 +2,10 @@ import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import * as Action from '../../redux/actions/auth/AuthAction';
+import * as AuthAction from '../../redux/actions/auth/AuthAction';
 // import IFormItemActions from '../../interfaces/IFormItemActions';
 
-export default class Login extends React.Component<Action.AuthResp & Action.AccountDispatch> {
+export default class Login extends React.Component<AuthAction.AuthResp & AuthAction.AccountDispatch> {
     state = {userName: '', password: '', disable: true};
     handleChange = (name: string, value: string|number) => {
         if (name.length !== 0) {
@@ -25,7 +25,7 @@ export default class Login extends React.Component<Action.AuthResp & Action.Acco
 
     handleClick = (e: MouseEvent) => {
         e.preventDefault();
-        let authRequest: Action.AuthReqByAccount = {userName: this.state.userName, password: this.state.password};
+        let authRequest: AuthAction.AuthReqByAccount = {userName: this.state.userName, password: this.state.password};
         this.props.accountLogin(authRequest);
     }
 

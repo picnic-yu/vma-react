@@ -1,5 +1,5 @@
 import { connect, Dispatch } from 'react-redux';
-import * as Action from '../../redux/actions/auth/AuthAction';
+import * as AuthAction from '../../redux/actions/auth/AuthAction';
 import Login from '../../view/auth/Login';
 
 /* 
@@ -10,7 +10,7 @@ interface MapStateToProps<TStateProps, TOwnProps> {
 }
 */
 
-export function mapStateToProps(state: Action.AuthResp): Action.AuthResp {
+export function mapStateToProps(state: AuthAction.AuthResp): AuthAction.AuthResp {
     // tslint:disable-next-line:no-console
     console.log('mapStateToProps:' + JSON.stringify(state));
     return state;
@@ -24,10 +24,10 @@ interface MapDispatchToPropsFunction<TDispatchProps, TOwnProps> {
     (dispatch: Dispatch<any>, ownProps?: TOwnProps): TDispatchProps;
 }
 */
-export function mapDispatchToProps(dispatch: Dispatch<Action.AuthResp>): Action.AccountDispatch {
+export function mapDispatchToProps(dispatch: Dispatch<AuthAction.AuthResp>): AuthAction.AccountDispatch {
     return {
-        accountLogin: (request: Action.AuthReqByAccount) => dispatch(Action.accountLogin(request)),
+        accountLogin: (request: AuthAction.AuthReqByAccount) => dispatch(AuthAction.accountLogin(request)),
     };
 }
 
-export default connect<{}, {}, Action.AuthResp>(mapStateToProps, mapDispatchToProps)(Login);
+export default connect<{}, {}, AuthAction.AuthResp>(mapStateToProps, mapDispatchToProps)(Login);

@@ -3,15 +3,15 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Layout from './view/layout/Layout';
-import * as State from './redux/State';
+import * as Action from './redux/actions/auth/AuthAction';
 
 import './App.css';
 import './assets/icomoon/style.css';
 
-export function mapStateToProps(state: State.User) {
+export function mapStateToProps(state: Action.AuthResp) {
     return {
-        userName: state.name,
-        icon: state.icon,
+        userName: state.userName,
+        portrait: state.portrait,
         token: state.token
     };
 }
