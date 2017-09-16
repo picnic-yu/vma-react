@@ -2,13 +2,6 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import * as ClassName from 'classnames';
 
-interface Permit {
-    url: string;
-    oper?: Array<string>;
-}
-
-export type PERMIT = Permit;
-
 export type InputType = 'text' | 'email' | 'number';
 export type WatchHandler = (value: FormItemState) => void;
 export interface FormItemProps {

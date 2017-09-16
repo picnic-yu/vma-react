@@ -11,11 +11,14 @@ import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
 // import { reducer } from './redux/Reducer';
-import { reducer } from './redux/actions/auth/AuthReducer';
-import * as Action from './redux/actions/auth/AuthAction';
+// import { reducer } from './redux/actions/auth/AuthReducer';
+// import * as Action from './redux/actions/auth/AuthAction';
 import { default as middleware } from './middleware';
 
-const store = createStore<Action.AuthResp>(reducer, applyMiddleware(middleware));
+import * as State from './redux/state';
+import * as Reducers from './redux';
+
+const store = createStore<State.Root>(Reducers.reducers, Reducers.initState, applyMiddleware(middleware));
 // tslint:disable-next-line:max-line-length
 // store.dispatch({type: 'authNotify', payload: { userName: 'xuefli', portrait: 'http://lorempixel.com/45/45/people', token: 'xxxx'}});
 
@@ -23,13 +26,13 @@ ReactDOM.render(
   <Provider store={store}>
   <BrowserRouter>
     <Switch>
-      {(store.getState().token || '').length === 0 &&
+      {(store.getState().auth.token || '').length === 0 &&
         <Route path="/login" component={Login}/>
       }
       <Route 
         path="/" 
         render={(props) => (
-        (store.getState().token || '').length !== 0 ? (
+        (store.getState().auth.token || '').length !== 0 ? (
           <App {...props}/>
         ) : (
           <Redirect to="/login"/>

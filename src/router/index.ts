@@ -27,6 +27,7 @@ const permits = [
     }
 ];
 
+/* 
 const menues = [
     {
         menuID: 1,
@@ -72,6 +73,7 @@ const menues = [
         children: []
     },
 ];
+ */
 
 const routes = [
     {
@@ -126,4 +128,4 @@ const routes = [
     }
 ];
 
-export { routes, menues, permits } ;
+export { routes, permits } ;

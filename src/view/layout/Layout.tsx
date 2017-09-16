@@ -14,7 +14,7 @@ class Layout extends React.Component {
         <div>
             <UserHeader/>
             <div className={ClassName('main-container', {'toggle': this.state.toggle})}>
-                <Sider/>
+                <Sider />
                 <div className="main-content">
                     {/* <LevelBar/> */}
                     <Route path="*" component={LevelBar}/>

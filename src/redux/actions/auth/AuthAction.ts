@@ -19,7 +19,13 @@ export interface AuthReqByToken {
 export interface AuthResp {
     userName: string;
     portrait?: string;
-    token: string;    
+    token: string;
+    permits?: Array<Permit>;
+}
+
+export interface Permit {
+    url: string;
+    oper?: Array<string>;
 }
 
 export interface AuthAction<T> extends Action {
@@ -35,11 +41,19 @@ export interface AuthTokenLoginAction extends AuthAction<AuthReqByToken> {
 }
 
 export interface AuthLogoutAction extends AuthAction<AuthReqByToken> {
-    type: AuthType.AUTH_LOGOUT;
+    type: AuthType.AUTH_Logout;
 }
 
-export interface AuthNotifyAction extends AuthAction<AuthResp> {
-    type: AuthType.AUTH_NOTIFY;
+export interface AuthNotifyAction extends AuthAction<AuthReqByToken> {
+    type: AuthType.AUTH_Notify;
+}
+
+export interface PermitLoadAction extends AuthAction<AuthReqByToken> {
+    type: AuthType.AUTH_PermitLoad;
+}
+
+export interface PermitNotifyAction extends AuthAction<Array<Permit>> {
+    type: AuthType.AUTH_PERMIT;
 }
 
 export interface AccountDispatch {
@@ -61,4 +75,20 @@ export function accountNotify(data: AuthResp): AuthNotifyAction {
     };
 }
 
-export type Action = AuthAccountLoginAction | AuthTokenLoginAction | AuthLogoutAction | AuthNotifyAction;
+export function permitLoad(data: AuthReqByToken): PermitLoadAction {
+    return {
+        type: AuthType.permitLoad,
+        payload: data
+    };
+}
+
+export function permitNotify(data: Array<Permit>): PermitNotifyAction {
+    return {
+        type: AuthType.permitNotify,
+        payload: data
+    };
+}
+
+export type Action = AuthAccountLoginAction | AuthTokenLoginAction | 
+                     AuthLogoutAction | AuthNotifyAction | 
+                     PermitLoadAction | PermitNotifyAction;

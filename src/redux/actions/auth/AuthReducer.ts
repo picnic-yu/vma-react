@@ -2,10 +2,11 @@ import * as Auth from '../types/AuthType';
 import * as Action from './AuthAction';
 // import IResponse from '../../../interfaces/IResponse';
 
-const initAuthState: Action.AuthResp = {
+export const initAuthState: Action.AuthResp = {
     userName: '',
     portrait: '',
-    token: localStorage.getItem('token') || ''
+    token: localStorage.getItem('token') || '',
+    permits: []
 };
 
 export function reducer(state: Action.AuthResp = initAuthState, action: Action.Action): Action.AuthResp {
@@ -26,6 +27,17 @@ export function reducer(state: Action.AuthResp = initAuthState, action: Action.A
             result = Object.assign({}, result, action.payload);
             break;
         case Auth.authLogout:
+            // tslint:disable-next-line:no-console
+            console.log(JSON.stringify(action));
+            break;
+        case Auth.permitLoad:
+            // tslint:disable-next-line:no-console
+            console.log(JSON.stringify(action));
+            break;
+        case Auth.permitNotify:
+            // tslint:disable-next-line:no-console
+            console.log(JSON.stringify(action));
+            result = Object.assign({}, result, action.payload);
             break;
         default:
             break;

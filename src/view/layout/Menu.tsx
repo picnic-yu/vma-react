@@ -1,21 +1,22 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
 import { NavLink } from 'react-router-dom';
+import * as Action from '../../redux/actions/menu/MenuAction';
 
 interface MenuNode {
-    menuID: number;
-    name: string;
-    url: string;
-    // children: Array<MenuNode>;
-    children: MenuNode[];
+    // menuID: number;
+    // name: string;
+    // url: string;
+    // // children: Array<MenuNode>;
+    // children: MenuNode[];
     deep?: number;
     watchValue?: (menuID: number, deep: number) => void;
     activeMenuID?: number;
     curDeep?: number;
 }
 
-class Menu extends React.Component<MenuNode> {
-    props: MenuNode;
+class Menu extends React.Component<Action.Menu & MenuNode> {
+    props: Action.Menu & MenuNode;
     // tslint:disable-next-line:max-line-length
     // Warning: Menu(...): When calling super() in `Menu`, make sure to pass up the same props that your component's constructor was passed.
     // props: MenuNode = {menuID: 0, name: '', url: '', children: []};
@@ -26,7 +27,7 @@ class Menu extends React.Component<MenuNode> {
             this.setState({active: false, open: false});
         }
     }
-    constructor(props: MenuNode) {
+    constructor(props: Action.Menu & MenuNode) {
         super(props);
         if (window.location.pathname.indexOf(this.props.url) !== -1) {
             this.state.open = true;
@@ -44,7 +45,7 @@ class Menu extends React.Component<MenuNode> {
         }
     }
 
-    renderSub = (menuItem: MenuNode): JSX.Element => {
+    renderSub = (menuItem: Action.Menu & MenuNode): JSX.Element => {
         let {menuID, name, url} = menuItem;
         let children = menuItem.children;
         let deep: number = 0;
@@ -68,7 +69,7 @@ class Menu extends React.Component<MenuNode> {
     }
 
     render() {
-        const listItems = this.props.children.map((menuItem: MenuNode) =>
+        const listItems = this.props.children.map((menuItem: Action.Menu & MenuNode) =>
             this.renderSub(menuItem)
         );
         return (

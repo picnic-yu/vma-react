@@ -1,9 +1,31 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
-import { menues } from '../../router/index';
+import { connect, Dispatch } from 'react-redux';
+// import { menues } from '../../router/index';
 import { Menu, MenuNode } from './Menu';
+import * as Action from '../../redux/actions/menu/MenuAction';
+import * as State from '../../redux/state';
 
-class Sider extends React.Component {
+export function mapStateToProps(state: State.Root) {
+    return {
+        token: state.auth.token,
+        menu: state.menu
+    };
+}
+
+interface SiderProps {
+    token: string;
+    menu: Array<Action.Menu>;
+}
+
+export function mapDispatchToProps(dispatch: Dispatch<Action.Menu>): Action.MenuDispatch {
+    return {
+        menuLoad: (token: string) => dispatch(Action.menuLoad(token)),
+    };
+}
+
+class Sider extends React.Component<SiderProps & Action.MenuDispatch> {
+    // props: Array<MenuData>;
     state = { toggle: false, activeMenuID: 0, curDeep: 0 };
 
     watchValue = (activeMenuID: number, deep: number) =>  {
@@ -16,7 +38,7 @@ class Sider extends React.Component {
         this.setState({toggle: !this.state.toggle});
     }
 
-    renderSub = (menuItem: MenuNode): JSX.Element => {
+    renderSub = (menuItem: Action.Menu & MenuNode): JSX.Element => {
         let {menuID, name, url} = menuItem;
         let children = menuItem.children;
         return (
@@ -33,8 +55,12 @@ class Sider extends React.Component {
         );
     }
    render() {
-        const listItems = menues.map((menuItem: MenuNode) => {
-         return this.renderSub(menuItem);
+        if (this.props.token.length > 0 && this.props.menu.length === 0) {
+            this.props.menuLoad(this.props.token);
+        }
+
+        const listItems = this.props.menu.map((menuItem: Action.Menu & MenuNode) => {
+            return this.renderSub(menuItem);
         }
         );
         // let {menuID, name, url, children} = menues[0];
@@ -55,4 +81,5 @@ class Sider extends React.Component {
     }
 }
 
-export default Sider;
+// export default Sider;
+export default connect<{}, {}, {}>(mapStateToProps, mapDispatchToProps)(Sider);

@@ -1,6 +1,7 @@
 import { connect, Dispatch } from 'react-redux';
 import * as AuthAction from '../../redux/actions/auth/AuthAction';
 import Login from '../../view/auth/Login';
+import * as State from '../../redux/state';
 
 /* 
 mapStateToProps原型，TStteProps是Presentational Component的props的定义,state: any是redux的全部状态树
@@ -10,10 +11,10 @@ interface MapStateToProps<TStateProps, TOwnProps> {
 }
 */
 
-export function mapStateToProps(state: AuthAction.AuthResp): AuthAction.AuthResp {
+export function mapStateToProps(state: State.Root): AuthAction.AuthResp {
     // tslint:disable-next-line:no-console
     console.log('mapStateToProps:' + JSON.stringify(state));
-    return state;
+    return state.auth;
 }
 
 /* 

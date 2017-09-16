@@ -1,0 +1,27 @@
+{
+    "data": [
+        {
+            "url": "/company",
+            "oper": ["list", "view"]
+        },
+        {
+            "url": "/catalog",
+            "oper": []
+        },
+        {
+            "url": "/goods",
+            "oper": []
+        },
+        {
+            "url": "/order",
+            "oper": []
+        },
+        {
+            "url": "/storage",
+            "oper": []
+        }
+    ],
+    "code": 0,
+    "codeMsg": "ok"
+}
+
