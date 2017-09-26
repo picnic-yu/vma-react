@@ -3,7 +3,8 @@ import * as ClassName from 'classnames';
 import { connect, Dispatch } from 'react-redux';
 // import { menues } from '../../router/index';
 import { Menu, MenuNode } from './Menu';
-import * as Action from '../../redux/actions/menu/MenuAction';
+import * as MenuAction from '../../redux/actions/menu/MenuAction';
+import * as ConfigAction from '../../redux/actions/config/ConfigAction';
 import * as State from '../../redux/state';
 
 export function mapStateToProps(state: State.Root) {
@@ -15,16 +16,18 @@ export function mapStateToProps(state: State.Root) {
 
 interface SiderProps {
     token: string;
-    menu: Array<Action.Menu>;
+    menu: Array<MenuAction.Menu>;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<Action.Menu>): Action.MenuDispatch {
+// tslint:disable-next-line:max-line-length
+export function mapDispatchToProps(dispatch: Dispatch<MenuAction.Menu>): MenuAction.MenuDispatch & ConfigAction.ConfigDispatch {
     return {
-        menuLoad: (token: string) => dispatch(Action.menuLoad(token)),
+        menuLoad: (token: string) => dispatch(MenuAction.menuLoad(token)),
+        refresh: (toggle: boolean) => dispatch(ConfigAction.toggleRefresh(toggle)),
     };
 }
 
-class Sider extends React.Component<SiderProps & Action.MenuDispatch> {
+class Sider extends React.Component<SiderProps & MenuAction.MenuDispatch & ConfigAction.ConfigDispatch> {
     // props: Array<MenuData>;
     state = { toggle: false, activeMenuID: 0, curDeep: 0 };
 
@@ -32,13 +35,15 @@ class Sider extends React.Component<SiderProps & Action.MenuDispatch> {
         this.setState({activeMenuID: activeMenuID, curDeep: deep});
     }
 
-    fold = () => {
+    fold = (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
         // tslint:disable-next-line:no-console
         console.log('fold');
         this.setState({toggle: !this.state.toggle});
+        this.props.refresh(!this.state.toggle);
     }
 
-    renderSub = (menuItem: Action.Menu & MenuNode): JSX.Element => {
+    renderSub = (menuItem: MenuAction.Menu & MenuNode): JSX.Element => {
         let {menuID, name, url} = menuItem;
         let children = menuItem.children;
         return (
@@ -48,18 +53,18 @@ class Sider extends React.Component<SiderProps & Action.MenuDispatch> {
                 name={name} 
                 url={url} 
                 children={children} 
-                watchValue={this.watchValue}
-                activeMenuID={this.state.activeMenuID}
-                curDeep={this.state.curDeep}
             />
         );
     }
    render() {
+        let log = `Sider=> token=${this.props.token} menu=${JSON.stringify(this.props.menu)}`;
+        // tslint:disable-next-line:no-console
+        console.log(log);
         if (this.props.token.length > 0 && this.props.menu.length === 0) {
             this.props.menuLoad(this.props.token);
         }
 
-        const listItems = this.props.menu.map((menuItem: Action.Menu & MenuNode) => {
+        const listItems = this.props.menu.map((menuItem: MenuAction.Menu & MenuNode) => {
             return this.renderSub(menuItem);
         }
         );

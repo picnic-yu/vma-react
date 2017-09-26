@@ -1,7 +1,25 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
-import { NavLink } from 'react-router-dom';
-import * as Action from '../../redux/actions/menu/MenuAction';
+import { connect, Dispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import * as MenuAction from '../../redux/actions/menu/MenuAction';
+import * as ConfigAction from '../../redux/actions/config/ConfigAction';
+import * as State from '../../redux/state';
+
+export function mapStateToProps(state: State.Root) {
+    return {
+        activeMenuID: state.config.activeMenuID,
+        curDeep: state.config.curDeep
+    };
+}
+
+// tslint:disable-next-line:max-line-length
+export function mapDispatchToProps(dispatch: Dispatch<ConfigAction.Config>): ConfigAction.ConfigDispatch {
+    return {
+        // tslint:disable-next-line:max-line-length
+        refresh: (curMenu: {activeMenuID: number, curDeep: number}) => dispatch(ConfigAction.activeMenuIDRefresh(curMenu.activeMenuID, curMenu.curDeep)),
+    };
+}
 
 interface MenuNode {
     // menuID: number;
@@ -10,24 +28,24 @@ interface MenuNode {
     // // children: Array<MenuNode>;
     // children: MenuNode[];
     deep?: number;
-    watchValue?: (menuID: number, deep: number) => void;
-    activeMenuID?: number;
-    curDeep?: number;
+    // watchValue?: (menuID: number, deep: number) => void;
+    // activeMenuID?: number;
+    // curDeep?: number;
 }
 
-class Menu extends React.Component<Action.Menu & MenuNode> {
-    props: Action.Menu & MenuNode;
+class Menu extends React.Component<MenuAction.Menu & MenuNode & ConfigAction.Config & ConfigAction.ConfigDispatch> {
+    props: MenuAction.Menu & MenuNode & ConfigAction.ConfigDispatch;
     // tslint:disable-next-line:max-line-length
     // Warning: Menu(...): When calling super() in `Menu`, make sure to pass up the same props that your component's constructor was passed.
     // props: MenuNode = {menuID: 0, name: '', url: '', children: []};
     state = { open: false, active: false};
 
-    componentWillReceiveProps(nextProps: MenuNode) {
+    componentWillReceiveProps(nextProps: MenuNode & ConfigAction.Config) {
         if (nextProps.activeMenuID !== this.props.menuID && (nextProps.curDeep || 0) <= (this.props.deep || 0)) {
             this.setState({active: false, open: false});
         }
     }
-    constructor(props: Action.Menu & MenuNode) {
+    constructor(props: MenuAction.Menu & MenuNode & ConfigAction.ConfigDispatch) {
         super(props);
         if (window.location.pathname.indexOf(this.props.url) !== -1) {
             this.state.open = true;
@@ -40,12 +58,13 @@ class Menu extends React.Component<Action.Menu & MenuNode> {
             this.setState({open: !this.state.open});
         }
         this.setState({active: true});
-        if (this.props.watchValue) {
-            this.props.watchValue(this.props.menuID, this.props.deep || 0);
-        }
+        // if (this.props.watchValue) {
+        //     this.props.watchValue(this.props.menuID, this.props.deep || 0);
+        // }
+        this.props.refresh({activeMenuID: this.props.menuID, curDeep: this.props.deep});
     }
 
-    renderSub = (menuItem: Action.Menu & MenuNode): JSX.Element => {
+    renderSub = (menuItem: MenuAction.Menu & MenuNode): JSX.Element => {
         let {menuID, name, url} = menuItem;
         let children = menuItem.children;
         let deep: number = 0;
@@ -53,14 +72,13 @@ class Menu extends React.Component<Action.Menu & MenuNode> {
             deep = this.props.deep;
         }
         return (
-        <Menu 
+        <MenuItem 
                 key={menuID} 
                 menuID={menuID} 
                 name={name} 
                 url={url} 
                 children={children} 
                 deep={deep + 1} 
-                watchValue={this.props.watchValue}
         />);
     }
 
@@ -69,24 +87,21 @@ class Menu extends React.Component<Action.Menu & MenuNode> {
     }
 
     render() {
-        const listItems = this.props.children.map((menuItem: Action.Menu & MenuNode) =>
+        const listItems = this.props.children.map((menuItem: MenuAction.Menu & MenuNode) =>
             this.renderSub(menuItem)
         );
         return (
-        <li 
-            className={ClassName({'active': this.state.active})} 
-            
-        >
+        <li className={ClassName({'active': this.state.active})} >
             {this.isFolder() ? (
-                <NavLink to={this.props.url} activeClassName="active" onClick={this.onClick}>{this.props.name}
+                <Link to={this.props.url} onClick={this.onClick}>{this.props.name}
                 {/* <span onClick={this.onClick}>{this.props.name} */}
                 <i 
                     className={ClassName('arrow', this.state.open ? 'icon-circle-down' : 'icon-circle-right')}
                 />                    
                 {/* </span> */}
-                </NavLink>
+                </Link>
             ) : (
-                <NavLink to={this.props.url} activeClassName="active" onClick={this.onClick}>{this.props.name}</NavLink>
+                <Link to={this.props.url} onClick={this.onClick}>{this.props.name}</Link>
             )}
             { this.state.open && this.isFolder() && 
                 <ul className="sub-menu">
@@ -98,4 +113,5 @@ class Menu extends React.Component<Action.Menu & MenuNode> {
     }
 }
 
-export { MenuNode, Menu };
+const MenuItem = connect<{}, {}, MenuAction.Menu & MenuNode>(mapStateToProps, mapDispatchToProps)(Menu);
+export { MenuNode,  MenuItem as Menu };

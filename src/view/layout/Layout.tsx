@@ -1,21 +1,38 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
+// import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import UserHeader from '../../components/UserHeader';
 import Tailer from '../../components/Tailer';
 import LevelBar from './LevelBar';
 import AppMain from './AppMain';
 import Sider from './Sider';
+import * as State from '../../redux/state';
 
-class Layout extends React.Component {
-    state = { toggle: false };
+export function mapStateToProps(state: State.Root) {
+    return {
+        toggle: state.config.toggle,
+        activeMenuID: state.config.activeMenuID
+    };
+}
+
+interface LayoutProps {
+    toggle: boolean;
+    activeMenuID: number;
+}
+
+class Layout extends React.Component<LayoutProps> {
+// class Layout extends React.Component {
+        // state = { toggle: false };
     render() {
         return (
         <div>
             <UserHeader/>
-            <div className={ClassName('main-container', {'toggle': this.state.toggle})}>
+            <div className="main-container">
                 <Sider />
-                <div className="main-content">
+                <div className={ClassName('main-content', {'toggle': this.props.toggle})}>
+                {/* <div className={ClassName('main-content')}> */}
                     {/* <LevelBar/> */}
                     <Route path="*" component={LevelBar}/>
                     <AppMain/>
@@ -27,4 +44,4 @@ class Layout extends React.Component {
     }
 }
 
-export default Layout;
+export default connect(mapStateToProps)(Layout);

@@ -25,7 +25,7 @@ class App extends React.Component<{token: string} & RouteComponentProps<{}>> {
   console.log(this.props.token);
   return (      
     <div className="container">
-      <Layout/>
+      <Layout {...this.props}/>
       </div>
     );
   }
