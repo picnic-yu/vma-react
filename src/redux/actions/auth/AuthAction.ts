@@ -57,7 +57,8 @@ export interface PermitNotifyAction extends AuthAction<Array<Permit>> {
 }
 
 export interface AccountDispatch {
-    accountLogin: (req: AuthReqByAccount) => AuthAccountLoginAction;
+    // accountLogin: (req: AuthReqByAccount) => AuthAccountLoginAction;
+    accountLogin: (req: AuthReqByAccount) => void;
     // accountLogout: (req: AuthReqByToken) => AuthTokenLoginAction;
 }
 

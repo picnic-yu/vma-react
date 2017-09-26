@@ -5,6 +5,8 @@ import CheckBox from './CheckBox';
 interface Pair {
     label: string;
     value: number|string;
+    disabled?: boolean;
+    readOnlay?: boolean;    
 }
 interface RenderProps {
     prompt: string;
@@ -19,7 +21,7 @@ interface RenderState {
 
 interface DataState {
     // tslint:disable-next-line:no-any
-    value: number|string;
+    value: Array<number|string>;
 }
 class RadioGroup extends React.Component<RenderProps & RenderState & DataState, DataState> {
     state: RenderState & DataState;
@@ -34,7 +36,18 @@ class RadioGroup extends React.Component<RenderProps & RenderState & DataState, 
     }
 
     handle = (name: string, value: string|number, checked: boolean) => {
-        this.setState({value});
+        if (checked) {
+            let result = [...this.state.value, value];
+            this.setState({value: result});
+        } else {
+            let result = [...this.state.value];
+            result.splice(result.indexOf(value), 1);
+            this.setState({value: result});
+        }
+    }
+
+    validator = () => {
+        return this.props.isRequire && this.state.value.length === 0;
     }
 
     render() {
@@ -52,12 +65,12 @@ class RadioGroup extends React.Component<RenderProps & RenderState & DataState, 
             // tslint:disable-next-line:jsx-wrap-multiline
             return <CheckBox 
                 key={index} 
-                type="radio" 
+                type="checkbox" 
                 name={this.props.name} 
                 prompt={item.label} 
                 value={item.value} 
-                checked={this.state.value === item.value}
-                disabled={this.state.disabled}
+                checked={this.state.value.indexOf(item.value) !== -1}
+                disabled={item.disabled}
                 handler={this.handle}
             />;
         }
@@ -68,7 +81,7 @@ class RadioGroup extends React.Component<RenderProps & RenderState & DataState, 
             <label className="vma-form-label" style={labelStyle}>{this.props.prompt}</label>
             <div className="vma-wapper" style={wapperStyle}>
               {checkList}
-              {this.props.isRequire && 
+              {this.validator() && 
               <div className="vma-form-item-error">请选择项目</div>
               }
             </div>

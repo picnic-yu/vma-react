@@ -2,6 +2,7 @@ import * as React from 'react';
 import Button from '../components/Button';
 import ButtonGroup from '../components/ButtonGroup';
 import Input from '../components/Input';
+import CheckBoxGroup from '../components/CheckBoxGroup';
 import RadioGroup from '../components/RadioGroup';
 import CheckBox from '../components/CheckBox';
 import TextArea from '../components/TextArea';
@@ -16,7 +17,8 @@ interface FormData {
     companyName: string;
     companyInfo: string;
     companyCode: number;
-    [index: string]: string|number;
+    testCheckBox: Array<number>;
+    [index: string]: string|number|Array<number>;
   }
 
 const logo = require('../logo.svg');
@@ -114,16 +116,39 @@ class Form extends React.Component<{}, FormData> {
               value={this.state.companyCode} 
               handler={this.handleChange}
             />
-            <RadioGroup prompt="输入项" isRequire={true}>
-              <CheckBox type="checkbox" name="test" prompt="选择项目" value="0"/>
-              <CheckBox type="checkbox" name="test" prompt="选择项目" value="1" disabled={true}/>
-              <CheckBox type="checkbox" name="test" prompt="选择项目" value="2" checked={true}/>
+            <CheckBox type="checkbox" name="testCheckBox1" prompt="选择项目" value="0"/>
+            <CheckBoxGroup 
+              name="testCheckBox" 
+              prompt="输入项" 
+              options={
+                [
+                  {label: '选择项目0', value: 0}, 
+                  {label: '选择项目1', value: 1}, 
+                  {label: '选择项目2', value: 2, disabled: true}
+                ]
+              } 
+              value={[1, 2]} 
+              isRequire={true}
+            />
+            <RadioGroup 
+              name="testRadio" 
+              prompt="输入项" 
+              options={[{label: '选择项目0', value: 0}, {label: '选择项目1', value: 1}, {label: '选择项目2', value: 2}]} 
+              value={2}
+              disabled={true}
+            />
+            
+            {/* <RadioGroup prompt="输入项" isRequire={true}>
+              <CheckBox type="checkbox" name="testCheckBox" prompt="选择项目" value="0"/>
+              <CheckBox type="checkbox" name="testCheckBox" prompt="选择项目" value="1" disabled={true}/>
+              <CheckBox type="checkbox" name="testCheckBox" prompt="选择项目" value="2" checked={true}/>
             </RadioGroup>
             <RadioGroup prompt="输入项">
-              <CheckBox type="radio" name="test" prompt="选择项目" value="0"/>
-              <CheckBox type="radio" name="test" prompt="选择项目" value="1" disabled={true}/>
-              <CheckBox type="radio" name="test" prompt="选择项目" value="2" checked={true}/>
-            </RadioGroup>
+              <CheckBox type="radio" name="testRadio" prompt="选择项目" value="0"/>
+              <CheckBox type="radio" name="testRadio" prompt="选择项目" value="1" disabled={true}/>
+              <CheckBox type="radio" name="testRadio" prompt="选择项目" value="2" checked={true}/>
+            </RadioGroup> */}
+            
             <TextArea 
               prompt="输入项" 
               isRequire={true} 
