@@ -1,6 +1,7 @@
 import * as React from 'react';
 // import * as PropTypes from 'prop-types';
 import * as ClassName from 'classnames';
+import * as validator from 'validator';
 
 import { 
     CheckBoxGroupProps, CheckBoxStates, 
@@ -82,7 +83,7 @@ export class CheckBoxControl extends React.Component<CheckBoxGroupProps, CheckBo
             <div className="vma-wapper" style={wapperStyle}>
               {checkList}
               {this.validator() && 
-              <div className="vma-form-item-error">请选择项目</div>
+              <div className="vma-form-item-error">请至少选择一项</div>
               }
             </div>
          </div>
@@ -165,7 +166,7 @@ export class RadioControl extends React.Component<RadioGroupProps, RadioStates> 
             <div className="vma-wapper" style={wapperStyle}>
               {checkList}
               {this.validator() && 
-              <div className="vma-form-item-error">请选择项目</div>
+              <div className="vma-form-item-error">请选择一项</div>
               }
             </div>
          </div>
@@ -207,6 +208,7 @@ export class RadioControl extends React.Component<RadioGroupProps, RadioStates> 
 
 export class InputControl extends React.Component<InputProps, InputStates> implements ControlIF {
     state: RadioStates;
+    errorMsg: string = '请提供数据';
 
     constructor(props: InputProps) {
         super(props);
@@ -231,8 +233,8 @@ export class InputControl extends React.Component<InputProps, InputStates> imple
             <label className="vma-form-label" style={labelStyle}>{this.props.labelName}</label>
             <div className="vma-wapper" style={wapperStyle}>
               {checkList}
-              {this.validator() && 
-              <div className="vma-form-item-error">请选择项目</div>
+              {!this.validator() && 
+              <div className="vma-form-item-error">{this.errorMsg}</div>
               }
             </div>
          </div>
@@ -240,8 +242,33 @@ export class InputControl extends React.Component<InputProps, InputStates> imple
     }
 
     validator = (): boolean => {
-        return this.props.required === true && (this.state.value === undefined || 
-            (typeof this.state.value === 'string' && this.state.value.length === 0));
+        let valid: boolean = true;
+        if (this.props.required !== true || this.state.value === undefined) {
+            return valid;
+        }
+        switch (this.props.type) {
+            case 'text':
+            case 'textarea':
+            if (typeof this.state.value === 'string') {
+                valid = this.validText();            
+            }
+            break;
+            case 'number':
+                valid = this.validNumber();
+                break;
+            case 'email':
+            if (typeof this.state.value === 'string') {
+                valid = validator.isEmail(this.state.value);
+                if (valid === false) {
+                    this.errorMsg = '邮箱格式不正确';
+                }                 
+            }
+            break;
+        
+            default:
+                break;
+        }
+        return valid;
     }
 
     checked(item: Pair<React.ReactText>): boolean {
@@ -259,6 +286,9 @@ export class InputControl extends React.Component<InputProps, InputStates> imple
                     disabled={this.props.disabled} 
                     checked={false} 
                     rows={this.props.rows}
+                    min={this.props.min}
+                    max={this.props.max}
+                    maxLength={this.props.maxLength}
                     watchValue={this.watchValue}
         />;
     }
@@ -270,8 +300,51 @@ export class InputControl extends React.Component<InputProps, InputStates> imple
             }
         });
     }
-}
 
+    private validNumber() {
+        let valid: boolean = true;
+        if (typeof this.state.value === 'string') {
+            valid = validator.isInt(this.state.value);
+            this.errorMsg = '';
+            let value = validator.toInt(this.state.value);
+            if (this.props.min !== undefined && (isNaN(value) || value < this.props.min)) {
+                this.errorMsg = `非法的数字,最小:${this.props.min}`;
+                valid = valid && false;
+            }
+            if (this.props.max !== undefined && (isNaN(value) || value > this.props.max)) {
+                valid = valid && false;
+                if (this.errorMsg.length === 0) {
+                    this.errorMsg += `非法的数字, 最大: ${this.props.max}`;
+                } else {
+                    this.errorMsg += `, 最大: ${this.props.max}`;
+                }
+            }
+        }
+        return valid;
+    }
+
+    private validText() {
+        let valid: boolean = true;
+        if (typeof this.state.value === 'string') {
+            this.errorMsg = '';
+            let value = this.state.value.length;
+            if (this.props.min !== undefined && (isNaN(value) || value < this.props.min)) {
+                this.errorMsg = `非法的文本,最短:${this.props.min}`;
+                valid = valid && false;
+            }
+            if (this.props.max !== undefined && (isNaN(value) || value > this.props.max)) {
+                valid = valid && false;
+                if (this.errorMsg.length === 0) {
+                    this.errorMsg += `非法的文本, 最长: ${this.props.max}`;
+                } else {
+                    this.errorMsg += `, 最长: ${this.props.max}`;
+                }
+            }
+        }
+        return valid;
+    }
+}
+    
 // tslint:disable-next-line:max-line-length
 export class Input extends React.Component<InputProps> {
     checked: DataStates<boolean>;
@@ -340,6 +413,9 @@ export class Input extends React.Component<InputProps> {
                 name={name} 
                 value={this.props.value} 
                 disabled={this.props.disabled}
+                min={this.props.min}
+                max={this.props.max}
+                maxLength={this.props.maxLength}
                 onChange={this.onChange}
             />
         );
@@ -355,6 +431,7 @@ export class Input extends React.Component<InputProps> {
                 value={this.props.value} 
                 disabled={this.props.disabled}
                 rows={this.props.rows || 3}
+                maxLength={this.props.maxLength}
                 onChange={this.onChangeTextArea}
             />
         );

@@ -33,9 +33,25 @@ class Form extends React.Component {
             labelWidth="100px"
             watchValue={this.observeForm}
           />
+          <CheckBoxControl 
+            type="checkbox"
+            name="testControl1" 
+            labelName="多选控件"
+            valueRange={
+                [
+                  {name: '选择项目0', value: 'value0'}, 
+                  {name: '选择项目1', value: 'value1'}, 
+                  {name: '选择项目2', value: 'value2', disabled: false}
+                ]
+              } 
+            value={[1, 2]}
+            required={true}
+            labelWidth="100px"
+            watchValue={this.observeForm}
+          />
           <RadioControl 
             type="radio"
-            name="testControl1" 
+            name="testControl2" 
             labelName="单选控件"
             valueRange={
                 [
@@ -48,38 +64,46 @@ class Form extends React.Component {
             labelWidth="100px"
             watchValue={this.observeForm}
           />
-          <CheckBoxControl 
-            type="checkbox"
-            name="testControl0" 
-            labelName="多选控件"
-            valueRange={
-                [
-                  {name: '选择项目0', value: 0}, 
-                  {name: '选择项目1', value: 1}, 
-                  {name: '选择项目2', value: 2, disabled: false}
-                ]
-              } 
-            value={[1, 2]}
+          <InputControl 
+            type="text" 
+            name="testControl3" 
+            labelName="单行控件" 
+            placeholder="请输入文字" 
+            required={true}
+            labelWidth="100px"
+            min={1}
+            max={10}
+            watchValue={this.observeForm}
+          />
+          <InputControl 
+            type="email" 
+            name="testControl4" 
+            labelName="单行控件" 
+            placeholder="请输入邮箱" 
             required={true}
             labelWidth="100px"
             watchValue={this.observeForm}
           />
           <InputControl 
-            type="text" 
-            name="testControl2" 
+            type="number" 
+            name="testControl5" 
             labelName="单行控件" 
-            placeholder="请输入" 
+            placeholder="请输入数字" 
             required={true}
             labelWidth="100px"
+            min={1}
+            max={99}
             watchValue={this.observeForm}
           />
           <InputControl 
             type="textarea" 
-            name="testControl3" 
+            name="testControl6" 
             labelName="多行控件" 
             placeholder="请输入" 
             required={true}
             labelWidth="100px"
+            min={1}
+            max={10}
             watchValue={this.observeForm}
           />
         </form>

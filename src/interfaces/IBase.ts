@@ -8,6 +8,9 @@ export interface RenderProps {
     placeholder?: string;
     checked?: boolean;
     rows?: number;
+    min?: number;
+    max?: number;
+    maxLength?: number;
 }
 
 export interface RenderState {
