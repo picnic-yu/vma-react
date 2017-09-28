@@ -115,6 +115,7 @@ export class CheckBoxControl extends React.Component<CheckBoxGroupProps, CheckBo
     }
 
     stateChange(name: string, value: string | number, checked: boolean) {
+        console.log(`name:${name} value:${value} checked:${checked} state:${JSON.stringify(this.state.value)}`);
         let result: Array<string | number> = [];
         if (checked) {
             // let result = [...this.state.value, value];
@@ -134,7 +135,11 @@ export class CheckBoxControl extends React.Component<CheckBoxGroupProps, CheckBo
                 result = [...this.state.value];
             }
             result.splice(result.indexOf(value), 1);
-            this.setState({ value: result });
+            this.setState({ value: result }, () => {
+                if (this.props.watchValue && this.state.value !== undefined) {
+                    this.props.watchValue(this.props.name || '', this.state.value, false);
+                }
+            });
         }
     }
 }
@@ -284,6 +289,7 @@ export class InputControl extends React.Component<InputProps, InputStates> imple
                     placeholder={this.props.placeholder}
                     value={this.props.value} 
                     disabled={this.props.disabled} 
+                    readOnly={this.props.readOnly}
                     checked={false} 
                     rows={this.props.rows}
                     min={this.props.min}
@@ -413,6 +419,7 @@ export class Input extends React.Component<InputProps> {
                 name={name} 
                 value={this.props.value} 
                 disabled={this.props.disabled}
+                readOnly={this.props.readOnly}
                 min={this.props.min}
                 max={this.props.max}
                 maxLength={this.props.maxLength}

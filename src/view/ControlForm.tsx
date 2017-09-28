@@ -41,10 +41,10 @@ class Form extends React.Component {
                 [
                   {name: '选择项目0', value: 'value0'}, 
                   {name: '选择项目1', value: 'value1'}, 
-                  {name: '选择项目2', value: 'value2', disabled: false}
+                  {name: '选择项目2', value: 'value2', disabled: true}
                 ]
               } 
-            value={[1, 2]}
+            value={['value0', 'value2']}
             required={true}
             labelWidth="100px"
             watchValue={this.observeForm}
@@ -67,12 +67,14 @@ class Form extends React.Component {
           <InputControl 
             type="text" 
             name="testControl3" 
+            value="测试内容"
             labelName="单行控件" 
             placeholder="请输入文字" 
             required={true}
             labelWidth="100px"
             min={1}
             max={10}
+            readOnly={true}
             watchValue={this.observeForm}
           />
           <InputControl 
@@ -96,8 +98,17 @@ class Form extends React.Component {
             watchValue={this.observeForm}
           />
           <InputControl 
-            type="textarea" 
+            type="file" 
             name="testControl6" 
+            labelName="单行控件" 
+            placeholder="请选择文件" 
+            required={true}
+            labelWidth="100px"
+            watchValue={this.observeForm}
+          />
+          <InputControl 
+            type="textarea" 
+            name="testControl7" 
             labelName="多行控件" 
             placeholder="请输入" 
             required={true}
