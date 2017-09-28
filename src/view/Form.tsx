@@ -57,7 +57,7 @@ class Form extends React.Component<{}, FormData> {
         // tslint:disable-next-line:no-console
         console.log(data.value);
     }
-
+    
     render() {
     const classStyle = {
       borderBottom: '1px solid #ddd'
@@ -98,75 +98,77 @@ class Form extends React.Component<{}, FormData> {
             />
             <Button type="btn-primary" handler={this.handleClick}>确认</Button>
             <h3 style={classStyle}>表单类</h3>
-            <form className="col-12 col-offset-6">
-            <Input 
-              type="text" 
-              prompt="文本" 
-              placeholder="请输入公司名称" 
-              isRequire={true}  
-              name="companyName" 
-              value={this.state.companyName} 
-              handler={this.handleChange}
-            />
-            <Input type="email" prompt="邮箱" />
-            <Input 
-              type="number" 
-              prompt="数字密码" 
-              name="companycode" 
-              value={this.state.companyCode} 
-              handler={this.handleChange}
-            />
-            <CheckBox type="checkbox" name="testCheckBox1" prompt="选择项目" value="0"/>
-            <CheckBoxGroup 
-              name="testCheckBox" 
-              prompt="输入项" 
-              options={
-                [
-                  {label: '选择项目0', value: 0}, 
-                  {label: '选择项目1', value: 1}, 
-                  {label: '选择项目2', value: 2, disabled: true}
-                ]
-              } 
-              value={[1, 2]} 
-              isRequire={true}
-            />
-            <RadioGroup 
-              name="testRadio" 
-              prompt="输入项" 
-              options={[{label: '选择项目0', value: 0}, {label: '选择项目1', value: 1}, {label: '选择项目2', value: 2}]} 
-              value={2}
-              disabled={true}
-            />
-            
-            {/* <RadioGroup prompt="输入项" isRequire={true}>
-              <CheckBox type="checkbox" name="testCheckBox" prompt="选择项目" value="0"/>
-              <CheckBox type="checkbox" name="testCheckBox" prompt="选择项目" value="1" disabled={true}/>
-              <CheckBox type="checkbox" name="testCheckBox" prompt="选择项目" value="2" checked={true}/>
-            </RadioGroup>
-            <RadioGroup prompt="输入项">
-              <CheckBox type="radio" name="testRadio" prompt="选择项目" value="0"/>
-              <CheckBox type="radio" name="testRadio" prompt="选择项目" value="1" disabled={true}/>
-              <CheckBox type="radio" name="testRadio" prompt="选择项目" value="2" checked={true}/>
-            </RadioGroup> */}
-            
-            <TextArea 
-              prompt="输入项" 
-              isRequire={true} 
-              name="companyInfo" 
-              value={this.state.companyInfo} 
-              handler={this.handleChange}
-            />
-            <Select prompt="输入项" isRequire={true} disabled={false}>
-              <Option name="请选择" value=""/>
-              <Option name="选择项1" value="1"/>
-              <Option name="选择项2" value="2"/>
-              <Option name="选择项3" value="3"/>
-            </Select>
-            <ButtonGroup>
-            <Button type="btn-default" disabled={true}>取消</Button>
-            <Button type="btn-primary" handler={this.handleClick}>确认</Button>
-            </ButtonGroup>
-            </form>
+            <div className="row">
+              <form className="col-12 col-offset-6">
+                <Input 
+                  type="text" 
+                  prompt="文本" 
+                  placeholder="请输入公司名称" 
+                  isRequire={true}  
+                  name="companyName" 
+                  value={this.state.companyName} 
+                  handler={this.handleChange}
+                />
+                <Input type="email" prompt="邮箱" />
+                <Input 
+                  type="number" 
+                  prompt="数字密码" 
+                  name="companycode" 
+                  value={this.state.companyCode} 
+                  handler={this.handleChange}
+                />
+                <CheckBox type="checkbox" name="testCheckBox1" prompt="选择项目" value="0"/>
+                <CheckBoxGroup 
+                  name="testCheckBox" 
+                  prompt="输入项" 
+                  options={
+                    [
+                      {label: '选择项目0', value: 0}, 
+                      {label: '选择项目1', value: 1}, 
+                      {label: '选择项目2', value: 2, disabled: true}
+                    ]
+                  } 
+                  value={[1, 2]} 
+                  isRequire={true}
+                />
+                <RadioGroup 
+                  name="testRadio" 
+                  prompt="输入项" 
+                  options={[{label: '选择项目0', value: 0}, {label: '选择项目1', value: 1}, {label: '选择项目2', value: 2}]} 
+                  value={2}
+                  disabled={true}
+                />
+                
+                {/* <RadioGroup prompt="输入项" isRequire={true}>
+                  <CheckBox type="checkbox" name="testCheckBox" prompt="选择项目" value="0"/>
+                  <CheckBox type="checkbox" name="testCheckBox" prompt="选择项目" value="1" disabled={true}/>
+                  <CheckBox type="checkbox" name="testCheckBox" prompt="选择项目" value="2" checked={true}/>
+                </RadioGroup>
+                <RadioGroup prompt="输入项">
+                  <CheckBox type="radio" name="testRadio" prompt="选择项目" value="0"/>
+                  <CheckBox type="radio" name="testRadio" prompt="选择项目" value="1" disabled={true}/>
+                  <CheckBox type="radio" name="testRadio" prompt="选择项目" value="2" checked={true}/>
+                </RadioGroup> */}
+                
+                <TextArea 
+                  prompt="输入项" 
+                  isRequire={true} 
+                  name="companyInfo" 
+                  value={this.state.companyInfo} 
+                  handler={this.handleChange}
+                />
+                <Select prompt="输入项" isRequire={true} disabled={false}>
+                  <Option name="请选择" value=""/>
+                  <Option name="选择项1" value="1"/>
+                  <Option name="选择项2" value="2"/>
+                  <Option name="选择项3" value="3"/>
+                </Select>
+                <ButtonGroup>
+                <Button type="btn-default" disabled={true}>取消</Button>
+                <Button type="btn-primary" handler={this.handleClick}>确认</Button>
+                </ButtonGroup>
+              </form>
+            </div>
         </div>
                
         );

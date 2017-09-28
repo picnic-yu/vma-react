@@ -1,12 +1,5 @@
 import Home from '../view/Home';
-import Login from '../view/auth/Login';
-// import Login from '../containers/Login';
-import Profile from '../view/Profile';
-import Company from '../view/Company';
-import Catalog from '../view/Catalog';
-import Goods from '../view/Goods';
-import Order from '../view/Order';
-import Storage from '../view/Storage';
+import * as View from '../view';
 
 /*
     A、菜单是路由的子集，一种用菜单组件呈现的路由交互组件
@@ -27,54 +20,6 @@ const permits = [
     }
 ];
 
-/* 
-const menues = [
-    {
-        menuID: 1,
-        name: '公司信息',
-        url: '/company',
-        children: [
-            {
-                menuID: 10,
-                name: '公司信息查询',
-                url: '/company/list',
-                children: []
-            },
-            {
-                menuID: 11,
-                name: '公司信息审核',
-                url: '/company/audit',
-                children: []
-            }
-            ]
-    },
-    {
-        menuID: 2,
-        name: '目录信息',
-        url: '/catalog',
-        children: []
-    },
-    {
-        menuID: 3,
-        name: '商品信息',
-        url: '/goods',
-        children: []
-    },
-    {
-        menuID: 4,
-        name: '订单信息',
-        url: '/order',
-        children: []
-    },
-    {
-        menuID: 5,
-        name: '仓储信息',
-        url: '/storage',
-        children: []
-    },
-];
- */
-
 const routes = [
     {
         path: '/',
@@ -83,42 +28,42 @@ const routes = [
     },
     {
         path: '/login',
-        component: Login,
+        component: View.Login,
         name: '登录'
     },
     {
         path: '/profile',
-        component: Profile,
+        component: View.Profile,
         name: '简介'
     },
     {
         path: '/company',
-        component: Company,
+        component: View.Company,
         name: '公司'
     },
     {
         path: '/company/list',
-        component: Company,
+        component: View.Company,
         name: '公司查询'
     },
     {
         path: '/company/audit',
-        component: Company,
+        component: View.Company,
         name: '公司审核'
     },
     {
         path: '/catalog',
-        component: Catalog,
+        component: View.Catalog,
         name: '目录'
     },
     {
         path: '/goods',
-        component: Goods,
+        component: View.Goods,
         name: '商品'
     },
     {
         path: '/order',
-        component: Order,
+        component: View.Order,
         name: '订单'
     },
     {

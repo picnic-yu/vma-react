@@ -1,4 +1,6 @@
 import * as React from 'react';
+import * as ClassName from 'classnames';
+
 interface Data {
     name?: string;
     value?: string;
@@ -33,12 +35,8 @@ class TextArea extends React.Component<Data> {
         }
     }
     render() {
-        let className = 'vma-form-item ';
-        if (this.props.isRequire) {
-            className += 'is-required';
-        }
         return (
-        <div className={className}>
+        <div className={ClassName('vma-form-item', {'is-required': this.props.isRequire})}>
             <label className="vma-form-label" style={{width: 80}}>{this.props.prompt}</label>
             <div className="vma-wapper" style={{marginLeft: 80}}>
                 <textarea 

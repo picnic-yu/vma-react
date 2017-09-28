@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ClassName from 'classnames';
 
 import CheckBox from './CheckBox';
 
@@ -14,7 +15,7 @@ interface RenderProps {
 interface RenderState {
     isRequire?: boolean;
     disabled?: boolean;
-    readOnlay?: boolean;    
+    readOnly?: boolean;    
 }
 
 interface DataState {
@@ -28,20 +29,12 @@ class RadioGroup extends React.Component<RenderProps & RenderState & DataState, 
         this.state = {
             isRequire: props.isRequire, 
             disabled: props.disabled, 
-            readOnlay: props.readOnlay, 
+            readOnly: props.readOnly, 
             value: props.value
         };
     }
 
-    handle = (name: string, value: string|number, checked: boolean) => {
-        this.setState({value});
-    }
-
     render() {
-        let className = 'vma-form-item ';
-        if (this.props.isRequire) {
-            className += 'is-required';
-        }
         let labelStyle = {
             width: '80px'
         };
@@ -56,15 +49,15 @@ class RadioGroup extends React.Component<RenderProps & RenderState & DataState, 
                 name={this.props.name} 
                 prompt={item.label} 
                 value={item.value} 
-                checked={this.state.value === item.value}
+                checked={this.checked(item)}
                 disabled={this.state.disabled}
-                handler={this.handle}
+                handler={this.watchValue}
             />;
         }
         );
         
         return (
-        <div className={className}>
+        <div className={ClassName('vma-form-item', {'is-required': this.props.isRequire})}>
             <label className="vma-form-label" style={labelStyle}>{this.props.prompt}</label>
             <div className="vma-wapper" style={wapperStyle}>
               {checkList}
@@ -74,6 +67,14 @@ class RadioGroup extends React.Component<RenderProps & RenderState & DataState, 
             </div>
          </div>
         );
+    }
+
+    private watchValue = (name: string, value: string|number, checked: boolean) => {
+        this.setState({value});
+    }
+
+    private checked(item: Pair): boolean | undefined {
+        return this.state.value === item.value;
     }
 }
 

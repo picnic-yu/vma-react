@@ -6,7 +6,7 @@ interface Pair {
     label: string;
     value: number|string;
     disabled?: boolean;
-    readOnlay?: boolean;    
+    readOnly?: boolean;    
 }
 interface RenderProps {
     prompt: string;
@@ -16,7 +16,7 @@ interface RenderProps {
 interface RenderState {
     isRequire?: boolean;
     disabled?: boolean;
-    readOnlay?: boolean;    
+    readOnly?: boolean;    
 }
 
 interface DataState {
@@ -30,7 +30,7 @@ class RadioGroup extends React.Component<RenderProps & RenderState & DataState, 
         this.state = {
             isRequire: props.isRequire, 
             disabled: props.disabled, 
-            readOnlay: props.readOnlay, 
+            readOnly: props.readOnly, 
             value: props.value
         };
     }
