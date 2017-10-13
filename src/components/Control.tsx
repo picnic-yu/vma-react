@@ -115,6 +115,7 @@ export class CheckBoxControl extends React.Component<CheckBoxGroupProps, CheckBo
     }
 
     stateChange(name: string, value: string | number, checked: boolean) {
+        // tslint:disable-next-line:no-console
         console.log(`name:${name} value:${value} checked:${checked} state:${JSON.stringify(this.state.value)}`);
         let result: Array<string | number> = [];
         if (checked) {
@@ -295,6 +296,8 @@ export class InputControl extends React.Component<InputProps, InputStates> imple
                     min={this.props.min}
                     max={this.props.max}
                     maxLength={this.props.maxLength}
+                    accept={this.props.accept}
+                    multiple={this.props.multiple}
                     watchValue={this.watchValue}
         />;
     }
@@ -363,15 +366,31 @@ export class Input extends React.Component<InputProps> {
 
     onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (this.props.type === 'radio' || this.props.type === 'checkbox') {
+            this.checked.value = event.target.checked;
             // tslint:disable-next-line:no-console
             console.log(this.props.value + ' is checked:' + event.target.checked);
-        }   
-        this.checked.value = event.target.checked;
-        this.setState({value: event.target.value}, () => {
-            if (this.props.watchValue && this.state.value !== undefined) {
-                this.props.watchValue(this.props.name || '', this.state.value, this.checked.value || false);
-            }    
-        });
+        }
+        let files: Array<File> = [];
+        if (this.props.type === 'file' && event.target.files !== null) {
+            for (let i = 0; i < event.target.files.length; i++) {
+                files.push(event.target.files.item(i));
+                // console.log(event.target.files.item(i));
+            }
+        }
+
+        if (this.props.type === 'file') {
+            this.setState({value: files}, () => {
+                if (this.props.watchValue && this.state.value !== undefined) {
+                    this.props.watchValue(this.props.name || '', this.state.value, this.checked.value || false);
+                }                    
+            });
+        } else {
+            this.setState({value: event.target.value}, () => {
+                if (this.props.watchValue && this.state.value !== undefined) {
+                    this.props.watchValue(this.props.name || '', this.state.value, this.checked.value || false);
+                }    
+            });    
+        }
     }
 
     onChangeTextArea = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -388,7 +407,9 @@ export class Input extends React.Component<InputProps> {
             case 'radio':
                 return this.renderByCheckedInput();     
             case 'textarea':
-                return this.renderForTextArea();       
+                return this.renderForTextArea();
+            case 'file':
+                return this.renderForFile();
             default:
                 return this.renderForInput();
         }
@@ -423,6 +444,27 @@ export class Input extends React.Component<InputProps> {
                 min={this.props.min}
                 max={this.props.max}
                 maxLength={this.props.maxLength}
+                onChange={this.onChange}
+            />
+        );
+
+    }
+
+    private renderForFile() {
+        return (
+            <input 
+                type={this.props.type} 
+                className="vma-input" 
+                placeholder={this.props.placeholder} 
+                name={name} 
+                value={this.props.value} 
+                disabled={this.props.disabled}
+                readOnly={this.props.readOnly}
+                min={this.props.min}
+                max={this.props.max}
+                maxLength={this.props.maxLength}
+                accept={this.props.accept}
+                multiple={this.props.multiple}
                 onChange={this.onChange}
             />
         );

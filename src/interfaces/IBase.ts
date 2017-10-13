@@ -11,6 +11,8 @@ export interface RenderProps {
     min?: number;
     max?: number;
     maxLength?: number;
+    accept?: string;
+    multiple?: boolean;
 }
 
 export interface RenderState {

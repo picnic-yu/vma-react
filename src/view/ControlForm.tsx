@@ -4,9 +4,15 @@ import { CheckBoxControl, RadioControl, InputControl } from '../components/Contr
 
 class Form extends React.Component {
 
-    observeForm = (name: string, value: string|number|Array<number|string>, checked: boolean) => {
+    observeForm = (name: string, value: string|number|Array<number|string|File|Array<File>>, checked: boolean) => {
       // tslint:disable-next-line:no-console
       console.log(name + ':' + value);
+      if (Array.isArray(value)) {
+        value.map(item => {
+          // tslint:disable-next-line:no-console
+          console.log(item);
+        });
+      }
     }
     
     render() {
@@ -104,6 +110,8 @@ class Form extends React.Component {
             placeholder="请选择文件" 
             required={true}
             labelWidth="100px"
+            accept=".jpg,.png"
+            multiple={true}
             watchValue={this.observeForm}
           />
           <InputControl 
