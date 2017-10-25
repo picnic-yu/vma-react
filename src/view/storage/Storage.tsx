@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Column, Grid } from '../../components/Grid';
 import { PageState, Paging } from '../../components/Paging';
-import { Input, FormItem } from '../../component/index';
+import { Input, FormItem, Button, ButtonGroup } from '../../components/index';
 
 interface Record {
     compID: number;
@@ -112,7 +112,12 @@ class Storage extends React.Component<{}, StorageState> {
                             <Input type="text" name="storageAddr" watchValue={this.watchValue}/>
                         </FormItem>
                     </div>
-                </form>
+                    <div className="pull-right">
+                        <ButtonGroup>
+                        <Button type="">查询</Button>
+                        <Button type="">清除</Button>
+                        </ButtonGroup>
+                    </div>                </form>
                 <Table columns={columns} rows={records} subject="test" />
                 <Paging {...page} style={{marginTop: '-20px'}} watchValue={this.watchValue}/>
             </div>

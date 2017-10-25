@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Button, Input, FormItem } from '../../component/index';
+import { Button, Input, FormItem } from '../../components/index';
 import * as AuthAction from '../../redux/actions/auth/AuthAction';
 // import IFormItemActions from '../../interfaces/IFormItemActions';
 

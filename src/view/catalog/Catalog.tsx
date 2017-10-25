@@ -5,7 +5,7 @@ import {
     RadioGroup, 
     Button, ButtonGroup,
     Select, Option
-} from '../../component/index';
+} from '../../components/index';
 
 class Catalog extends React.Component {
     state = {  };
