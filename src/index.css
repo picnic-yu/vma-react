@@ -1382,6 +1382,18 @@ th {
 .dialog-footer {
   padding: 14px 14px 14px;
 }
+
+.dialog-close {
+  padding: 3;
+  border: none;
+}
+
+.dialog-toolbar {
+  text-align: right;
+  width: 100%;
+  display: inline-block;
+}
+
 .dialog-large {
   width: 90%;
 }

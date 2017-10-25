@@ -1,10 +1,14 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
 import * as validator from 'validator';
-import { Handler, InputState } from './Base';
+import { Handler } from './Base';
 
 interface CheckState {
     checked: boolean;
+}
+
+interface InputState<T> {
+    value: T;
 }
 
 export type InputAttribute = React.InputHTMLAttributes<HTMLInputElement>;

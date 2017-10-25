@@ -1,27 +1,20 @@
 import * as React from 'react';
-interface Data {
-    type?: string;
-    name?: string;
-    value?: string;
-    prompt?: string;
-    placeholder?: string;
-    disabled?: boolean;
-    isRequire?: boolean;
+// import ClassNames from 'classnames';
+
+interface TagProps {
+    label: string;
     icon?: string;
-    handler?(): void;
 }
-class Tag extends React.Component<Data> {
+
+export class Tag extends React.Component<TagProps & React.HTMLAttributes<HTMLSpanElement>> {
     state = {  };
-    constructor(props: Data) {
-        super(props);
-    }
     render() {
         let className = '';
         if (this.props.icon) {
             className = `icon-${this.props.icon}`;
         }
         return (
-            <span className="tag">{this.props.prompt}
+            <span className="tag">{this.props.label}
                 {className.length > 0 &&
                 <i className={className}/>
                 }
@@ -29,5 +22,3 @@ class Tag extends React.Component<Data> {
         );
     }
 }
-
-export default (Tag);

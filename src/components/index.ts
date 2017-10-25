@@ -5,11 +5,13 @@ import { Radio, RadioGroup } from './Radio';
 import { CheckBox, CheckBoxGroup } from './CheckBox';
 import { Button, ButtonGroup } from './Button';
 import { Select, Option } from './Select';
+import { Tag } from './Tag';
 
 export { 
     FormItem, 
     Input, TextArea, 
     Radio, RadioGroup, CheckBox, CheckBoxGroup,
     Button, ButtonGroup,
-    Select, Option
+    Select, Option,
+    Tag
 };

@@ -1,43 +1,65 @@
 import * as React from 'react';
+import { Button, ButtonGroup } from './Button';
 
-class Dialog extends React.Component {
+interface DialogProps {
+    title?: string;
+    body?: React.ReactNode;
+    show?: boolean;
+}
+
+interface DialogState {
+    show?: boolean;
+    agree?: boolean;
+}
+class Dialog extends React.Component<DialogProps & React.HtmlHTMLAttributes<HTMLDivElement>, DialogState> {
+    state: DialogState;
+    constructor(props: DialogProps) {
+        super(props);
+        this.state = {show: true};
+    }
+
     render() {
-        const showStyle = {
-            display: 'none'
-        };
-
-        const closeStyle = {
-            padding: 3,
-            border: 'none'
-        };
-
-        const footerStyle = {
-            textAlign: 'right',
-            width: '100%',
-            display: 'inline-block'
-        };
-
+        console.log(JSON.stringify(this.state));
+        const { title = '温馨提示', body = ''} = this.props;
+        let { show }  = this.state; 
         return (
-            <div style={showStyle}>
+        show ? (
+        <div>
             <div className="modal"/>
-            <div className="dialog-wrapper">
-              <div className="dialog dialog-large">
-                <div className="dialog-header">
-                    <span>提示</span>
-                    <button className="btn pull-right" style={closeStyle}>&times;</button>
+                <div className="dialog-wrapper">
+                    <div className="dialog dialog-large">
+                        <div className="dialog-header">
+                            <span>{title}</span>
+                            <Button className="btn pull-right dialog-close" onClick={this.close}>&times;</Button>
+                        </div>
+                <div className="dialog-body">
+                    {body}
                 </div>
-                <div className="dialog-body">body</div>
                 <div className="dialog-footer">
-                  <span style={footerStyle}>
-                  <div className="btn-group">
-                    <button className="btn btn-default">取消</button><button className="btn btn-primary">确定</button>
-                  </div>
-                  </span>          
+                    <span className="dialog-toolbar">
+                        <ButtonGroup>
+                            <Button className="btn btn-default" onClick={this.close}>取消</Button>
+                            <Button className="btn btn-primary" onClick={this.agree}>确定</Button>
+                        </ButtonGroup>
+                    </span>          
                 </div>
               </div>
             </div>
-          </div>
-                );
+        </div>
+        ) : (
+            null
+        )
+        );
+    }
+
+    close = (event: React.MouseEvent<HTMLButtonElement>) => {
+        console.log('cancle');
+        this.setState({show: false, agree: false});
+    }
+
+    agree = (event: React.MouseEvent<HTMLButtonElement>) => {
+        console.log('agree');
+        this.setState({show: false, agree: true});
     }
 }
 

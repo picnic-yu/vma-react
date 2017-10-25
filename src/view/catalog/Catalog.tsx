@@ -4,7 +4,8 @@ import {
     TextArea, CheckBoxGroup, 
     RadioGroup, 
     Button, ButtonGroup,
-    Select, Option
+    Select, Option,
+    Tag
 } from '../../components/index';
 
 class Catalog extends React.Component {
@@ -113,6 +114,10 @@ class Catalog extends React.Component {
                             >
                                 <Option label="请选择" value=""/>
                             </Select>
+                        </FormItem>
+                        <FormItem>
+                            <Tag label="标签" icon="cross"/>
+                            <Tag label="标签1" />
                         </FormItem>
                         <FormItem>
                             <Button>按钮</Button>

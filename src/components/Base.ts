@@ -1,14 +1,3 @@
-export interface LabelProps {
-    label?: string;
-    width?: string;
-    required?: boolean;
-    readOnly?: boolean;
-}
-
-export interface InputState<T> {
-    value: T;
-}
-
 export interface Handler<T> {
     watchValue?: WatchValueHandle<T>;
     validator?: Validator;
