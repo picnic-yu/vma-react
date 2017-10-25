@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
-import Button from '../../components/Button';
-import Input from '../../components/Input';
+import { Button, Input, FormItem } from '../../component/index';
 import * as AuthAction from '../../redux/actions/auth/AuthAction';
 // import IFormItemActions from '../../interfaces/IFormItemActions';
 
@@ -40,25 +39,24 @@ export default class Login extends React.Component<AuthAction.AuthResp & AuthAct
         }
         return (
             <div className="col-offset-12 col-6" style={{marginTop: '10%'}}>
-                <Input 
-                    type="text" 
-                    prompt="用户名" 
-                    name="userName" 
-                    value={this.state.userName} 
-                    handler={this.handleChange}
-                />
-                <Input 
-                    type="password" 
-                    prompt="密码" 
-                    name="password" 
-                    value={this.state.password} 
-                    handler={this.handleChange}
-                />
+                <FormItem label="用户名">
+                    <Input 
+                        type="text" 
+                        name="userName" 
+                        value={this.state.userName} 
+                    />
+                </FormItem>
+                <FormItem label="密码">
+                    <Input 
+                        type="password" 
+                        name="password" 
+                        value={this.state.password} 
+                    />
+                </FormItem>
                 <div style={{marginLeft: 80}}>
                     <Button 
                         type="btn-primary" 
                         disabled={this.state.disable} 
-                        handler={this.handleClick}
                     >登录{this.props.token}
                     </Button>
                 </div>
