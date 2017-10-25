@@ -19,6 +19,7 @@ class Dialog extends React.Component<DialogProps & React.HtmlHTMLAttributes<HTML
     }
 
     render() {
+        // tslint:disable-next-line:no-console
         console.log(JSON.stringify(this.state));
         const { title = '温馨提示', body = ''} = this.props;
         let { show }  = this.state; 
@@ -53,11 +54,13 @@ class Dialog extends React.Component<DialogProps & React.HtmlHTMLAttributes<HTML
     }
 
     close = (event: React.MouseEvent<HTMLButtonElement>) => {
+        // tslint:disable-next-line:no-console
         console.log('cancle');
         this.setState({show: false, agree: false});
     }
 
     agree = (event: React.MouseEvent<HTMLButtonElement>) => {
+        // tslint:disable-next-line:no-console
         console.log('agree');
         this.setState({show: false, agree: true});
     }

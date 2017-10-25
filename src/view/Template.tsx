@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Root as AppState } from '../redux/state';
-import { login } from '../redux/thunk/auth';
-import { AuthReqByAccount } from '../redux/actions/auth/AuthAction';
+import * as AuthAction from '../redux/actions/auth/AuthAction';
 
 import { connect, MapStateToPropsParam, MapDispatchToPropsParam } from 'react-redux';
 
@@ -10,7 +9,7 @@ interface ViewProps {
 }
 
 interface ViewHandle {
-    login: (req: AuthReqByAccount) => void;
+    login: (req: AuthAction.AuthReqByAccount) => void;
 }
 
 const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (appState: AppState) => {
@@ -19,7 +18,7 @@ const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (appState: App
 
 const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispatch) => {
     return {
-        login: (req: AuthReqByAccount) => dispatch(login(req)),
+        login: (req: AuthAction.AuthReqByAccount) => dispatch(AuthAction.login(req)),
         token: (token: string) => dispatch({type: ''})
     };
 };

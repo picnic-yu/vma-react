@@ -4,7 +4,6 @@ import * as ClassName from 'classnames';
 import { Menu, MenuNode } from './Menu';
 import * as MenuAction from '../../redux/actions/menu/MenuAction';
 import * as ConfigAction from '../../redux/actions/config/ConfigAction';
-import { loadMenu } from '../../redux/thunk/menu';
 
 import { Root as AppState } from '../../redux/state';
 import { AuthReqByAccount } from '../../redux/actions/auth/AuthAction';
@@ -31,7 +30,7 @@ const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (appState: App
 
 const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispatch) => {
     return {
-        menuLoad: (token: string) => dispatch(loadMenu(token)),
+        menuLoad: (token: string) => dispatch(MenuAction.loadMenu(token)),
         refresh: (toggle: boolean) => dispatch(ConfigAction.toggleRefresh(toggle)),
     };
 };

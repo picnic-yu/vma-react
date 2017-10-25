@@ -61,6 +61,7 @@ export class FileUpLoad extends React.Component<FileUpLoadProps & React.InputHTM
         if (event.target.files !== null) {
             for (let i = 0; i < event.target.files.length; i++) {
                 files.push(event.target.files.item(i));
+                // tslint:disable-next-line:no-console
                 console.log(event.target.files.item(i));
             }
         }

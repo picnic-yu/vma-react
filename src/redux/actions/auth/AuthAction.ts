@@ -2,6 +2,12 @@ import { Action } from 'redux';
 
 import * as AuthType from '../types/AuthType';
 
+import { ThunkAction } from 'redux-thunk';
+import { Dispatch } from 'redux';
+import { Root as State } from '../../state/index';
+import IResponse from '../../../interfaces/IResponse';
+import { loadMenu } from '../menu/MenuAction';
+
 export interface AuthReqByAccount {
     userName: string;
     password: string;
@@ -29,24 +35,8 @@ export interface AuthAction<T> extends Action {
     payload: T;
 }
 
-export interface AuthAccountLoginAction extends AuthAction<AuthReqByAccount> {
-    type: AuthType.AUTH_LoginByAccount;
-}
-
-export interface AuthTokenLoginAction extends AuthAction<AuthReqByToken> {
-    type: AuthType.AUTH_LoginByToken;
-}
-
-export interface AuthLogoutAction extends AuthAction<AuthReqByToken> {
-    type: AuthType.AUTH_Logout;
-}
-
 export interface AuthNotifyAction extends AuthAction<AuthReqByToken> {
     type: AuthType.AUTH_Notify;
-}
-
-export interface PermitLoadAction extends AuthAction<AuthReqByToken> {
-    type: AuthType.AUTH_PermitLoad;
 }
 
 export interface PermitNotifyAction extends AuthAction<Array<Permit>> {
@@ -59,23 +49,9 @@ export interface AccountDispatch {
     // accountLogout: (req: AuthReqByToken) => AuthTokenLoginAction;
 }
 
-export function accountLogin(req: AuthReqByAccount): AuthAccountLoginAction {
-    return {
-        type: AuthType.authLogin,
-        payload: req
-    };
-}
-
 export function accountNotify(data: AuthResp): AuthNotifyAction {
     return {
         type: AuthType.authNotify,
-        payload: data
-    };
-}
-
-export function permitLoad(data: AuthReqByToken): PermitLoadAction {
-    return {
-        type: AuthType.permitLoad,
         payload: data
     };
 }
@@ -87,6 +63,78 @@ export function permitNotify(data: Array<Permit>): PermitNotifyAction {
     };
 }
 
-export type Action = AuthAccountLoginAction | AuthTokenLoginAction | 
-                     AuthLogoutAction | AuthNotifyAction | 
-                     PermitLoadAction | PermitNotifyAction;
+export type Action = AuthNotifyAction | PermitNotifyAction;
+
+export const login: (param: AuthReqByAccount) => ThunkAction<void, State, null> = (param: AuthReqByAccount) => {
+    return (dispatch: Dispatch<State>, getState: () => State) => {
+        fetch('/login.json', {mode: 'cors'}).then(response =>  {
+            response.json().then((data: IResponse<AuthResp>) => {
+                if (data.code === 0) {
+                    // tslint:disable-next-line:no-console
+                    console.log('登录:' + JSON.stringify(data));
+                    if (data.data) {
+                        dispatch(accountNotify(data.data));
+                        dispatch(loadMenu(data.data.token));
+                        dispatch(loadPermit(data.data.token));        
+                    }
+                }                          
+            }).catch(reason => {
+                // tslint:disable-next-line:no-console
+                console.log(reason);
+            });
+        }).catch(ex => {
+            // tslint:disable-next-line:no-console
+            console.log(ex);
+        });
+    };
+};
+
+export const logout: (req: AuthReqByToken) => ThunkAction<void, State, null> = (req: AuthReqByToken) => {
+    return (dispatch: Dispatch<State>, getState: () => State) => {
+        fetch(
+            '/logout.json', 
+            { 
+                method: 'POST', 
+                headers: {'token': req.token }, 
+                credentials: 'include'
+            }).then(response =>  {
+            response.json().then((data: IResponse<AuthResp>) => {
+                if (data.code === 0) {
+                    // tslint:disable-next-line:no-console
+                    console.log('登录:' + JSON.stringify(data));
+                    if (data.data) {
+                        dispatch(accountNotify(data.data));
+                    }
+                }                          
+            }).catch(reason => {
+                // tslint:disable-next-line:no-console
+                console.log(reason);
+            });
+        }).catch(ex => {
+            // tslint:disable-next-line:no-console
+            console.log(ex);
+        });
+    };
+};
+
+export const loadPermit: (token: string) => ThunkAction<void, State, null> = (token: string) => {
+    return (dispatch: Dispatch<State>, getState: () => State) => {
+        fetch('/permit.json', { method: 'GET', headers: {'token': token}, credentials: 'include'}).then(response =>  {
+            response.json().then((data: IResponse<Array<Permit>>) => {
+                if (data.code === 0) {
+                    // tslint:disable-next-line:no-console
+                    console.log('登录:' + JSON.stringify(data));
+                    if (data.data) {
+                        dispatch(permitNotify(data.data));
+                    }
+                }                          
+            }).catch(reason => {
+                // tslint:disable-next-line:no-console
+                console.log(reason);
+            });
+        }).catch(ex => {
+            // tslint:disable-next-line:no-console
+            console.log(ex);
+        });
+    };
+};

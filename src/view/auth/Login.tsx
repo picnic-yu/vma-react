@@ -5,7 +5,6 @@ import * as AuthAction from '../../redux/actions/auth/AuthAction';
 // import IFormItemActions from '../../interfaces/IFormItemActions';
 
 import { Root as AppState } from '../../redux/state';
-import { login } from '../../redux/thunk/auth';
 import { AuthReqByAccount } from '../../redux/actions/auth/AuthAction';
 
 import { connect, MapStateToPropsParam, MapDispatchToPropsParam } from 'react-redux';
@@ -26,7 +25,7 @@ const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (appState: App
 
 const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispatch) => {
     return {
-        loginByAccount: (req: AuthReqByAccount) => dispatch(login(req)),
+        loginByAccount: (req: AuthReqByAccount) => dispatch(AuthAction.login(req)),
     };
 };
 
