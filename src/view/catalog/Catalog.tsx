@@ -38,7 +38,7 @@ class Catalog extends React.Component {
                             </Input>
                         </FormItem>
                         <FormItem required={true} label="多行控件">
-                            <TextArea name="testControl7" placeholder="请输入" minLength={2} maxLength={10}/>
+                            <TextArea name="testControl7" placeholder="请输入" minLength={2} maxLength={10} value="我是描述"/>
                         </FormItem>
                         <FormItem label="多选框" required={true}>
                             <CheckBoxGroup
@@ -83,7 +83,7 @@ class Catalog extends React.Component {
                             />
                         </FormItem>
                         <FormItem label="文本输入" required={true}>
-                            <Input type="text" name="input1" placeholder="请输入公司名称" min={2}/>
+                            <Input type="text" name="input1" placeholder="请输入公司名称" min={2} value="中国"/>
                         </FormItem>
                         <FormItem label="邮箱输入" required={true}>
                             <Input type="email" name="input2" placeholder="请输入工作邮箱" min={2}/>

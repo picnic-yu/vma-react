@@ -1,19 +1,27 @@
 import * as React from 'react';
-import { TextAreaAttribute, Handler, InputState } from './Base';
+import { Handler } from './Base';
 
-export class TextArea extends React.Component<TextAreaAttribute & Handler<string>> {
-    state: InputState<string>;
+type TextAreaValueType = string | string[] | number;
+export interface TextAreaState {
+    value: TextAreaValueType;
+}
+
+export type TextAreaAttribute = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+
+export class TextArea extends React.Component<TextAreaAttribute & Handler<TextAreaValueType>, TextAreaState> {
+    state: TextAreaState;
     errorMsg: string = '请提供数据';
 
     constructor(props: TextAreaAttribute) {
         super(props);
+        this.state = {value: props.value || ''};
     }
     render() {
         // tslint:disable-next-line:no-shadowed-variable
         let { className= 'vma-area', watchValue, onChange, validator, ...others} = this.props;
         onChange = this.onChange;
         return (
-            <textarea className={className} {...others} onChange={onChange}/>
+            <textarea className={className} {...others} onChange={onChange} value={this.state.value}/>
         );
     }
 

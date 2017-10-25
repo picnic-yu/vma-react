@@ -1,8 +1,10 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
-import { InputAttribute, Validator } from './Base';
+import { Validator } from './Base';
 
 type RadioValueType = string|number;
+
+export type RadioAttribute = React.InputHTMLAttributes<HTMLInputElement>;
 
 interface RadioOption {
     label: string;
@@ -24,7 +26,7 @@ interface RadioState {
     value: RadioValueType | undefined;    
 }
 
-export class Radio extends React.Component<RadioOption & InputAttribute> {
+export class Radio extends React.Component<RadioOption & RadioAttribute> {
     render() {
         let { label, value, disabled, checked, onChange} = this.props;
         return (

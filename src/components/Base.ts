@@ -19,6 +19,3 @@ export type Validator = (
     valid: boolean, errorMsg: 
     string) => void;
 export type WatchValueHandle<T> = (name: string, value: T, checked: boolean) => void;
-
-export type InputAttribute = React.InputHTMLAttributes<HTMLInputElement>;
-export type TextAreaAttribute = React.TextareaHTMLAttributes<HTMLTextAreaElement>;

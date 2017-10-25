@@ -22,8 +22,8 @@ export default class Login extends React.Component<AuthAction.AuthResp & AuthAct
         }
     }
 
-    handleClick = (e: MouseEvent) => {
-        e.preventDefault();
+    handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        // e.preventDefault();
         let authRequest: AuthAction.AuthReqByAccount = {userName: this.state.userName, password: this.state.password};
         this.props.accountLogin(authRequest);
     }
@@ -44,22 +44,25 @@ export default class Login extends React.Component<AuthAction.AuthResp & AuthAct
                         type="text" 
                         name="userName" 
                         value={this.state.userName} 
+                        watchValue={this.handleChange}
                     />
                 </FormItem>
-                <FormItem label="密码">
+                <FormItem>
                     <Input 
                         type="password" 
                         name="password" 
                         value={this.state.password} 
+                        watchValue={this.handleChange}
                     />
                 </FormItem>
-                <div style={{marginLeft: 80}}>
+                <FormItem>
                     <Button 
                         type="btn-primary" 
                         disabled={this.state.disable} 
+                        onClick={this.handleClick}
                     >登录{this.props.token}
                     </Button>
-                </div>
+                </FormItem>
             </div>
         );
     }    

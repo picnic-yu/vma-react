@@ -1,8 +1,10 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
-import { InputAttribute, Validator } from './Base';
+import { Validator } from './Base';
 
 type CheckBoxValueType = string|number;
+export type CheckBoxAttribute = React.InputHTMLAttributes<HTMLInputElement>;
+
 interface CheckBoxOption {
     label: string;
     value: CheckBoxValueType;
@@ -21,7 +23,7 @@ interface CheckBoxState {
     value: Array<CheckBoxValueType>;    
 }
 
-export class CheckBox extends React.Component<CheckBoxOption & InputAttribute> {
+export class CheckBox extends React.Component<CheckBoxOption & CheckBoxAttribute> {
     render() {
         let { label, value, disabled, checked, onChange} = this.props;
         return (

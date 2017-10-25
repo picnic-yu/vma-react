@@ -1,11 +1,13 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
 import * as validator from 'validator';
-import { InputAttribute, Handler, InputState } from './Base';
+import { Handler, InputState } from './Base';
 
 interface CheckState {
     checked: boolean;
 }
+
+export type InputAttribute = React.InputHTMLAttributes<HTMLInputElement>;
 
 export class Input extends React.Component<
     InputAttribute & Handler<string|string[]|number|undefined|File>> {
@@ -20,7 +22,8 @@ export class Input extends React.Component<
             console.warn(`using CheckBox or Radio instead of ${this.props.type}`);
         }
         // tslint:disable-next-line:no-shadowed-variable
-        let { type, className= 'vma-input', children, watchValue, checked, onChange, validator, ...others} = this.props;
+        // tslint:disable-next-line:max-line-length
+        let { type, className= 'vma-input', value, children, watchValue, checked, onChange, validator, ...others} = this.props;
         onChange = this.onChange;
         return (
             type === 'radio' || type === 'checkbox' ? (
@@ -29,7 +32,13 @@ export class Input extends React.Component<
                     <span>{children}</span>
                 </label>
             ) : (
-                <input type={type} className={className} {...others} onChange={onChange}/>                
+                <input 
+                    type={type} 
+                    className={className} 
+                    {...others} 
+                    onChange={onChange} 
+                    value={this.state.value}
+                />                
             )
         );
     }
@@ -46,6 +55,7 @@ export class Input extends React.Component<
                 result = result && this.state.value === undefined;
                 break;
             case 'text':
+            case 'password':
                 result = this.validText();
                 break;
             case 'number':

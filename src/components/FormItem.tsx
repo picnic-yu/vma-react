@@ -33,7 +33,12 @@ export class FormItem extends React.Component<LabelProps> {
         });
 
         return (
-        <div className={ClassName('vma-form-item', {'is-required': this.props.required}, {'vma-form-item-error': !this.state.value})}>
+        <div 
+            className={ClassName(
+                'vma-form-item', 
+                {'is-required': this.props.required}, 
+                {'vma-form-item-error': !this.state.value})}
+        >
             <label className="vma-form-label" style={{width}}>{label}</label>
             <div className={ClassName('vma-wapper')} style={{marginLeft}}>
               {children}
@@ -41,7 +46,7 @@ export class FormItem extends React.Component<LabelProps> {
               <div className="vma-form-item-error">{this.errorMsg}</div>
               }
             </div>
-         </div>
+        </div>
         );
     }
 
