@@ -1,33 +1,42 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
-import { connect, Dispatch } from 'react-redux';
 // import { menues } from '../../router/index';
 import { Menu, MenuNode } from './Menu';
 import * as MenuAction from '../../redux/actions/menu/MenuAction';
 import * as ConfigAction from '../../redux/actions/config/ConfigAction';
-import * as State from '../../redux/state';
+import { loadMenu } from '../../redux/thunk/menu';
 
-export function mapStateToProps(state: State.Root) {
-    return {
-        token: state.auth.token,
-        menu: state.menu
-    };
-}
+import { Root as AppState } from '../../redux/state';
+import { AuthReqByAccount } from '../../redux/actions/auth/AuthAction';
 
-interface SiderProps {
+import { connect, MapStateToPropsParam, MapDispatchToPropsParam } from 'react-redux';
+
+interface ViewProps {
     token: string;
     menu: Array<MenuAction.Menu>;
 }
-
-// tslint:disable-next-line:max-line-length
-export function mapDispatchToProps(dispatch: Dispatch<MenuAction.Menu>): MenuAction.MenuDispatch & ConfigAction.ConfigDispatch {
-    return {
-        menuLoad: (token: string) => dispatch(MenuAction.menuLoad(token)),
-        refresh: (toggle: boolean) => dispatch(ConfigAction.toggleRefresh(toggle)),
-    };
+    
+interface ViewHandle {
+    loginByAccount: (req: AuthReqByAccount) => void;
+    menuLoad: (token: string) => void;
+    refresh: (toggle: boolean) => void;
 }
 
-class Sider extends React.Component<SiderProps & MenuAction.MenuDispatch & ConfigAction.ConfigDispatch> {
+const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (appState: AppState) => {
+    return {
+        token: appState.auth.token,
+        menu: appState.menu
+    };
+};
+
+const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispatch) => {
+    return {
+        menuLoad: (token: string) => dispatch(loadMenu(token)),
+        refresh: (toggle: boolean) => dispatch(ConfigAction.toggleRefresh(toggle)),
+    };
+};
+
+class Sider extends React.Component<ViewProps & ViewHandle & ConfigAction.ConfigDispatch> {
     // props: Array<MenuData>;
     state = { toggle: false, activeMenuID: 0, curDeep: 0 };
 
@@ -86,5 +95,4 @@ class Sider extends React.Component<SiderProps & MenuAction.MenuDispatch & Confi
     }
 }
 
-// export default Sider;
-export default connect<{}, {}, {}>(mapStateToProps, mapDispatchToProps)(Sider);
+export default connect<ViewProps, ViewHandle, {}>(mapStateToPropsParam, mapDispatchToPropsParam)(Sider);

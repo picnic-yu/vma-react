@@ -4,7 +4,33 @@ import { Button, Input, FormItem } from '../../components/index';
 import * as AuthAction from '../../redux/actions/auth/AuthAction';
 // import IFormItemActions from '../../interfaces/IFormItemActions';
 
-export default class Login extends React.Component<AuthAction.AuthResp & AuthAction.AccountDispatch> {
+import { Root as AppState } from '../../redux/state';
+import { login } from '../../redux/thunk/auth';
+import { AuthReqByAccount } from '../../redux/actions/auth/AuthAction';
+
+import { connect, MapStateToPropsParam, MapDispatchToPropsParam } from 'react-redux';
+
+interface ViewProps {
+    token: string;
+}
+    
+interface ViewHandle {
+    loginByAccount: (req: AuthReqByAccount) => void;
+}
+
+const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (appState: AppState) => {
+    return {
+        token: appState.auth.token
+    };
+};
+
+const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispatch) => {
+    return {
+        loginByAccount: (req: AuthReqByAccount) => dispatch(login(req)),
+    };
+};
+
+class Login extends React.Component<ViewProps & ViewHandle> {
     state = {userName: '', password: '', disable: true};
     handleChange = (name: string, value: string|number) => {
         if (name.length !== 0) {
@@ -25,7 +51,7 @@ export default class Login extends React.Component<AuthAction.AuthResp & AuthAct
     handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         // e.preventDefault();
         let authRequest: AuthAction.AuthReqByAccount = {userName: this.state.userName, password: this.state.password};
-        this.props.accountLogin(authRequest);
+        this.props.loginByAccount(authRequest);
     }
 
     render() {
@@ -67,3 +93,5 @@ export default class Login extends React.Component<AuthAction.AuthResp & AuthAct
         );
     }    
 }
+
+export default connect<ViewProps, ViewHandle, {}>(mapStateToPropsParam, mapDispatchToPropsParam)(Login);

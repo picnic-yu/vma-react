@@ -1,9 +1,6 @@
 import { Action } from 'redux';
 
 import * as AuthType from '../types/AuthType';
-// import IFormItemStates from '../../../interfaces/IFormItemStates';
-// import IRequest from '../../../interfaces/IRequest';
-// import IResponse from '../../../interfaces/IResponse';
 
 export interface AuthReqByAccount {
     userName: string;
