@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
-import * as IBase from '../interfaces/IBase';
+import * as Base from '../components/Base';
 
 export interface PageProps {
     curPage?: number;
@@ -16,7 +16,7 @@ export interface PageState {
     curPage: number;
 }
 
-export class Paging extends React.Component<PageProps & RenderProps & IBase.Handler<number>, PageState> {
+export class Paging extends React.Component<PageProps & RenderProps & Base.Handler<number>, PageState> {
     // static defaultProps: PageProps;
     static defaultProps = {
         curPage: 1,
@@ -25,7 +25,7 @@ export class Paging extends React.Component<PageProps & RenderProps & IBase.Hand
     };
 
     state: PageState;
-    constructor(props: PageProps & RenderProps & IBase.Handler<number>) {
+    constructor(props: PageProps & RenderProps & Base.Handler<number>) {
         super(props);
         this.state = {curPage: this.props.curPage ? this.props.curPage : Paging.defaultProps.curPage};
     }
