@@ -1,5 +1,9 @@
 import * as React from 'react';
 import { Column, Grid } from '../../components/Grid';
+import { PageState, Paging } from '../../components/Paging';
+import { InputControl } from '../../components/Control';
+import Button from '../../components/Button';
+import ButtonGroup from '../../components/ButtonGroup';
 
 interface Record {
     compID: number;
@@ -20,7 +24,7 @@ const columns: Array<Column<Record>> = [
         title: '仓库名称',
         order: true,
         sort: (first: Record, second: Record) => {
-            return first.storageName.localeCompare(second.storageName);
+            return second.storageName.localeCompare(first.storageName);
         }
     },
     {
@@ -33,7 +37,7 @@ const columns: Array<Column<Record>> = [
         title: '归属市',
         order: true,
         sort: (first: Record, second: Record) => {
-            return first.storageName.localeCompare(second.storageName);
+            return second.storageName.localeCompare(first.storageName);
         }
     },
     {
@@ -74,15 +78,47 @@ const records = [
     }
 ];
 
+const page = {
+    curPage: 1,
+    total: 4,
+    pageSize: 10
+};
+
+interface Query {
+    storageName?: string;
+    storageAddr?: string;
+}
+
+type StorageState = Query | PageState;
+
 class Table extends Grid<Record> {}
 
-class Storage extends React.Component {
-    state = {  };
+class Storage extends React.Component<{}, StorageState> {
+    state: StorageState;
+
+    watchValue = (name: string, value: string|number) => {
+        this.setState({[name]: value});
+    }
     render() {
         return (
             <div>
                 <p>storage infor</p>
+                <form className="row">
+                    <div className="col-12">
+                    <InputControl type="text" labelName="仓库名称" name="storageName" watchValue={this.watchValue}/>
+                    </div>
+                    <div className="col-12">
+                    <InputControl type="text" labelName="仓库地址" name="storageAddr" watchValue={this.watchValue}/>
+                    </div>
+                    <div className="pull-right">
+                        <ButtonGroup>
+                        <Button type="">查询</Button>
+                        <Button type="">清除</Button>
+                        </ButtonGroup>
+                    </div>
+                </form>
                 <Table columns={columns} rows={records} subject="test" />
+                <Paging {...page} style={{marginTop: '-20px'}} watchValue={this.watchValue}/>
             </div>
         );
     }

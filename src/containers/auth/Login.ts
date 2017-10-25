@@ -2,6 +2,7 @@ import { connect, Dispatch } from 'react-redux';
 import * as AuthAction from '../../redux/actions/auth/AuthAction';
 import Login from '../../view/auth/Login';
 import * as State from '../../redux/state';
+// import { login } from '../../redux/thunk/auth';
 
 /* 
 mapStateToProps原型，TStteProps是Presentational Component的props的定义,state: any是redux的全部状态树

@@ -30,7 +30,6 @@ export class Grid<T> extends React.Component<GridProps<T>, GridState<T>> {
     }
 
     render() {
-        console.log(this.state);
         let header = this.genHeader();
         let records = this.genRecorders();
         return (
@@ -55,11 +54,21 @@ export class Grid<T> extends React.Component<GridProps<T>, GridState<T>> {
     genHeader(): JSX.Element[] {
         return this.props.columns.map((item, index) => {
             return (
-                <th key={item.key} className={ClassName({'sort': item.order}, {'active': this.state && this.state.orderBy === item})} onClickCapture={this.sortRecord.bind(this, item)}>
+                <th 
+                    key={item.key} 
+                    className={ClassName(
+                                {'sort': item.order}, 
+                                {'active': this.state && this.state.orderBy === item}
+                    )} 
+                    onClickCapture={this.sortRecord.bind(this, item)}
+                >
                     {item.title}
-                    <span className={ClassName({'gridSort': item.order}, 
-                                               {'asc': item.order && this.state && this.state.order === 'asc'},
-                                               {'dsc': item.order && this.state && this.state.order === 'desc'})} 
+                    <span 
+                        className={ClassName(
+                            {'gridSort': item.order}, 
+                            {'asc': item.order && this.state && this.state.order === 'asc'},
+                            {'dsc': item.order && this.state && this.state.order === 'desc'}
+                        )} 
                     />
                 </th>);
         });

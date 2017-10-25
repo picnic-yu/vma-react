@@ -21,7 +21,7 @@ class Form extends React.Component {
     };
     return (
       <div>
-        <h3 style={classStyle}>新版表单类</h3>
+        <h3 style={classStyle}>新版V1表单类</h3>
         <form className="col-12 col-offset-6">
           <CheckBoxControl 
             type="checkbox"

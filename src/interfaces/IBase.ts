@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 export interface RenderProps {
     type: string;
     className?: string;
@@ -44,8 +46,6 @@ export interface DataRange<T> {
 export interface Handler<T> {
     watchValue?: WatchValueHandle<T>;
 }
-
-import * as React from 'react';
 
 export type WatchValueHandle<T> = (name: string, value: T, checked: boolean) => void;
 export type OnChangehandle = React.ChangeEventHandler<HTMLInputElement>;

@@ -10,46 +10,6 @@ import {
     Pair, DataStates
 } from '../interfaces/IFormItem';
 
-/*
-export interface Process {
-    stateChange(name: string, value: string | number, checked: boolean): void;
-    genChildNode(): (JSX.Element | JSX.Element[]);
-    validator(): boolean;
-}
-
-export function hoc<T>(component: React.Component<FormItem.InputProps<T>>, process: Process) {
-    return class extends React.Component<FormItem.InputProps<T>> {
-        state: FormItem.DataStates<T>;
-        constructor(props: FormItem.InputProps<T>) {
-            super(props);
-            this.state = {value: props.value};
-        }
-        
-        render() {
-            let labelStyle = {
-                width: this.props.labelWidth || '80px'
-            };
-            let wapperStyle = {
-                marginLeft: this.props.labelWidth || '80px'
-            };
-            const checkList = process.genChildNode();
-            
-            return (
-            <div className={ClassName('vma-form-item', {'is-required': this.props.required})}>
-                <label className="vma-form-label" style={labelStyle}>{this.props.labelName}</label>
-                <div className="vma-wapper" style={wapperStyle}>
-                  {checkList}
-                  {process.validator() && 
-                  <div className="vma-form-item-error">请选择项目</div>
-                  }
-                </div>
-             </div>
-            );
-        }
-    };
-}
-*/   
-
 interface ControlIF {
     stateChange(name: string, value: string | number, checked: boolean): void;
     genChildNode(): (JSX.Element | JSX.Element[]);
