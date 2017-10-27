@@ -17,6 +17,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
   "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
   SimSun, sans-serif;
+  
   font-size: 13px;
   color: #393939;
   line-height: 1.5;
@@ -1541,4 +1542,29 @@ th {
 
 .vma-upload-item-action:hover span {
   display: inline-block;
+}
+
+.vma-menu {
+  line-height: 36px;
+  /* background-color: black; */
+  /* border: 1px solid #d9d9d9; */
+  
+}
+
+.vma-menu>li, .vma-menu-item>li {
+  /* position: relative; */
+}
+
+.vma-menu-item, .vma-menu-node {
+  /* padding: 0 28px; */
+  cursor: pointer;
+}
+
+.vma-menu-item:hover, .vma-menu-title:hover {
+  color: #108ee9;
+}
+
+.vma-menu-item-active {
+  color: #108ee9;
+  background-color: #ecf6fd;
 }
