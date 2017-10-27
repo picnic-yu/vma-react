@@ -14,6 +14,7 @@ import thunk from 'redux-thunk';
 
 import * as State from './redux/state';
 import * as Reducers from './redux';
+import Demo from './Demo';
 
 const store = createStore<State.Root>(Reducers.reducers, Reducers.initState, applyMiddleware(thunk));
 // tslint:disable-next-line:max-line-length
@@ -26,6 +27,7 @@ ReactDOM.render(
       {(store.getState().auth.token || '').length === 0 &&
         <Route path="/login" component={Login}/>
       }
+      <Route path="/demo" component={Demo}/>
       <Route 
         path="/" 
         render={(props) => (

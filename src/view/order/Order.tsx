@@ -15,7 +15,7 @@ class Order extends React.Component {
             <div>
                 <p>order infor</p>
                 <Dialog/>
-                <FileUpLoad files={files} multiple={true} accept=".jpg,.gif,.png"/>
+                <FileUpLoad files={files} multiple={true} accept="image/jpg, image/gif, image/png" />
             </div>
         );
     }

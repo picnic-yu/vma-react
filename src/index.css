@@ -205,7 +205,7 @@ li {
 }
 
 .drop-menu > li > a:hover {
-  font-weight: bold;
+  /* font-weight: bold; */
   color: #2b7dbc;
   background-color: #f2f2f2;
   text-decoration: none;
@@ -398,7 +398,7 @@ li {
   
   /* 设置当前激活或者鼠标悬浮时一级菜单的字体、底色、颜色 */
   .menu > li.active > a, .menu > li > a:hover, .menu > li.active > span, .menu > li > span:hover, .menu > li > a.active {
-    font-weight: bold;
+    /* font-weight: bold; */
     color: #2b7dbc;
     background-color: #fff;
   }
@@ -431,7 +431,7 @@ li {
   
   /* 设置当前激活或者鼠标悬浮时二级菜单的字体、底色、颜色 */
   .sub-menu > li.active > a, .sub-menu > li > a:hover {
-    font-weight: bold;
+    /* font-weight: bold; */
     color: #2b7dbc;
     background-color: #fff;
   }
