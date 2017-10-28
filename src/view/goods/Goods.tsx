@@ -1,9 +1,11 @@
 import * as React from 'react';
 import Panel from '../../components/Panel';
-import { SiderMenu }  from '../../components/Menu';
+import { RouteMenu }  from '../../components/Menu';
+import { ContextMenuNode, DropDownMenu } from '../../components/DropDownMenu';
+import { Button } from '../../components/Button';
+// import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 class Goods extends React.Component {
-    state = {  };
     render() {
         const menus = {
             name: '菜单1',
@@ -28,15 +30,31 @@ class Goods extends React.Component {
                 }
             ]
         };
+
+        const contextMenu = {
+            name: '上下文菜单',
+            items: [
+                {name: '菜单1', url: '/company'},
+                {name: '菜单2', url: '/catalog'},
+                {name: '菜单3', url: '/order'}
+            ]
+        };
         return (
             <div>
                 <p>goods infor</p>
                 <Panel/>
                 <div className="col-8" style={{border: '1px solid #e9e9e9'}}>
-                    <SiderMenu {...menus}/>
+                    <RouteMenu {...menus}/>
                 </div>
+                <DropDownMenu {...contextMenu} onClick={this.contextMenu}>
+                    <Button>上下文</Button>
+                </DropDownMenu>
             </div>
         );
+    }
+
+    contextMenu = (contextMenu: ContextMenuNode) => {
+        console.log(JSON.stringify(contextMenu));
     }
 }
 

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 interface MenuNode {
     name: string;
@@ -24,9 +25,9 @@ interface SideMenuState {
     activeMenu?: string;
 }
 
-export class SiderMenu extends React.Component<MenuNode, SideMenuState> {
+class SiderMenu extends React.Component<MenuNode & RouteComponentProps<{}>, SideMenuState> {
     state: SideMenuState;
-    constructor(props: MenuNode) {
+    constructor(props: MenuNode & RouteComponentProps<{}>) {
         super(props);
         this.state = {marks: this.marks('', this.props.items)};
     }
@@ -40,7 +41,9 @@ export class SiderMenu extends React.Component<MenuNode, SideMenuState> {
         if (isMenuTitle) {
             this.setState({isMenuTitle: isMenuTitle, curMark: curMark});            
         } else {
-            this.setState({isMenuTitle: isMenuTitle, curMark: curMark, activeMenu: curMark});            
+            this.setState({isMenuTitle: isMenuTitle, curMark: curMark, activeMenu: curMark}, () => {
+                this.props.history.push('/company');
+            });            
         }
     }
 
@@ -61,6 +64,8 @@ export class SiderMenu extends React.Component<MenuNode, SideMenuState> {
     }
 }
 
+export const RouteMenu = withRouter<MenuNode>(SiderMenu);
+
 interface MenuState {
     show: boolean;
 }
@@ -74,6 +79,7 @@ export class Menu extends React.Component<MenuProps, MenuState> {
                     items.map((item, index) => {
                         let key = item.mark;
                         if (item.items !== undefined) {
+                            let toggle = this.toggle(key);
                             return (
                                 <li className="vma-menu-node" key={key} onClick={e => this.selectedMenu(e, true, key)}>
                                     <div 
@@ -81,8 +87,13 @@ export class Menu extends React.Component<MenuProps, MenuState> {
                                         style={{paddingLeft: `${this.indent(key)}px`}}
                                     >
                                         {item.name}
+                                        <i 
+                                            className={ClassName(
+                                                'arrow', 
+                                                toggle ? 'icon-circle-down' : 'icon-circle-right')}
+                                        />                    
                                     </div>
-                                    {this.toggle(key) &&
+                                    {toggle &&
                                         <Menu 
                                             {...item} 
                                             mark={key} 
@@ -118,6 +129,11 @@ export class Menu extends React.Component<MenuProps, MenuState> {
         result = this.path(mark);
         if (result && this.state.show === true) {
             result = false;
+        }
+        if (mark !== undefined && this.props.activeMenu !== undefined) {
+            if (this.props.activeMenu.startsWith(mark)) {
+                result = true;
+            }
         }
         return result;
     }

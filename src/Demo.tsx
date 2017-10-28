@@ -20,6 +20,8 @@ export default class Demo extends React.Component {
             <li><a href="#">菜单</a></li>
             <li><a href="#">菜单</a></li>
             <li><a href="#">菜单</a></li>
-        </ul></div></div>);
+        </ul>
+        <div className="content">动画效果</div>
+        </div></div>);
     }
 }
