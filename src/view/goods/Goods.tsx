@@ -10,8 +10,9 @@ class Goods extends React.Component {
         const menus = {
             name: '菜单1',
             items: [
-                { name: '菜单1.1'},
+                { name: '菜单1.1', disabled: true},
                 { name: '菜单1.2',
+                  disabled: true,
                     items: [
                     {name: '菜单1.2.1',
                     items: [
@@ -34,7 +35,7 @@ class Goods extends React.Component {
         const contextMenu = {
             name: '上下文菜单',
             items: [
-                {name: '菜单1', url: '/company'},
+                {name: '菜单1', url: '/company', disabled: true},
                 {name: '菜单2', url: '/catalog'},
                 {name: '菜单3', url: '/order'}
             ]

@@ -5,13 +5,19 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 interface MenuNode {
     name: string;
     items?: Array<MenuNode>;
+    disabled?: boolean;
     mark?: string;
 }
 
+interface CloneNode {
+    marks: Array<string>;
+    items: Array<MenuNode>;
+}
 interface MenuProps {
     name: string;
     items?: Array<MenuNode>;
     mark?: string;
+    disabled?: boolean;
     notify?: (isMenuTitle: boolean, curMark?: string) => void;
     isMenuTitle?: boolean;
     curMark?: string;
@@ -19,6 +25,7 @@ interface MenuProps {
 }
 
 interface SideMenuState {
+    items?: Array<MenuNode>;
     marks: Array<string>;
     isMenuTitle?: boolean;
     curMark?: string;
@@ -29,12 +36,12 @@ class SiderMenu extends React.Component<MenuNode & RouteComponentProps<{}>, Side
     state: SideMenuState;
     constructor(props: MenuNode & RouteComponentProps<{}>) {
         super(props);
-        this.state = {marks: this.marks('', this.props.items)};
+        this.state = {...this.marks('', this.props.items)};
     }
 
     render() {
-        let { mark= '', ...others} = this.props;
-        return <Menu mark={mark} {...others} {...this.state} notify={this.notify}/>;
+        let { mark= '', ...others} = {...this.props, ...this.state};
+        return <Menu mark={mark} {...others} notify={this.notify}/>;
     }
 
     notify = (isMenuTitle: boolean, curMark?: string) => {
@@ -47,8 +54,9 @@ class SiderMenu extends React.Component<MenuNode & RouteComponentProps<{}>, Side
         }
     }
 
-    private marks(parentMark: string, items?: Array<MenuNode>): Array<string> {
+    private marks(parentMark: string, items?: Array<MenuNode>): CloneNode {
         let marks: Array<string> = [];
+        let root: Array<MenuNode> = [];
         if (items !== undefined) {
             items.forEach((item, index) => {
                 let mark: string = parentMark === '' ? `${index}` : `${parentMark}.${index}`;
@@ -56,11 +64,12 @@ class SiderMenu extends React.Component<MenuNode & RouteComponentProps<{}>, Side
                 marks.push(mark);
                 if (item.items !== undefined) {
                     let childs = this.marks(mark, item.items);
-                    marks = [...marks, ...childs];
+                    marks = [...marks, ...childs.marks];
                 }
+                root.push(Object.assign({}, item));
             });
         }
-        return marks;
+        return {marks, items: root};
     }
 }
 
@@ -75,15 +84,20 @@ export class Menu extends React.Component<MenuProps, MenuState> {
         let { items } = this.props;
         return (
             <ul className="vma-menu">
-                {items !== undefined &&
+                {items !== undefined &&  
                     items.map((item, index) => {
                         let key = item.mark;
+                        console.log(`name:${item.name} key=${key}`);
                         if (item.items !== undefined) {
                             let toggle = this.toggle(key);
                             return (
-                                <li className="vma-menu-node" key={key} onClick={e => this.selectedMenu(e, true, key)}>
+                                <li 
+                                    key={key} 
+                                    className={ClassName('vma-menu-node', {'vma-menu-item-disabled': item.disabled})} 
+                                    onClick={item.disabled === true ? undefined : e => this.selectedMenu(e, true, key)}
+                                >
                                     <div 
-                                        className="vma-menu-title" 
+                                        className={ClassName('vma-menu-title')} 
                                         style={{paddingLeft: `${this.indent(key)}px`}}
                                     >
                                         {item.name}
@@ -93,7 +107,7 @@ export class Menu extends React.Component<MenuProps, MenuState> {
                                                 toggle ? 'icon-circle-down' : 'icon-circle-right')}
                                         />                    
                                     </div>
-                                    {toggle &&
+                                    {toggle && 
                                         <Menu 
                                             {...item} 
                                             mark={key} 
@@ -109,11 +123,12 @@ export class Menu extends React.Component<MenuProps, MenuState> {
                                 <li 
                                     className={ClassName(
                                         'vma-menu-item', 
-                                        {'vma-menu-item-active': this.isActive(key)}
+                                        {'vma-menu-item-active': this.isActive(key)},
+                                        {'vma-menu-item-disabled': item.disabled}
                                     )} 
                                     key={item.mark}
                                     style={{paddingLeft: `${this.indent(key)}px`}} 
-                                    onClick={e => this.selectedMenu(e, false, key)}
+                                    onClick={item.disabled === true ? undefined : e => this.selectedMenu(e, false, key)}
                                 >
                                     <div>{item.name}</div>
                                 </li>);                            

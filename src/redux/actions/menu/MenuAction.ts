@@ -36,7 +36,7 @@ export const loadMenu: (token: string) => ThunkAction<void, State, null> = (toke
             response.json().then((data: IResponse<Array<Menu>>) => {
                 if (data.code === 0) {
                     // tslint:disable-next-line:no-console
-                    console.log('登录:' + JSON.stringify(data));
+                    console.log('装载菜单:' + JSON.stringify(data));
                     if (data.data) {
                         dispatch(menuNotify(data.data));
                     }

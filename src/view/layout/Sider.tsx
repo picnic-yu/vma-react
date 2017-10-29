@@ -45,8 +45,6 @@ class Sider extends React.Component<ViewProps & ViewHandle & ConfigAction.Config
 
     fold = (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
-        // tslint:disable-next-line:no-console
-        console.log('fold');
         this.setState({toggle: !this.state.toggle});
         this.props.refresh(!this.state.toggle);
     }
@@ -65,9 +63,6 @@ class Sider extends React.Component<ViewProps & ViewHandle & ConfigAction.Config
         );
     }
    render() {
-        let log = `Sider=> token=${this.props.token} menu=${JSON.stringify(this.props.menu)}`;
-        // tslint:disable-next-line:no-console
-        console.log(log);
         if (this.props.token.length > 0 && this.props.menu.length === 0) {
             this.props.menuLoad(this.props.token);
         }

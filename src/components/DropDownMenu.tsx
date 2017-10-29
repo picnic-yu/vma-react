@@ -4,6 +4,7 @@ import * as ClassName from 'classnames';
 export interface ContextMenuNode {
     name: string;
     url: string;
+    disabled?: boolean;
 }
 
 export interface MenuNode {
@@ -36,7 +37,8 @@ export class DropDownMenu extends React.Component<MenuNode> {
                         return (
                         <li 
                             key={index} 
-                            onClick={e => this.props.onClick(item)} 
+                            className={ClassName({'vma-drop-menu-item-disabled': item.disabled}, 'vma-drop-menu-item')}
+                            onClick={item.disabled === true ? undefined : e => this.props.onClick(item)} 
                         >
                         {item.name}
                         </li>);

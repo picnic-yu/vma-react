@@ -52,8 +52,6 @@ export class RadioGroup extends React.Component<RadioProps, RadioState> {
         this.state = {value: props.value};
     }
     render() {
-        // tslint:disable-next-line:no-console
-        console.log(JSON.stringify(this.state));
         let { options } = this.props;
         const children = options.map(option => {
             // <Input type="checkbox" value={option.value} disabled={option.disabled}>{option.label}</Input>

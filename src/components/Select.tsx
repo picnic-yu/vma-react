@@ -44,8 +44,6 @@ export class Select extends React.Component<SelectProps, SelectState> {
         this.state = {value: props.value};
     }
     render() {
-        // tslint:disable-next-line:no-console
-        console.log(JSON.stringify(this.state));
         let { options } = this.props;
         const children = options.map(option => {
             // tslint:disable-next-line:no-shadowed-variable
@@ -76,8 +74,6 @@ export class Select extends React.Component<SelectProps, SelectState> {
     }
 
     selectOption(selected: SelectValueType) {
-        // tslint:disable-next-line:no-console
-        console.log(typeof(selected));
         if ((selected + '').length === 0) {
             selected = undefined;
         } else if (typeof(this.props.options[0].value) === 'number') {

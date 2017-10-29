@@ -19,10 +19,6 @@ export function mapStateToProps(state: State.Root) {
 
 class App extends React.Component<{token: string} & RouteComponentProps<{}>> {
   render() {
-  // tslint:disable-next-line:no-console
-  console.log(this.props.match);
-  // tslint:disable-next-line:no-console
-  console.log(this.props.token);
   return (      
     <div className="container">
       <Layout {...this.props}/>

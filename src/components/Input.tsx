@@ -76,14 +76,12 @@ export class Input extends React.Component<
 
     onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (this.props.type === 'radio' || this.props.type === 'checkbox') {
-            // tslint:disable-next-line:no-console
-            console.log(this.props.value + ' is checked:' + event.target.checked);
+            //
         }
         let files: Array<File> = [];
         if (this.props.type === 'file' && event.target.files !== null) {
             for (let i = 0; i < event.target.files.length; i++) {
                 files.push(event.target.files.item(i));
-                // console.log(event.target.files.item(i));
             }
         }
 
@@ -126,16 +124,16 @@ export class Input extends React.Component<
         if (typeof this.state.value === 'string') {
             this.errorMsg = '';
             let value = this.state.value.length;
-            if (this.props.min !== undefined && (isNaN(value) || value < this.props.min)) {
-                this.errorMsg = `非法的文本,最短:${this.props.min}`;
+            if (this.props.minLength !== undefined && (isNaN(value) || value < this.props.minLength)) {
+                this.errorMsg = `非法的文本,最短:${this.props.minLength}`;
                 valid = valid && false;
             }
-            if (this.props.max !== undefined && (isNaN(value) || value > this.props.max)) {
+            if (this.props.maxLength !== undefined && (isNaN(value) || value > this.props.maxLength)) {
                 valid = valid && false;
                 if (this.errorMsg.length === 0) {
-                    this.errorMsg += `非法的文本, 最长: ${this.props.max}`;
+                    this.errorMsg += `非法的文本, 最长: ${this.props.maxLength}`;
                 } else {
-                    this.errorMsg += `, 最长: ${this.props.max}`;
+                    this.errorMsg += `, 最长: ${this.props.maxLength}`;
                 }
             }
         }

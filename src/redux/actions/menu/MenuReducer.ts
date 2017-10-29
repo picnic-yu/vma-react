@@ -7,8 +7,6 @@ export function reducer(state: Array<Action.Menu> = initMenuState, action: Actio
     let result: Array<Action.Menu> = state;
     switch (action.type) {
         case Menu.menuNotify:
-            // tslint:disable-next-line:no-console
-            console.log(JSON.stringify(action));
             result = Object.assign([], result, action.payload);
             break;
         default:

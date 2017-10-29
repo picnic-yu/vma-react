@@ -71,7 +71,7 @@ export const login: (param: AuthReqByAccount) => ThunkAction<void, State, null> 
             response.json().then((data: IResponse<AuthResp>) => {
                 if (data.code === 0) {
                     // tslint:disable-next-line:no-console
-                    console.log('登录:' + JSON.stringify(data));
+                    console.log('登入:' + JSON.stringify(data));
                     if (data.data) {
                         dispatch(accountNotify(data.data));
                         dispatch(loadMenu(data.data.token));
@@ -101,7 +101,7 @@ export const logout: (req: AuthReqByToken) => ThunkAction<void, State, null> = (
             response.json().then((data: IResponse<AuthResp>) => {
                 if (data.code === 0) {
                     // tslint:disable-next-line:no-console
-                    console.log('登录:' + JSON.stringify(data));
+                    console.log('登出:' + JSON.stringify(data));
                     if (data.data) {
                         dispatch(accountNotify(data.data));
                     }
@@ -123,7 +123,7 @@ export const loadPermit: (token: string) => ThunkAction<void, State, null> = (to
             response.json().then((data: IResponse<Array<Permit>>) => {
                 if (data.code === 0) {
                     // tslint:disable-next-line:no-console
-                    console.log('登录:' + JSON.stringify(data));
+                    console.log('获取权限:' + JSON.stringify(data));
                     if (data.data) {
                         dispatch(permitNotify(data.data));
                     }
