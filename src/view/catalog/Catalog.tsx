@@ -8,6 +8,8 @@ import {
     Tag
 } from '../../components/index';
 
+import { Calendar } from '../../components/Calendar';
+
 class Catalog extends React.Component {
     state = {  };
     render() {
@@ -21,6 +23,7 @@ class Catalog extends React.Component {
                 <div>
                     <h3 style={classStyle}>新版V2表单类</h3>
                     <form className="col-12 col-offset-6">
+                        <Calendar year={2017} month={3} day={31}/>
                         <FormItem required={true} label="多选控件">
                             <Input type="checkbox" name="testControl0" value={0}>选择项目0</Input>
                             <Input type="checkbox" name="testControl0" value={1}>选择项目1</Input>
@@ -83,6 +86,9 @@ class Catalog extends React.Component {
                                 value={1}
                             />
                         </FormItem>
+                        <FormItem label="日期选择" required={true}>
+                            <Input type="date" name="input0" placeholder="请选择日期" min={2}/>
+                        </FormItem>
                         <FormItem label="文本输入" required={true}>
                             <Input type="text" name="input1" placeholder="请输入公司名称" min={2} value="中国"/>
                         </FormItem>
@@ -101,6 +107,9 @@ class Catalog extends React.Component {
                                 readOnly={true} 
                                 value="测试一下只读模式"
                             />
+                        </FormItem>
+                        <FormItem label="时间选择" required={true}>
+                            <Input type="datetime-local" name="input5" placeholder="请选择时间" min={2}/>
                         </FormItem>
                         <FormItem label="下拉框" required={true}>
                             <Select
