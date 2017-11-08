@@ -89,9 +89,6 @@ class Catalog extends React.Component {
                                 value="测试一下只读模式"
                             />
                         </FormItem>
-                        <FormItem label="时间选择" required={true}>
-                            <Input type="datetime-local" name="input5" placeholder="请选择时间" min={2}/>
-                        </FormItem>
                         <FormItem label="下拉框" required={true}>
                             <Select
                                 name="select1"

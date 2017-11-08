@@ -41,6 +41,8 @@
 - 样式在index.css未做less处理
 
 Form组件：![image](https://github.com/xuefli/vma-react/blob/master/screenshot/form-demo.png?raw=true)
+![image](https://github.com/xuefli/vma-react/blob/master/screenshot/form-demo-error.png?raw=true)
+![image](https://github.com/xuefli/vma-react/blob/master/screenshot/form-demo-1.png?raw=true)
 
 左侧菜单、上下文菜单、面板组件：![image](https://github.com/xuefli/vma-react/blob/master/screenshot/menu.png?raw=true)
 
