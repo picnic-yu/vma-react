@@ -18,7 +18,7 @@
         },
         {
             "url": "/storage",
-            "oper": []
+            "oper": ["update", "audit"]
         }
     ],
     "code": 0,

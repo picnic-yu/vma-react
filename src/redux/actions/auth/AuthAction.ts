@@ -28,8 +28,10 @@ export interface AuthResp {
 
 export interface Permit {
     url: string;
-    oper?: Array<string>;
+    oper?: Array<OperType>;
 }
+
+export type OperType = 'list' | 'view' | 'create' | 'delete' | 'update' | 'audit' | 'downLoad';
 
 export interface AuthAction<T> extends Action {
     payload: T;
@@ -65,8 +67,73 @@ export function permitNotify(data: Array<Permit>): PermitNotifyAction {
 
 export type Action = AuthNotifyAction | PermitNotifyAction;
 
+export async function get<T>(url: string) {
+    let result: IResponse<T> = {code: 0};
+    try {
+        let response: Response = await fetch(url, {credentials: 'include'});
+        let data: IResponse<T> = await response.json();
+        result = data;
+    } catch (error) {
+        // tslint:disable-next-line:no-console
+        console.log(error);
+    }
+
+    return result;
+}
+
+export async function post<T>(url: string, headers: {}, param: {}) {
+    let result: IResponse<T> = {code: 0};
+    try {
+        let response: Response = await fetch(url, {
+            credentials: 'include', 
+            method: 'POST', 
+            headers: {'Content-Type': 'application/json', ...headers}, 
+            body: JSON.stringify(param)});
+        let data: IResponse<T> = await response.json();
+        result = data;
+    } catch (error) {
+        // tslint:disable-next-line:no-console
+        console.log(error);
+    }
+
+    return result;
+}
+
+export async function postFormData<T>(url: string, headers: {}, param: FormData) {
+    let result: IResponse<T> = {code: 0};
+    try {
+        let response: Response = await fetch(url, {
+            credentials: 'include', 
+            method: 'POST', 
+            headers: headers, 
+            body: param});
+        let data: IResponse<T> = await response.json();
+        result = data;
+    } catch (error) {
+        // tslint:disable-next-line:no-console
+        console.log(error);
+    }
+
+    return result;
+}
+
 export const login: (param: AuthReqByAccount) => ThunkAction<void, State, null> = (param: AuthReqByAccount) => {
     return (dispatch: Dispatch<State>, getState: () => State) => {
+        post<AuthResp>('/login.ajax', {}, param).then(response => {
+        // get<AuthResp>('login.json').then(response => {
+            const { code, codeMsg, data } = response;
+            if (code === 0) {
+                if (data) {
+                    dispatch(accountNotify(data));
+                    dispatch(loadMenu(data.token));
+                    dispatch(loadPermit(data.token));        
+                }
+            } else {
+                // tslint:disable-next-line:no-console
+                console.log(`login error:${codeMsg}`);
+            }
+        });
+        /*
         fetch('/login.json', {mode: 'cors'}).then(response =>  {
             response.json().then((data: IResponse<AuthResp>) => {
                 if (data.code === 0) {
@@ -86,6 +153,7 @@ export const login: (param: AuthReqByAccount) => ThunkAction<void, State, null> 
             // tslint:disable-next-line:no-console
             console.log(ex);
         });
+        */
     };
 };
 

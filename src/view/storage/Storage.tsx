@@ -2,9 +2,15 @@ import * as React from 'react';
 import { Column, Grid } from '../../components/Grid';
 import { PageState, Paging } from '../../components/Paging';
 import { Input, FormItem, Button, ButtonGroup } from '../../components/index';
+import Permit from '../../components/Permit';
 
+function rowSelect(e: React.MouseEvent<HTMLAnchorElement>, row: Record, oper: string) {
+    e.preventDefault();
+    console.log(`oper=${oper} row=${JSON.stringify(row)}`);
+}
 interface Record {
     compID: number;
+    compName: string;
     storageName: string;
     provice: string;
     city: string;
@@ -15,7 +21,12 @@ const columns: Array<Column<Record>> = [
     {
         key: 'compID',
         title: '公司编码',
-        order: false
+        order: false,
+        render(key: string, record: Record) {
+            return (
+                <a style={{display: 'block'}} href="#" onClick={e => rowSelect(e, record, 'view')}>{record.compName}</a>
+            );
+        }
     },
     {
         key: 'storageName',
@@ -42,12 +53,40 @@ const columns: Array<Column<Record>> = [
         key: 'storageAddr',
         title: '仓库地址',
         order: false
+    },
+    {
+        key: 'action',
+        title: '操作',
+        order: false,
+        render: (key: string, record: Record) => {
+            return (
+            <div>
+                <Permit url="/storage" oper="update">
+                    <a href="#" onClick={e => rowSelect(e, record, 'update')}>更新</a>
+                </Permit>
+                <span className="divider"/>
+                <Permit url="/storage" oper="delete" hidden={false}>
+                    <a href="#" onClick={e => rowSelect(e, record, 'delete')}>删除</a>
+                </Permit>
+                <span className="divider"/>
+                <Permit url="/storage" oper="audit">
+                    <a href="#" onClick={e => rowSelect(e, record, 'audit')}>审核</a>
+                </Permit>
+            </div>
+            // <ButtonGroup>
+            //     <Button>更新</Button>
+            //     <Button>删除</Button>
+            //     <Button>审核</Button>
+            // </ButtonGroup>    
+            );
+        }
     }
 ];
 
 const records = [
     {
         compID: 1,
+        compName: '公司1',
         storageName: 'xxx0',
         provice: 'hunan',
         city: 'changsha3',
@@ -55,6 +94,7 @@ const records = [
     },
     {
         compID: 2,
+        compName: '公司2',
         storageName: 'xxx1',
         provice: 'hunan',
         city: 'changsha2',
@@ -62,6 +102,7 @@ const records = [
     },
     {
         compID: 3,
+        compName: '公司3',
         storageName: 'xxx2',
         provice: 'hunan',
         city: 'changsha1',
@@ -69,6 +110,7 @@ const records = [
     },
     {
         compID: 4,
+        compName: '公司4',
         storageName: 'xxx3',
         provice: 'hunan',
         city: 'changsha0',
@@ -118,10 +160,23 @@ class Storage extends React.Component<{}, StorageState> {
                         <Button type="">清除</Button>
                         </ButtonGroup>
                     </div>                </form>
-                <Table columns={columns} rows={records} subject="test" />
-                <Paging {...page} style={{marginTop: '-20px'}} watchValue={this.watchValue}/>
+                <div className="panel panel-default">
+                    <div className="panel-header">
+                        <span>仓库列表</span>
+                        <ButtonGroup className="pull-right">
+                            <Button>删除</Button>
+                            <Button>导出</Button>
+                        </ButtonGroup>
+                    </div>
+                    <Table columns={columns} rows={records} recordSelect={this.recordSelect} />
+                    <Paging {...page} style={{marginTop: '0px'}} watchValue={this.watchValue}/>
+                </div>
             </div>
         );
+    }
+
+    recordSelect = (rows: Record|Array<Record>, oper?: string) => {
+        console.log(`oper=${oper} row=${JSON.stringify(rows)}`);        
     }
 }
 

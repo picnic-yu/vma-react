@@ -3,6 +3,7 @@ import * as ClassName from 'classnames';
 // import { menues } from '../../router/index';
 import { Menu, MenuNode } from './Menu';
 import * as MenuAction from '../../redux/actions/menu/MenuAction';
+import * as AuthAction from '../../redux/actions/auth/AuthAction';
 import * as ConfigAction from '../../redux/actions/config/ConfigAction';
 
 import { Root as AppState } from '../../redux/state';
@@ -18,6 +19,7 @@ interface ViewProps {
 interface ViewHandle {
     loginByAccount: (req: AuthReqByAccount) => void;
     menuLoad: (token: string) => void;
+    permitLoad: (token: string) => void;
     refresh: (toggle: boolean) => void;
 }
 
@@ -31,6 +33,7 @@ const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (appState: App
 const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispatch) => {
     return {
         menuLoad: (token: string) => dispatch(MenuAction.loadMenu(token)),
+        permitLoad: (token: string) => dispatch(AuthAction.loadPermit(token)),
         refresh: (toggle: boolean) => dispatch(ConfigAction.toggleRefresh(toggle)),
     };
 };
@@ -65,6 +68,7 @@ class Sider extends React.Component<ViewProps & ViewHandle & ConfigAction.Config
    render() {
         if (this.props.token.length > 0 && this.props.menu.length === 0) {
             this.props.menuLoad(this.props.token);
+            this.props.permitLoad(this.props.token);
         }
 
         const listItems = this.props.menu.map((menuItem: MenuAction.Menu & MenuNode) => {

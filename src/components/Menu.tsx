@@ -87,7 +87,6 @@ export class Menu extends React.Component<MenuProps, MenuState> {
                 {items !== undefined &&  
                     items.map((item, index) => {
                         let key = item.mark;
-                        console.log(`name:${item.name} key=${key}`);
                         if (item.items !== undefined) {
                             let toggle = this.toggle(key);
                             return (
@@ -146,7 +145,9 @@ export class Menu extends React.Component<MenuProps, MenuState> {
             result = false;
         }
         if (mark !== undefined && this.props.activeMenu !== undefined) {
-            if (this.props.activeMenu.startsWith(mark)) {
+            if (String.prototype.startsWith && this.props.activeMenu.startsWith(mark) ||
+                this.props.activeMenu.indexOf(mark) === 0
+            ) {
                 result = true;
             }
         }
@@ -171,7 +172,8 @@ export class Menu extends React.Component<MenuProps, MenuState> {
             mark = '';
         }
         if (this.props.curMark !== undefined) {
-            result = this.props.curMark.startsWith(mark);
+            result = String.prototype.startsWith && this.props.curMark.startsWith(mark) || 
+            this.props.curMark.indexOf(mark) === 0;
         }
         return result;
     }

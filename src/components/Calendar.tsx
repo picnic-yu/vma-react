@@ -1,5 +1,8 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
+import * as moment from 'moment';
+// import { Input } from './Input';
+import { Handler } from './Base';
 
 interface Day {
     key: number;
@@ -24,49 +27,80 @@ interface CalendarState {
     months?: Array<Month>;
     years?: Array<number>;
     date: Date;
+    value?: string;
+    show?: boolean;
+    canClear?: boolean;
 }
 
 interface CalendarProps {
-    year?: number;
-    month?: number;
-    day?: number;
+    name?: string;
+    value?: string;
+    required?: boolean;
+    format?: string;
+    onChange?: (date: string) => void;
 }
-export class Calendar extends React.Component<CalendarProps, CalendarState> {
+
+export class Calendar extends React.Component<CalendarProps & Handler<string>, CalendarState> {
+    state: CalendarState;
+    errorMsg: string = '请提供时间';
     constructor(props: CalendarProps) {
         super(props);
         this.calculate();
     }
     render() {
         let date = this.state.date;
+        let show = this.state.show;
+        // let format = this.props.format === undefined ? 'YYYY-MM-DD' : this.props.format;
+        let value = this.state.value;
         return (
-        <div className="calendar">
-            <ul className="calendar-bar row">
-                <li className="calendar-title-pre col-6" onClick={this.preMonth}>{'<'}</li>
-                <li className="calendar-title-current col-12">
-                {date.getFullYear()}年{date.getMonth() + 1}月{date.getDate()}日
-                </li>
-                <li className="calendar-title-next col-6" onClick={this.nextMonth}>{'>'}</li>
-            </ul>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>日</td>
-                            <td>一</td>
-                            <td>二</td>
-                            <td>三</td>
-                            <td>四</td>
-                            <td>五</td>
-                            <td>六</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderWeek()}
-                        {/* <tr>
-                            <td onClick={e => this.curDate(29)}>29</td>
-                            <td>30</td><td>31</td><td>1</td><td>2</td><td>3</td><td>4</td>
-                        </tr> */}
-                    </tbody>
-                </table>
+        <div>
+            <input 
+                type="text" 
+                className="vma-input"
+                style={{width: 'auto', border: '1px solid #bfcbd9'}}
+                name={this.props.name}
+                value={value}
+                required={this.props.required}
+                readOnly={true}
+                onClick={this.showCalendar}
+                onMouseOver={this.setCloseFlag}
+                onMouseLeave={this.clearCloseFlag}
+            />
+            <i 
+                className={ClassName('icon-calendar', {'icon-cross': this.state.canClear === true})} 
+                style={{right: '28px', position: 'relative'}}
+                onMouseOver={this.setCloseFlag}
+                onClick={this.clearClose}
+            />
+            {show && 
+            <div className="calendar">
+                <ul className="calendar-bar row">
+                <li className="calendar-title-pre col-3" onClick={this.preYear}>{'<<'}</li>
+                    <li className="calendar-title-pre col-3" onClick={this.preMonth}>{'<'}</li>
+                    <li className="calendar-title-current col-12">
+                    {date.getFullYear()}年{date.getMonth() + 1}月{date.getDate()}日
+                    </li>
+                    <li className="calendar-title-next col-3" onClick={this.nextMonth}>{'>'}</li>
+                    <li className="calendar-title-next col-3" onClick={this.nextYear}>{'>>'}</li>
+                </ul>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>日</td>
+                                <td>一</td>
+                                <td>二</td>
+                                <td>三</td>
+                                <td>四</td>
+                                <td>五</td>
+                                <td>六</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderWeek()}
+                        </tbody>
+                    </table>
+            </div>
+            }
         </div>
         );
     }
@@ -80,6 +114,17 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
         day = Math.min(day, validDay);
         date.setMonth(date.getMonth() - 1, day);
         // date.setDate(date.getDate() - 1);
+        this.setState({date, days: this.fullDays(date.getFullYear(), date.getMonth(), date.getDate())});
+    }
+
+    preYear = () => {
+        let date = this.state.date;
+        let day = date.getDate();
+        let valid = new Date(date);
+        valid.setDate(0);
+        let validDay = valid.getDate();
+        day = Math.min(day, validDay);
+        date.setFullYear(date.getFullYear() - 1, date.getMonth(), day);      
         this.setState({date, days: this.fullDays(date.getFullYear(), date.getMonth(), date.getDate())});
     }
 
@@ -97,22 +142,109 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
         this.setState({date, days: this.fullDays(date.getFullYear(), date.getMonth(), date.getDate())});
     }
 
+    nextYear = () => {
+        let date = this.state.date;
+        let day = date.getDate();
+        let valid = new Date(date);
+        valid.setDate(1);
+        valid.setMonth(valid.getMonth() + 2);
+        valid.setDate(0);
+        let validDay = valid.getDate();
+        day = Math.min(day, validDay);
+        date.setFullYear(date.getFullYear() + 1, date.getMonth(), day);
+        // date.setDate(date.getDate() + 1);
+        this.setState({date, days: this.fullDays(date.getFullYear(), date.getMonth(), date.getDate())});
+    }
+
     curDate = (day: Day) => {
         let date = new Date(day.year, day.month, day.day);
-        this.setState({date, days: this.fullDays(day.year, day.month, day.day)});
-        console.log(date.toDateString());
+        let format = this.props.format === undefined ? 'YYYY-MM-DD' : this.props.format;
+        let value = moment(date).format(format);
+        this.setState({value, date, days: this.fullDays(day.year, day.month, day.day), show: false}, () => {
+            if (this.props.watchValue && this.state.value !== undefined) {
+                this.props.watchValue(
+                    this.props.name || '', 
+                    this.state.value, 
+                    false);
+            }
+            if (this.props.validator) {
+                this.props.validator(
+                    this.props.name || '', 
+                    this.state.value, 
+                    this.validator(), 
+                    this.errorMsg);
+            }                                        
+        });           
     }
-    
-    private calculate() {
-        let {year, month, day} = this.props;
-        let date = new Date();
-        
-        year = year === undefined ? date.getFullYear() : year;
-        month = month === undefined ? date.getMonth() : month - 1;
-        day = day === undefined ? date.getDate() : day;
-        date.setFullYear(year, month, day);
 
-        this.state = {date, days: this.fullDays(year, month, day)};
+    showCalendar = () => {
+        this.setState({show: !this.state.show || false}, () => {
+            if (this.state.show === false) {
+                if (this.props.watchValue && this.state.value !== undefined) {
+                    this.props.watchValue(
+                        this.props.name || '', 
+                        this.state.value, 
+                        false);
+                }
+                if (this.props.validator) {
+                    this.props.validator(
+                        this.props.name || '', 
+                        this.state.value, 
+                        this.validator(), 
+                        this.errorMsg);
+                }                                                            
+            }            
+        });
+    }
+
+    setCloseFlag = () => {
+        if (this.state.value !== undefined && this.state.value.length > 0) {
+            this.setState({canClear: true});
+        }
+    }
+
+    clearCloseFlag = () => {
+        if (this.state.value !== undefined && this.state.value.length > 0) {
+            this.setState({canClear: false});
+        }
+    }
+
+    clearClose = () => {
+        if (this.state.value !== undefined) {
+            this.setState({value: '', canClear: false}, () => {
+                if (this.props.watchValue && this.state.value !== undefined) {
+                    this.props.watchValue(
+                        this.props.name || '', 
+                        this.state.value, 
+                        false);
+                }
+                if (this.props.validator) {
+                    this.props.validator(
+                        this.props.name || '', 
+                        this.state.value, 
+                        this.validator(), 
+                        this.errorMsg);
+                }                                                                            
+            });
+        }
+    }
+
+    validator = (): boolean => {
+        let result: boolean = this.props.required === true;
+        return result ? this.state.value !== undefined && this.state.value.length > 0 : true;
+    }
+        
+    private calculate() {
+        let {value, format} = this.props;
+        format = format === undefined ? 'YYYY-MM-DD' : format;
+        let date = value === undefined ?  new Date() : moment(value, format).toDate();
+        
+        this.state = {
+            value: this.props.value, 
+            date, 
+            days: this.fullDays(date.getFullYear(), date.getMonth(), date.getDate()), 
+            show: false
+        };
     }
 
     private fullDays(year: number, month: number, day: number) {

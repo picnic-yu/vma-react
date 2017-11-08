@@ -11,7 +11,6 @@ import {
 import { Calendar } from '../../components/Calendar';
 
 class Catalog extends React.Component {
-    state = {  };
     render() {
         const classStyle = {
             borderBottom: '1px solid #ddd'
@@ -23,23 +22,8 @@ class Catalog extends React.Component {
                 <div>
                     <h3 style={classStyle}>新版V2表单类</h3>
                     <form className="col-12 col-offset-6">
-                        <Calendar year={2017} month={3} day={31}/>
-                        <FormItem required={true} label="多选控件">
-                            <Input type="checkbox" name="testControl0" value={0}>选择项目0</Input>
-                            <Input type="checkbox" name="testControl0" value={1}>选择项目1</Input>
-                            <Input type="checkbox" name="testControl0" value={2}  disabled={true}>选择项目2</Input>
-                        </FormItem>
-                        <FormItem required={true} label="多选控件">
-                            <Input type="checkbox" name="testControl1" value="value0">选择项目0</Input>
-                            <Input type="checkbox" name="testControl1" value="value1" checked={true}>选择项目1</Input>
-                            <Input 
-                                type="checkbox" 
-                                name="testControl1" 
-                                value="value2"
-                                disabled={true}
-                                checked={true}
-                            >选择项目2
-                            </Input>
+                        <FormItem label="日期选择" required={true}>
+                            <Calendar name="testDate"/>
                         </FormItem>
                         <FormItem required={true} label="多行控件">
                             <TextArea name="testControl7" placeholder="请输入" minLength={2} maxLength={10} value="我是描述"/>
@@ -85,9 +69,6 @@ class Catalog extends React.Component {
                                 {label: 'testControl2', value: 2, disabled: true}]}
                                 value={1}
                             />
-                        </FormItem>
-                        <FormItem label="日期选择" required={true}>
-                            <Input type="date" name="input0" placeholder="请选择日期" min={2}/>
                         </FormItem>
                         <FormItem label="文本输入" required={true}>
                             <Input type="text" name="input1" placeholder="请输入公司名称" min={2} value="中国"/>

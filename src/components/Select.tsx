@@ -77,7 +77,7 @@ export class Select extends React.Component<SelectProps, SelectState> {
         if ((selected + '').length === 0) {
             selected = undefined;
         } else if (typeof(this.props.options[0].value) === 'number') {
-            selected = Number.parseInt(selected + '');
+            selected = parseInt(selected + '', 10);
         }
         this.setState({value: selected}, () => {
             if (this.props.validator) {

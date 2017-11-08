@@ -22,12 +22,21 @@ export class Input extends React.Component<
         this.state = {value: this.props.value, checked: this.props.checked || false};
     }
     render() {
-        if (process.env.NODE_ENV !== 'production' && (this.props.type === 'checkbox' || this.props.type === 'radio')) {
-            console.warn(`using CheckBox or Radio instead of ${this.props.type}`);
-        }
         // tslint:disable-next-line:no-shadowed-variable
-        // tslint:disable-next-line:max-line-length
-        let { type, className= 'vma-input', value, children, watchValue, checked, onChange, validator, ...others} = this.props;
+        let { type, className = 'vma-input', validator, value, 
+            children, watchValue, checked, onChange, ...others} = this.props;
+        if (process.env.NODE_ENV !== 'production' && (type === 'checkbox' || type === 'radio')) {
+            // tslint:disable-next-line:no-console
+            console.error(`using CheckBox or Radio components instead of Input with type=${this.props.type}`);
+        }
+        if (process.env.NODE_ENV !== 'production' && (type === 'file')) {
+            // tslint:disable-next-line:no-console
+            console.error(`using FileUpLoad components instead of Input with type=${this.props.type}`);
+        }
+        if (process.env.NODE_ENV !== 'production' && (type === 'date' || type === 'datetime')) {
+            // tslint:disable-next-line:no-console
+            console.error(`using Calendar components instead of Input with type=${this.props.type}`);
+        }
         onChange = this.onChange;
         return (
             type === 'radio' || type === 'checkbox' ? (

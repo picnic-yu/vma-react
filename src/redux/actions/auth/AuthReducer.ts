@@ -21,7 +21,7 @@ export function reducer(state: Action.AuthResp = initAuthState, action: Action.A
         case Auth.permitNotify:
             // tslint:disable-next-line:no-console
             console.log(JSON.stringify(action));
-            result = Object.assign({}, result, action.payload);
+            result = Object.assign({}, result, {permits: action.payload});
             break;
         default:
             break;

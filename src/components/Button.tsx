@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ClassName from 'classnames';
 import { Validator } from './Base';
 
 interface ButtonProps {
@@ -19,9 +20,9 @@ export class Button extends React.Component<ButtonProps & React.ButtonHTMLAttrib
 
 export class ButtonGroup extends React.Component<ButtonProps & React.HTMLAttributes<HTMLDivElement>> {
     render() {
-        const { className = 'btn-group', validator, children, ...others} = this.props;
+        const { className, validator, children, ...others} = this.props;
         return (
-        <div className={className} {...others}>
+        <div className={ClassName('btn-group', className)} {...others}>
             {children}
         </div>
         );

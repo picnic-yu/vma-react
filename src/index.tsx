@@ -15,6 +15,7 @@ import thunk from 'redux-thunk';
 import * as State from './redux/state';
 import * as Reducers from './redux';
 import Demo from './Demo';
+// import './mock';
 
 const store = createStore<State.Root>(Reducers.reducers, Reducers.initState, applyMiddleware(thunk));
 // tslint:disable-next-line:max-line-length
