@@ -48,7 +48,7 @@ Form组件：![image](https://github.com/xuefli/vma-react/blob/master/screenshot
 
 文件上传、dialog组件：![image](https://github.com/xuefli/vma-react/blob/master/screenshot/fileupload.png?raw=true)
 
-表格组件：![image]((https://github.com/xuefli/vma-react/blob/master/screenshot/table.png?raw=true)
+表格组件：![image](https://github.com/xuefli/vma-react/blob/master/screenshot/table.png?raw=true)
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
