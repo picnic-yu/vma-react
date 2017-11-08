@@ -13,7 +13,7 @@
 - 文本、数字、邮件输入框： Input
 - 菜单：Menu
 - 翻页：Paging
-- 容器：Panel
+- 面板容器：Panel
 - 权限：Permit
 - 单选框： Radio、RadioGroup
 - 标签：Tag
@@ -39,7 +39,15 @@
 - 业务组件模拟在文件夹 view及其功能子文件夹
 - trials文件夹，模拟对redux的middlware内部实现机制的模拟
 - 样式在index.css未做less处理
-- 
+
+Form组件：![image](https://github.com/xuefli/vma-react/raw/master/screenshots/form-demo.png)
+
+左侧菜单、上下文菜单、面板组件：![image](https://github.com/xuefli/vma-react/raw/master/screenshots/menu.png)
+
+文件上传、dialog组件：![image](https://github.com/xuefli/vma-react/raw/master/screenshots/fileupload.png)
+
+表格组件：![image](https://github.com/xuefli/vma-react/raw/master/screenshots/table.png)
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
