@@ -40,13 +40,13 @@
 - trials文件夹，模拟对redux的middlware内部实现机制的模拟
 - 样式在index.css未做less处理
 
-Form组件：![image](https://github.com/xuefli/vma-react/raw/master/screenshots/form-demo.png)
+Form组件：![image](https://github.com/xuefli/vma-react/blob/master/screenshot/form-demo.png?raw=true)
 
-左侧菜单、上下文菜单、面板组件：![image](https://github.com/xuefli/vma-react/raw/master/screenshots/menu.png)
+左侧菜单、上下文菜单、面板组件：![image](https://github.com/xuefli/vma-react/blob/master/screenshot/menu.png?raw=true)
 
-文件上传、dialog组件：![image](https://github.com/xuefli/vma-react/raw/master/screenshots/fileupload.png)
+文件上传、dialog组件：![image](https://github.com/xuefli/vma-react/blob/master/screenshot/fileupload.png?raw=true)
 
-表格组件：![image](https://github.com/xuefli/vma-react/raw/master/screenshots/table.png)
+表格组件：![image]((https://github.com/xuefli/vma-react/blob/master/screenshot/table.png?raw=true)
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
