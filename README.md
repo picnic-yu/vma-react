@@ -1,3 +1,46 @@
+该项目使用官方手脚架create-react-app 创建，完全基于typescript完成
+
+参考 bootstrap、element ui 、 ant design的css，重写组件
+
+- 按钮：Button、ButtonGroup
+- 时间：Calendar
+- 复选框：CheckBox
+- 对话框：Dialog
+- 上下文菜单： DropDownMenu
+- 文件上传：FileUpLoad
+- Form的基本项目包装： FormItem
+- 表格：Grid
+- 文本、数字、邮件输入框： Input
+- 菜单：Menu
+- 翻页：Paging
+- 容器：Panel
+- 权限：Permit
+- 单选框： Radio、RadioGroup
+- 标签：Tag
+- 页脚：Tailer
+- 多行文本： TextArea
+- 页眉： UserHeader
+
+- 布局： Layout
+- 主要组件路由： AppMain
+- 左栏导航：Sider
+- 路径水平导航： LevelBar
+
+为了避免用户写业务界面过于复杂，基于html的语义标签，把复杂的内容（css、props、state、handler、required、readonly、disabled）全部隐藏在components中
+
+使用redux完成全局影响的数据的管理，业务数据由业务的components使用props、state自行管理，内容获取通过接口watchValue(name?:string, value:any)回调给业务组件处理
+
+对于异步从服务器获取内容，使用Fetch组件，对于符合redux管理的，使用redux-thunk来管理
+
+本工程，完成以下部分
+- 用户远程登录认证、基于token的远程菜单、权限加载，模拟数据在public目录的menu.json、permit.json
+- 使用Link和基于事件和HOC函数withRoute的路由选择
+- 使用router v4完成路由的集成
+- 业务组件模拟在文件夹 view及其功能子文件夹
+- trials文件夹，模拟对redux的middlware内部实现机制的模拟
+- 样式在index.css未做less处理
+- 
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
