@@ -1,51 +1,54 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
-import { connect, Dispatch } from 'react-redux';
+import { connect, MapStateToPropsParam, MapDispatchToPropsParam } from 'react-redux';
+
 import { Link } from 'react-router-dom';
 import * as MenuAction from '../../redux/actions/menu/MenuAction';
 import * as ConfigAction from '../../redux/actions/config/ConfigAction';
 import * as State from '../../redux/state';
 
-export function mapStateToProps(state: State.Root) {
+interface ViewProps {
+    activeMenuURL?: string;
+}
+const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (state: State.Root) => {
     return {
-        activeMenuID: state.config.activeMenuID,
-        curDeep: state.config.curDeep
+        activeMenuURL: state.config.activeMenuURL
     };
+};
+    
+interface ViewHandle {
+    refresh: (activeMenuURL: string) => void;
 }
 
-// tslint:disable-next-line:max-line-length
-export function mapDispatchToProps(dispatch: Dispatch<ConfigAction.Config>): ConfigAction.ConfigDispatch {
+const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispatch) => {
     return {
-        // tslint:disable-next-line:max-line-length
-        refresh: (curMenu: {activeMenuID: number, curDeep: number}) => dispatch(ConfigAction.activeMenuIDRefresh(curMenu.activeMenuID, curMenu.curDeep)),
+        refresh: (activeMenuURL: string) => dispatch(ConfigAction.activeMenuRefresh(activeMenuURL)),
     };
+};
+
+interface MenuState {
+    open: boolean;
+    active: boolean;
 }
 
-interface MenuNode {
-    // menuID: number;
-    // name: string;
-    // url: string;
-    // // children: Array<MenuNode>;
-    // children: MenuNode[];
-    deep?: number;
-    // watchValue?: (menuID: number, deep: number) => void;
-    // activeMenuID?: number;
-    // curDeep?: number;
-}
-
-class Menu extends React.Component<MenuAction.Menu & MenuNode & ConfigAction.Config & ConfigAction.ConfigDispatch> {
-    props: MenuAction.Menu & MenuNode & ConfigAction.ConfigDispatch;
+class Menu extends React.Component<MenuAction.Menu & ViewProps & ViewHandle, MenuState> {
+    props: MenuAction.Menu & ViewHandle;
     // tslint:disable-next-line:max-line-length
     // Warning: Menu(...): When calling super() in `Menu`, make sure to pass up the same props that your component's constructor was passed.
     // props: MenuNode = {menuID: 0, name: '', url: '', children: []};
     state = { open: false, active: false};
 
-    componentWillReceiveProps(nextProps: MenuNode & ConfigAction.Config) {
-        if (nextProps.activeMenuID !== this.props.menuID && (nextProps.curDeep || 0) <= (this.props.deep || 0)) {
+    componentWillReceiveProps(nextProps: ViewProps) {
+        if (nextProps.activeMenuURL !== this.props.url && 
+            ((nextProps.activeMenuURL || '').match(/\//g) || []).length <= (this.props.url.match(/\//g) || []).length) {
             this.setState({active: false, open: false});
         }
+        if (window.location.pathname.indexOf(this.props.url) !== -1) {
+            this.state.open = true;
+            this.state.active =  true;
+        }
     }
-    constructor(props: MenuAction.Menu & MenuNode & ConfigAction.ConfigDispatch) {
+    constructor(props: MenuAction.Menu & ViewProps & ViewHandle) {
         super(props);
         if (window.location.pathname.indexOf(this.props.url) !== -1) {
             this.state.open = true;
@@ -58,19 +61,12 @@ class Menu extends React.Component<MenuAction.Menu & MenuNode & ConfigAction.Con
             this.setState({open: !this.state.open});
         }
         this.setState({active: true});
-        // if (this.props.watchValue) {
-        //     this.props.watchValue(this.props.menuID, this.props.deep || 0);
-        // }
-        this.props.refresh({activeMenuID: this.props.menuID, curDeep: this.props.deep});
+        this.props.refresh(this.props.url);
     }
 
-    renderSub = (menuItem: MenuAction.Menu & MenuNode): JSX.Element => {
+    renderSub = (menuItem: MenuAction.Menu): JSX.Element => {
         let {menuID, name, url} = menuItem;
         let children = menuItem.children;
-        let deep: number = 0;
-        if (this.props.deep) {
-            deep = this.props.deep;
-        }
         return (
         <MenuItem 
                 key={menuID} 
@@ -78,7 +74,6 @@ class Menu extends React.Component<MenuAction.Menu & MenuNode & ConfigAction.Con
                 name={name} 
                 url={url} 
                 children={children} 
-                deep={deep + 1} 
         />);
     }
 
@@ -87,7 +82,7 @@ class Menu extends React.Component<MenuAction.Menu & MenuNode & ConfigAction.Con
     }
 
     render() {
-        const listItems = this.props.children.map((menuItem: MenuAction.Menu & MenuNode) =>
+        const listItems = this.props.children.map((menuItem: MenuAction.Menu) =>
             this.renderSub(menuItem)
         );
         return (
@@ -113,5 +108,5 @@ class Menu extends React.Component<MenuAction.Menu & MenuNode & ConfigAction.Con
     }
 }
 
-const MenuItem = connect<{}, {}, MenuAction.Menu & MenuNode>(mapStateToProps, mapDispatchToProps)(Menu);
-export { MenuNode,  MenuItem as Menu };
+const MenuItem = connect<ViewProps, ViewHandle, MenuAction.Menu>(mapStateToPropsParam, mapDispatchToPropsParam)(Menu);
+export { MenuItem as Menu };

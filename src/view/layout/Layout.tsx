@@ -13,13 +13,13 @@ import * as State from '../../redux/state';
 export function mapStateToProps(state: State.Root) {
     return {
         toggle: state.config.toggle,
-        activeMenuID: state.config.activeMenuID
+        activeMenuURL: state.config.activeMenuURL
     };
 }
 
 interface LayoutProps {
     toggle: boolean;
-    activeMenuID: number;
+    activeMenuURL: string;
 }
 
 class Layout extends React.Component<LayoutProps> {

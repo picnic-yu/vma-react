@@ -1,6 +1,9 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
+import { connect, MapDispatchToPropsParam } from 'react-redux';
+
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import * as ConfigAction from '../redux/actions/config/ConfigAction';
 
 interface MenuNode {
     name: string;
@@ -31,10 +34,20 @@ interface SideMenuState {
     curMark?: string;
     activeMenu?: string;
 }
+    
+interface ViewHandle {
+    refresh: (activeMenuURL: string) => void;
+}
 
-class SiderMenu extends React.Component<MenuNode & RouteComponentProps<{}>, SideMenuState> {
+const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispatch) => {
+    return {
+        refresh: (activeMenuURL: string) => dispatch(ConfigAction.activeMenuRefresh(activeMenuURL)),
+    };
+};
+
+class SiderMenu extends React.Component<MenuNode & RouteComponentProps<{}> & ViewHandle, SideMenuState> {
     state: SideMenuState;
-    constructor(props: MenuNode & RouteComponentProps<{}>) {
+    constructor(props: MenuNode & RouteComponentProps<{}> & ViewHandle) {
         super(props);
         this.state = {...this.marks('', this.props.items)};
     }
@@ -49,7 +62,8 @@ class SiderMenu extends React.Component<MenuNode & RouteComponentProps<{}>, Side
             this.setState({isMenuTitle: isMenuTitle, curMark: curMark});            
         } else {
             this.setState({isMenuTitle: isMenuTitle, curMark: curMark, activeMenu: curMark}, () => {
-                this.props.history.push('/company');
+                this.props.refresh('/company/audit');
+                this.props.history.push('/company/audit');
             });            
         }
     }
@@ -73,7 +87,8 @@ class SiderMenu extends React.Component<MenuNode & RouteComponentProps<{}>, Side
     }
 }
 
-export const RouteMenu = withRouter<MenuNode>(SiderMenu);
+export const RouteMenu = withRouter<MenuNode>(
+        connect<{}, ViewHandle, MenuNode & RouteComponentProps<{}>>(null, mapDispatchToPropsParam)(SiderMenu));
 
 interface MenuState {
     show: boolean;

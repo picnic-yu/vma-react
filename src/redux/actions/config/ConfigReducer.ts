@@ -3,8 +3,7 @@ import * as Action from './ConfigAction';
 
 export const initConfigState: Action.Config = {
     toggle: false,
-    activeMenuID: 0,
-    curDeep: 0
+    activeMenuURL: ''
 };
 
 export function reducer(state: Action.Config = initConfigState, action: Action.Action): Action.Config {

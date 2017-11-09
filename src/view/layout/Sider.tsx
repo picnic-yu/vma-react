@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ClassName from 'classnames';
 // import { menues } from '../../router/index';
-import { Menu, MenuNode } from './Menu';
+import { Menu } from './Menu';
 import * as MenuAction from '../../redux/actions/menu/MenuAction';
 import * as AuthAction from '../../redux/actions/auth/AuthAction';
 import * as ConfigAction from '../../redux/actions/config/ConfigAction';
@@ -40,10 +40,10 @@ const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispat
 
 class Sider extends React.Component<ViewProps & ViewHandle & ConfigAction.ConfigDispatch> {
     // props: Array<MenuData>;
-    state = { toggle: false, activeMenuID: 0, curDeep: 0 };
+    state = { toggle: false, activeMenuURL: ''};
 
-    watchValue = (activeMenuID: number, deep: number) =>  {
-        this.setState({activeMenuID: activeMenuID, curDeep: deep});
+    watchValue = (activeMenuURL: string) =>  {
+        this.setState({activeMenuURL: activeMenuURL});
     }
 
     fold = (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -52,7 +52,7 @@ class Sider extends React.Component<ViewProps & ViewHandle & ConfigAction.Config
         this.props.refresh(!this.state.toggle);
     }
 
-    renderSub = (menuItem: MenuAction.Menu & MenuNode): JSX.Element => {
+    renderSub = (menuItem: MenuAction.Menu): JSX.Element => {
         let {menuID, name, url} = menuItem;
         let children = menuItem.children;
         return (
@@ -71,7 +71,7 @@ class Sider extends React.Component<ViewProps & ViewHandle & ConfigAction.Config
             this.props.permitLoad(this.props.token);
         }
 
-        const listItems = this.props.menu.map((menuItem: MenuAction.Menu & MenuNode) => {
+        const listItems = this.props.menu.map((menuItem: MenuAction.Menu) => {
             return this.renderSub(menuItem);
         }
         );

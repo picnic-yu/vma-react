@@ -4,8 +4,7 @@ import * as ConfigType from '../types/ConfigType';
 
 export interface Config {
     toggle?: boolean;
-    activeMenuID?: number;
-    curDeep?: number;
+    activeMenuURL?: string;
 }
 
 export interface ConfigAction<T> extends Action {
@@ -31,12 +30,11 @@ export function toggleRefresh(toggle: boolean): ConfigRefreshAction {
     };
 }
 
-export function activeMenuIDRefresh(activeMenuID: number, curDeep: number): ConfigRefreshAction {
+export function activeMenuRefresh(activeMenuURL: string): ConfigRefreshAction {
     return {
         type: ConfigType.configRefresh,
         payload: {
-            activeMenuID: activeMenuID,
-            curDeep: curDeep
+            activeMenuURL: activeMenuURL,
         }
     };
 }
