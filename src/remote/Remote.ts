@@ -1,37 +1,51 @@
-// import 'fetch';
-import 'whatwg-fetch';
+import IResponse from '../interfaces/IResponse';
 
-export interface RemoteResult {
-    code: number;
-    codeMsg: string;
-    data: {
-        name: string;
-        icon?: string;
-        token: string;
-    };
+export async function get<T>(url: string) {
+    let result: IResponse<T> = {code: 0};
+    try {
+        let response: Response = await fetch(url, {credentials: 'include'});
+        let data: IResponse<T> = await response.json();
+        result = data;
+    } catch (error) {
+        // tslint:disable-next-line:no-console
+        console.log(error);
+    }
+
+    return result;
 }
 
-export async function login(userName: string, password: string): Promise<RemoteResult> {
-    // let response = await fetch('http://localhost:8080/login.json', {mode: 'cors',
-    let response = await fetch('/login.json', {mode: 'cors',
-    // method: 'POST',
-    // headers: {
-    //     'Cotent-Type': 'application/json'
-    // },
-    // body: JSON.stringify({
-    //     userName: userName,
-    //     password: password
-    // })
-    });
-    // let response = await fetch('/login.json');
-    let data = response.json();
-    return data;        
+export async function post<T>(url: string, headers: {}, param: {}) {
+    let result: IResponse<T> = {code: 0};
+    try {
+        let response: Response = await fetch(url, {
+            credentials: 'include', 
+            method: 'POST', 
+            headers: {'Content-Type': 'application/json', ...headers}, 
+            body: JSON.stringify(param)});
+        let data: IResponse<T> = await response.json();
+        result = data;
+    } catch (error) {
+        // tslint:disable-next-line:no-console
+        console.log(error);
+    }
 
-    // fetch('http://localhost:3000/login.json').then(function (response) {
-    //         return response.json();
-    //     }).then(function(data) {
-    //             console.log(data);
-    //     }).catch(function(ex) {
-    //         console.log(ex);
-    //     });
+    return result;
+}
+
+export async function postFormData<T>(url: string, headers: {}, param: FormData) {
+    let result: IResponse<T> = {code: 0};
+    try {
+        let response: Response = await fetch(url, {
+            credentials: 'include', 
+            method: 'POST', 
+            headers: headers, 
+            body: param});
+        let data: IResponse<T> = await response.json();
+        result = data;
+    } catch (error) {
+        // tslint:disable-next-line:no-console
+        console.log(error);
+    }
+
+    return result;
 }

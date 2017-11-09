@@ -6,7 +6,8 @@ import { ThunkAction } from 'redux-thunk';
 import { Dispatch } from 'redux';
 import { Root as State } from '../../state/index';
 import IResponse from '../../../interfaces/IResponse';
-import { remoteMenu } from '../menu/MenuAction';
+import * as Remote from '../../../remote/Remote';
+// import { remoteMenu } from '../menu/MenuAction';
 
 export interface AuthReqByAccount {
     userName: string;
@@ -67,66 +68,16 @@ export function permitNotify(data: Array<Permit>): PermitNotifyAction {
 
 export type Action = AuthNotifyAction | PermitNotifyAction;
 
-export async function get<T>(url: string) {
-    let result: IResponse<T> = {code: 0};
-    try {
-        let response: Response = await fetch(url, {credentials: 'include'});
-        let data: IResponse<T> = await response.json();
-        result = data;
-    } catch (error) {
-        // tslint:disable-next-line:no-console
-        console.log(error);
-    }
-
-    return result;
-}
-
-export async function post<T>(url: string, headers: {}, param: {}) {
-    let result: IResponse<T> = {code: 0};
-    try {
-        let response: Response = await fetch(url, {
-            credentials: 'include', 
-            method: 'POST', 
-            headers: {'Content-Type': 'application/json', ...headers}, 
-            body: JSON.stringify(param)});
-        let data: IResponse<T> = await response.json();
-        result = data;
-    } catch (error) {
-        // tslint:disable-next-line:no-console
-        console.log(error);
-    }
-
-    return result;
-}
-
-export async function postFormData<T>(url: string, headers: {}, param: FormData) {
-    let result: IResponse<T> = {code: 0};
-    try {
-        let response: Response = await fetch(url, {
-            credentials: 'include', 
-            method: 'POST', 
-            headers: headers, 
-            body: param});
-        let data: IResponse<T> = await response.json();
-        result = data;
-    } catch (error) {
-        // tslint:disable-next-line:no-console
-        console.log(error);
-    }
-
-    return result;
-}
-
 export const login: (param: AuthReqByAccount) => ThunkAction<void, State, null> = (param: AuthReqByAccount) => {
     return (dispatch: Dispatch<State>, getState: () => State) => {
-        post<AuthResp>('/login.ajax', {}, param).then(response => {
-        // get<AuthResp>('login.json').then(response => {
+        // Remote.post<AuthResp>('/login.ajax', {}, param).then(response => {
+        Remote.get<AuthResp>('login.json').then(response => {
             const { code, codeMsg, data } = response;
             if (code === 0) {
                 if (data) {
                     dispatch(accountNotify(data));
-                    dispatch(remoteMenu(data.token));
-                    dispatch(loadPermit(data.token));        
+                    // dispatch(remoteMenu(data.token));
+                    // dispatch(loadPermit(data.token));        
                 }
             } else {
                 // tslint:disable-next-line:no-console

@@ -479,8 +479,9 @@ li {
   content: "/\00a0";      
 }
 
-.breadcrumb > li > a {
+.breadcrumb > li > a, .breadcrumb > li > span {
   color: #337ab7;
+  cursor: pointer;
 }
 
 .breadcrumb > .active {

@@ -1,12 +1,23 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import * as ClassName from 'classnames';
-import { NavLink } from 'react-router-dom';
+import { connect, MapDispatchToPropsParam } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import * as ConfigAction from '../../redux/actions/config/ConfigAction';
 
 import { routes } from '../../router/index';
+    
+interface ViewHandle {
+    refresh: (activeMenuURL: string) => void;
+}
 
-class LevelBar extends React.Component<RouteComponentProps<{}>> {
+const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispatch) => {
+    return {
+        refresh: (activeMenuURL: string) => dispatch(ConfigAction.activeMenuRefresh(activeMenuURL)),
+    };
+};
+
+class LevelBar extends React.Component<RouteComponentProps<{}> & ViewHandle> {
     static propTypes = {
         match: PropTypes.object.isRequired,
         location: PropTypes.object.isRequired,
@@ -32,7 +43,7 @@ class LevelBar extends React.Component<RouteComponentProps<{}>> {
             {urls.map((item, index) =>
                 <li key={index} className={ClassName({'active': index === urls.length})}>
                     {item.url !== this.props.match.url ? (
-                        <NavLink to={item.url}>{item.name}</NavLink>
+                        <span onClick={e => this.selectMenu(item.url)}>{item.name}</span>
                         ) : (
                         item.name
                         )
@@ -42,6 +53,13 @@ class LevelBar extends React.Component<RouteComponentProps<{}>> {
         </ul>
         );
     }
+
+    selectMenu = (url: string) => {
+        this.props.history.push(url);
+        this.props.refresh(url);
+    }
 }
 
-export default withRouter(LevelBar);
+export default withRouter(
+    connect<{}, ViewHandle, RouteComponentProps<{}>>(undefined, mapDispatchToPropsParam)(LevelBar)
+);
