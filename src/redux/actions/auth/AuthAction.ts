@@ -6,7 +6,7 @@ import { ThunkAction } from 'redux-thunk';
 import { Dispatch } from 'redux';
 import { Root as State } from '../../state/index';
 import IResponse from '../../../interfaces/IResponse';
-import { loadMenu } from '../menu/MenuAction';
+import { remoteMenu } from '../menu/MenuAction';
 
 export interface AuthReqByAccount {
     userName: string;
@@ -125,7 +125,7 @@ export const login: (param: AuthReqByAccount) => ThunkAction<void, State, null> 
             if (code === 0) {
                 if (data) {
                     dispatch(accountNotify(data));
-                    dispatch(loadMenu(data.token));
+                    dispatch(remoteMenu(data.token));
                     dispatch(loadPermit(data.token));        
                 }
             } else {
@@ -191,7 +191,7 @@ export const loadPermit: (token: string) => ThunkAction<void, State, null> = (to
             response.json().then((data: IResponse<Array<Permit>>) => {
                 if (data.code === 0) {
                     // tslint:disable-next-line:no-console
-                    console.log('获取权限:' + JSON.stringify(data));
+                    // console.log('获取权限:' + JSON.stringify(data));
                     if (data.data) {
                         dispatch(permitNotify(data.data));
                     }

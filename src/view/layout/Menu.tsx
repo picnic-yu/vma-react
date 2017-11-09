@@ -43,13 +43,14 @@ class Menu extends React.Component<MenuAction.Menu & ViewProps & ViewHandle, Men
             ((nextProps.activeMenuURL || '').match(/\//g) || []).length <= (this.props.url.match(/\//g) || []).length) {
             this.setState({active: false, open: false});
         }
-        if (window.location.pathname.indexOf(this.props.url) !== -1) {
+        if ((nextProps.activeMenuURL || '').indexOf(this.props.url) !== -1) {
             this.state.open = true;
             this.state.active =  true;
         }
     }
     constructor(props: MenuAction.Menu & ViewProps & ViewHandle) {
         super(props);
+        // 解决页面强制刷新时，左侧匹配菜单项目未激活的issue
         if (window.location.pathname.indexOf(this.props.url) !== -1) {
             this.state.open = true;
             this.state.active =  true;

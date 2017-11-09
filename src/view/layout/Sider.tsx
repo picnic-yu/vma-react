@@ -32,7 +32,8 @@ const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (appState: App
 
 const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispatch) => {
     return {
-        menuLoad: (token: string) => dispatch(MenuAction.loadMenu(token)),
+        menuLoad: (token: string) => dispatch(MenuAction.remoteMenu(token)),
+        // menuLoad: (token: string) => dispatch(MenuAction.loadMenu(token)),
         permitLoad: (token: string) => dispatch(AuthAction.loadPermit(token)),
         refresh: (toggle: boolean) => dispatch(ConfigAction.toggleRefresh(toggle)),
     };

@@ -33,7 +33,8 @@ export class Input extends React.Component<
             // tslint:disable-next-line:no-console
             console.error(`using FileUpLoad components instead of Input with type=${this.props.type}`);
         }
-        if (process.env.NODE_ENV !== 'production' && (type === 'date' || type === 'datetime' || type=== 'datetime-local')) {
+        if (process.env.NODE_ENV !== 'production' && 
+            (type === 'date' || type === 'datetime' || type === 'datetime-local')) {
             // tslint:disable-next-line:no-console
             console.error(`using Calendar components instead of Input with type=${this.props.type}`);
         }

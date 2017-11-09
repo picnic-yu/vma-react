@@ -11,7 +11,7 @@ export function reducer(state: Action.Config = initConfigState, action: Action.A
     switch (action.type) {
         case Config.configRefresh:
             // tslint:disable-next-line:no-console
-            console.log(JSON.stringify(action));
+            // console.log(JSON.stringify(action));
             result = Object.assign({}, result, action.payload);
             break;
         default:

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, Store } from 'redux';
 import { Provider } from 'react-redux';
 
 import App from './App';
@@ -9,7 +9,8 @@ import Login from './view/auth/Login';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
-// import middleware from './middleware';
+import middleware from './middleware';
+import asyncAction from './AsyncAction';
 import thunk from 'redux-thunk';
 
 import * as State from './redux/state';
@@ -17,9 +18,20 @@ import * as Reducers from './redux';
 import Demo from './Demo';
 // import './mock';
 
-const store = createStore<State.Root>(Reducers.reducers, Reducers.initState, applyMiddleware(thunk));
+let store: Store<State.Root>;
+if (process.env.NODE_ENV !== 'production') {
+  store = createStore<State.Root>(
+      Reducers.reducers, 
+      Reducers.initState, 
+      applyMiddleware(middleware, asyncAction, thunk));
+} else {
+  store = createStore<State.Root>(Reducers.reducers, Reducers.initState, applyMiddleware(thunk));  
+}
 // tslint:disable-next-line:max-line-length
 // store.dispatch({type: 'authNotify', payload: { userName: 'xuefli', portrait: 'http://lorempixel.com/45/45/people', token: 'xxxx'}});
+store.dispatch({type: () => {
+  console.log(`test it`);
+}});
 
 ReactDOM.render(
   <Provider store={store}>
