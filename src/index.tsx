@@ -30,7 +30,7 @@ if (process.env.NODE_ENV !== 'production') {
 // tslint:disable-next-line:max-line-length
 // store.dispatch({type: 'authNotify', payload: { userName: 'xuefli', portrait: 'http://lorempixel.com/45/45/people', token: 'xxxx'}});
 store.dispatch({type: () => {
-  console.log(`test it`);
+  console.warn(`simulator asyncAction`);
 }});
 
 ReactDOM.render(

@@ -5,6 +5,7 @@ import { ThunkAction } from 'redux-thunk';
 import { Dispatch } from 'redux';
 import { Root as State } from '../../state/index';
 import IResponse from '../../../interfaces/IResponse';
+import { AsyncAction } from '../base';
 
 export interface Menu {
     menuID: number;
@@ -13,9 +14,10 @@ export interface Menu {
     children: Array<Menu>;
 }
 
-export interface AsyncAction<S> extends Action  {
-    type: (dispatch: Dispatch<S>, getState: () => S) => void;
-}
+// export interface AsyncAction<S> extends Action  {
+//     type: (dispatch: Dispatch<S>, getState: () => S) => void;
+// }
+
 export interface MenuAction<T> extends Action {
     payload: T;
 }
@@ -35,7 +37,7 @@ export type Action = MenuNotifyAction;
 
 export const remoteMenu: (token: string) => AsyncAction<State> = (token: string) => {
     return {
-        type: (dispatch: Dispatch<State>, getState: () => State) => {
+        type: (dispatch, getState) => {
             fetch('/menu.json', { method: 'GET', headers: {'token': token}, credentials: 'include'}).then(response =>  {
                 response.json().then((data: IResponse<Array<Menu>>) => {
                     if (data.code === 0) {
