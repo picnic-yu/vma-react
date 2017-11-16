@@ -1,5 +1,5 @@
 import Home from '../view/Home';
-import * as View from '../view';
+// import * as View from '../view';
 
 /*
     A、菜单是路由的子集，一种用菜单组件呈现的路由交互组件
@@ -28,42 +28,42 @@ const routes = [
     },
     {
         path: '/login',
-        component: View.Login,
+        // component: View.Login,
         name: '登录'
     },
     {
         path: '/profile',
-        component: View.Profile,
+        // component: View.Profile,
         name: '简介'
     },
     {
         path: '/company',
-        component: View.Company,
+        // component: View.Company,
         name: '公司'
     },
     {
         path: '/company/list',
-        component: View.Company,
+        // component: View.Company,
         name: '公司查询'
     },
     {
         path: '/company/audit',
-        component: View.Company,
+        // component: View.Company,
         name: '公司审核'
     },
     {
         path: '/catalog',
-        component: View.Catalog,
+        // component: View.Catalog,
         name: '目录'
     },
     {
         path: '/goods',
-        component: View.Goods,
+        // component: View.Goods,
         name: '商品'
     },
     {
         path: '/order',
-        component: View.Order,
+        // component: View.Order,
         name: '订单'
     },
     {
