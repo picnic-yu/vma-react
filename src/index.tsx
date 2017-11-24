@@ -31,7 +31,10 @@ if (process.env.NODE_ENV !== 'production') {
       Reducers.initState, 
       applyMiddleware(middleware, asyncAction, thunk, routeMiddleware));
 } else {
-  store = createStore<State.Root>(Reducers.reducers, Reducers.initState, applyMiddleware(thunk, routeMiddleware));  
+  store = createStore<State.Root>(
+    Reducers.reducers, 
+    Reducers.initState, 
+    applyMiddleware(asyncAction, thunk, routeMiddleware));  
 }
 // tslint:disable-next-line:max-line-length
 // store.dispatch({type: 'authNotify', payload: { userName: 'xuefli', portrait: 'http://lorempixel.com/45/45/people', token: 'xxxx'}});
