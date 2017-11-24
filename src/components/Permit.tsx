@@ -18,7 +18,7 @@ interface OwnProps {
 interface PermitState {
     permitFlag?: boolean;    
 }
-const mapStateToPropsParam: MapStateToPropsParam<ViewProps, OwnProps> = (appState: AppState) => {
+const mapStateToPropsParam: MapStateToPropsParam<ViewProps, OwnProps, {}> = (appState: AppState) => {
     return {
         permits: appState.auth.permits
     };

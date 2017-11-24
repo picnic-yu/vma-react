@@ -17,7 +17,7 @@ export function mapStateToProps(state: State.Root) {
     };
 }
 
-class App extends React.Component<{token: string} & RouteComponentProps<{}>> {
+class App extends React.Component<{token?: string} & RouteComponentProps<{}>> {
   render() {
   return (      
     <div className="container">

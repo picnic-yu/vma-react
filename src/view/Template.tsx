@@ -12,7 +12,7 @@ interface ViewHandle {
     login: (req: AuthAction.AuthReqByAccount) => void;
 }
 
-const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (appState: AppState) => {
+const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}, {}> = (appState: AppState) => {
     return {};
 };
 

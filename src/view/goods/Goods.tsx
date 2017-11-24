@@ -20,7 +20,7 @@ interface ViewHandle {
     route: (url: string) => void;
 }
 
-const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (appState: AppState) => {
+const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}, {}> = (appState: AppState) => {
     return {};
 };
 

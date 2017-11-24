@@ -5,7 +5,7 @@ import { createStore, applyMiddleware, Store } from 'redux';
 import { Provider } from 'react-redux';
 
 import createHistory from 'history/createBrowserHistory';
-import { ConnectedRouter, routerMiddleware, push } from 'react-router-redux';
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 
 import App from './App';
 import Login from './view/auth/Login';
@@ -35,32 +35,31 @@ if (process.env.NODE_ENV !== 'production') {
 }
 // tslint:disable-next-line:max-line-length
 // store.dispatch({type: 'authNotify', payload: { userName: 'xuefli', portrait: 'http://lorempixel.com/45/45/people', token: 'xxxx'}});
-store.dispatch({type: () => {
-  console.warn(`simulator asyncAction`);
-}});
-store.dispatch(push('/goods'));
+// store.dispatch({type: () => {
+//   console.warn(`simulator asyncAction`);
+// }});
+// store.dispatch(push('/goods'));
+
 ReactDOM.render(
   <Provider store={store}>
-  {/* <BrowserRouter> */}
-  <ConnectedRouter history={history}>
-    <Switch>
-      {(store.getState().auth.token || '').length === 0 &&
-        <Route path="/login" component={Login}/>
-      }
-      <Route path="/demo" component={Demo}/>
-      <Route 
-        path="/" 
-        render={(props) => (
-        (store.getState().auth.token || '').length !== 0 ? (
-          <App {...props}/>
-        ) : (
-          <Redirect to="/login"/>
-        )
-        )}
-      />
-    </Switch>
-  </ConnectedRouter>
-  {/* </BrowserRouter> */}
+    <ConnectedRouter history={history}>
+      <Switch>
+        {(store.getState().auth.token || '').length === 0 &&
+          <Route path="/login" component={Login}/>
+        }
+        <Route path="/demo" component={Demo}/>
+        <Route 
+          path="/" 
+          render={(props) => (
+          (store.getState().auth.token || '').length !== 0 ? (
+            <App {...props}/>
+          ) : (
+            <Redirect to="/login"/>
+          )
+          )}
+        />
+      </Switch>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById('root') as HTMLElement
 );

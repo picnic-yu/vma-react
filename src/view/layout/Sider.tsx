@@ -7,7 +7,7 @@ import * as AuthAction from '../../redux/actions/auth/AuthAction';
 import * as ConfigAction from '../../redux/actions/config/ConfigAction';
 
 import { Root as AppState } from '../../redux/state';
-import { AuthReqByAccount } from '../../redux/actions/auth/AuthAction';
+// import { AuthReqByAccount } from '../../redux/actions/auth/AuthAction';
 
 import { connect, MapStateToPropsParam, MapDispatchToPropsParam } from 'react-redux';
 
@@ -17,13 +17,13 @@ interface ViewProps {
 }
     
 interface ViewHandle {
-    loginByAccount: (req: AuthReqByAccount) => void;
+    // loginByAccount: (req: AuthReqByAccount) => void;
     menuLoad: (token: string) => void;
     permitLoad: (token: string) => void;
     refresh: (toggle: boolean) => void;
 }
 
-const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (appState: AppState) => {
+const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}, {}> = (appState: AppState) => {
     return {
         token: appState.auth.token,
         menu: appState.menu

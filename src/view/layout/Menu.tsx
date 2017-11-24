@@ -10,7 +10,7 @@ import * as State from '../../redux/state';
 interface ViewProps {
     activeMenuURL?: string;
 }
-const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (state: State.Root) => {
+const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}, {}> = (state: State.Root) => {
     return {
         activeMenuURL: state.config.activeMenuURL
     };

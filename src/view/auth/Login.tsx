@@ -17,7 +17,7 @@ interface ViewHandle {
     loginByAccount: (req: AuthReqByAccount) => void;
 }
 
-const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (appState: AppState) => {
+const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}, {}> = (appState: AppState) => {
     return {
         token: appState.auth.token
     };
