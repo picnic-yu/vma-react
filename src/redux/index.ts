@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
+
 
 import * as State from './state';
 
@@ -25,5 +27,6 @@ export const initState: State.Root = {
 export const reducers = combineReducers<State.Root>({
     config: ConfigReducer,
     auth: authReducer,
-    menu: menuReducer
+    menu: menuReducer,
+    router: routerReducer
 });

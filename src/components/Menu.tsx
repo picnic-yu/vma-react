@@ -2,11 +2,13 @@ import * as React from 'react';
 import * as ClassName from 'classnames';
 import { connect, MapDispatchToPropsParam } from 'react-redux';
 
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+// import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { push } from 'react-router-redux';
 import * as ConfigAction from '../redux/actions/config/ConfigAction';
 
 interface MenuNode {
     name: string;
+    url?: string;
     items?: Array<MenuNode>;
     disabled?: boolean;
     mark?: string;
@@ -21,7 +23,7 @@ interface MenuProps {
     items?: Array<MenuNode>;
     mark?: string;
     disabled?: boolean;
-    notify?: (isMenuTitle: boolean, curMark?: string) => void;
+    notify?: (isMenuTitle: boolean, node: MenuNode, curMark?: string) => void;
     isMenuTitle?: boolean;
     curMark?: string;
     activeMenu?: string;
@@ -37,17 +39,19 @@ interface SideMenuState {
     
 interface ViewHandle {
     refresh: (activeMenuURL: string) => void;
+    route: (url: string) => void;
 }
 
 const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispatch) => {
     return {
         refresh: (activeMenuURL: string) => dispatch(ConfigAction.activeMenuRefresh(activeMenuURL)),
+        route: (url: string) => dispatch(push(url))
     };
 };
 
-class SiderMenu extends React.Component<MenuNode & RouteComponentProps<{}> & ViewHandle, SideMenuState> {
+class SiderMenu extends React.Component<MenuNode & ViewHandle, SideMenuState> {
     state: SideMenuState;
-    constructor(props: MenuNode & RouteComponentProps<{}> & ViewHandle) {
+    constructor(props: MenuNode & ViewHandle) {
         super(props);
         this.state = {...this.marks('', this.props.items)};
     }
@@ -57,13 +61,17 @@ class SiderMenu extends React.Component<MenuNode & RouteComponentProps<{}> & Vie
         return <Menu mark={mark} {...others} notify={this.notify}/>;
     }
 
-    notify = (isMenuTitle: boolean, curMark?: string) => {
+    notify = (isMenuTitle: boolean, node: MenuNode, curMark?: string) => {
         if (isMenuTitle) {
             this.setState({isMenuTitle: isMenuTitle, curMark: curMark});            
         } else {
             this.setState({isMenuTitle: isMenuTitle, curMark: curMark, activeMenu: curMark}, () => {
-                this.props.refresh('/company/audit');
-                this.props.history.push('/company/audit');
+                console.log(`menu notify name:${node.name} url:${node.url}`);
+                if (node.url !== undefined) {
+                    this.props.route(node.url);
+                    this.props.refresh(node.url);
+                    // this.props.history.push('/company/audit');    
+                }
             });            
         }
     }
@@ -87,8 +95,7 @@ class SiderMenu extends React.Component<MenuNode & RouteComponentProps<{}> & Vie
     }
 }
 
-export const RouteMenu = withRouter<MenuNode>(
-        connect<{}, ViewHandle, MenuNode & RouteComponentProps<{}>>(null, mapDispatchToPropsParam)(SiderMenu));
+export const RouteMenu = connect<{}, ViewHandle, MenuNode>(null, mapDispatchToPropsParam)(SiderMenu);
 
 interface MenuState {
     show: boolean;
@@ -108,7 +115,11 @@ export class Menu extends React.Component<MenuProps, MenuState> {
                                 <li 
                                     key={key} 
                                     className={ClassName('vma-menu-node', {'vma-menu-item-disabled': item.disabled})} 
-                                    onClick={item.disabled === true ? undefined : e => this.selectedMenu(e, true, key)}
+                                    onClick={
+                                        item.disabled === true ? 
+                                            undefined : 
+                                            e => this.selectedMenu(e, true, {name: item.name, url: item.url}, key)
+                                    }
                                 >
                                     <div 
                                         className={ClassName('vma-menu-title')} 
@@ -142,7 +153,11 @@ export class Menu extends React.Component<MenuProps, MenuState> {
                                     )} 
                                     key={item.mark}
                                     style={{paddingLeft: `${this.indent(key)}px`}} 
-                                    onClick={item.disabled === true ? undefined : e => this.selectedMenu(e, false, key)}
+                                    onClick={
+                                        item.disabled === true ? 
+                                            undefined : 
+                                            e => this.selectedMenu(e, false, {name: item.name, url: item.url}, key)
+                                    }
                                 >
                                     <div>{item.name}</div>
                                 </li>);                            
@@ -169,7 +184,7 @@ export class Menu extends React.Component<MenuProps, MenuState> {
         return result;
     }
 
-    selectedMenu = (event: React.MouseEvent<HTMLLIElement>, isMenuTitle: boolean, curMark?: string) => {
+    selectedMenu = (event: React.MouseEvent<HTMLLIElement>, isMenuTitle: boolean, node: MenuNode, curMark?: string) => {
         event.stopPropagation();
         if (this.path(curMark)) {
             this.setState({show: !this.state.show});
@@ -177,7 +192,7 @@ export class Menu extends React.Component<MenuProps, MenuState> {
             this.setState({show: false});            
         }
         if (this.props.notify !== undefined) {
-            this.props.notify(isMenuTitle, curMark);
+            this.props.notify(isMenuTitle, node, curMark);
         }
     }
 

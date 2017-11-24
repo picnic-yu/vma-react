@@ -40,12 +40,13 @@ class Menu extends React.Component<MenuAction.Menu & ViewProps & ViewHandle, Men
 
     componentWillReceiveProps(nextProps: ViewProps) {
         if (nextProps.activeMenuURL !== this.props.url && 
-            ((nextProps.activeMenuURL || '').match(/\//g) || []).length <= (this.props.url.match(/\//g) || []).length) {
+            ((nextProps.activeMenuURL || '').match(/\//g) || []).length >= (this.props.url.match(/\//g) || []).length) {
             this.setState({active: false, open: false});
-        }
+        } 
         if ((nextProps.activeMenuURL || '').indexOf(this.props.url) !== -1) {
-            this.state.open = true;
-            this.state.active =  true;
+            this.setState({active: true, open: true});
+            // this.state.open = true;
+            // this.state.active =  true;
         }
     }
     constructor(props: MenuAction.Menu & ViewProps & ViewHandle) {

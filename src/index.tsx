@@ -1,8 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { createStore, applyMiddleware, Store } from 'redux';
 import { Provider } from 'react-redux';
+
+import createHistory from 'history/createBrowserHistory';
+import { ConnectedRouter, routerMiddleware, push } from 'react-router-redux';
 
 import App from './App';
 import Login from './view/auth/Login';
@@ -18,24 +21,28 @@ import * as Reducers from './redux';
 import Demo from './Demo';
 // import './mock';
 
+const history = createHistory();
+const routeMiddleware = routerMiddleware(history);
+
 let store: Store<State.Root>;
 if (process.env.NODE_ENV !== 'production') {
   store = createStore<State.Root>(
-      Reducers.reducers, 
+      Reducers.reducers,
       Reducers.initState, 
-      applyMiddleware(middleware, asyncAction, thunk));
+      applyMiddleware(middleware, asyncAction, thunk, routeMiddleware));
 } else {
-  store = createStore<State.Root>(Reducers.reducers, Reducers.initState, applyMiddleware(thunk));  
+  store = createStore<State.Root>(Reducers.reducers, Reducers.initState, applyMiddleware(thunk, routeMiddleware));  
 }
 // tslint:disable-next-line:max-line-length
 // store.dispatch({type: 'authNotify', payload: { userName: 'xuefli', portrait: 'http://lorempixel.com/45/45/people', token: 'xxxx'}});
 store.dispatch({type: () => {
   console.warn(`simulator asyncAction`);
 }});
-
+store.dispatch(push('/goods'));
 ReactDOM.render(
   <Provider store={store}>
-  <BrowserRouter>
+  {/* <BrowserRouter> */}
+  <ConnectedRouter history={history}>
     <Switch>
       {(store.getState().auth.token || '').length === 0 &&
         <Route path="/login" component={Login}/>
@@ -52,7 +59,8 @@ ReactDOM.render(
         )}
       />
     </Switch>
-  </BrowserRouter>
+  </ConnectedRouter>
+  {/* </BrowserRouter> */}
   </Provider>,
   document.getElementById('root') as HTMLElement
 );

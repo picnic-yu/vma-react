@@ -2,25 +2,58 @@ import * as React from 'react';
 import Panel from '../../components/Panel';
 import { RouteMenu }  from '../../components/Menu';
 import { ContextMenuNode, DropDownMenu } from '../../components/DropDownMenu';
+import { push } from 'react-router-redux';
+
 import { Button } from '../../components/Button';
 // import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Root as AppState } from '../../redux/state';
+import * as ConfigAction from '../../redux/actions/config/ConfigAction';
 
-class Goods extends React.Component {
+import { connect, MapStateToPropsParam, MapDispatchToPropsParam } from 'react-redux';
+
+interface ViewProps {
+    
+}
+
+interface ViewHandle {
+    refresh: (activeMenuURL: string) => void;
+    route: (url: string) => void;
+}
+
+const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}> = (appState: AppState) => {
+    return {};
+};
+
+const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispatch) => {
+    return {
+        refresh: (activeMenuURL: string) => dispatch(ConfigAction.activeMenuRefresh(activeMenuURL)),
+        route: (url: string) => dispatch(push(url))
+    };
+};
+
+class Goods extends React.Component<ViewProps & ViewHandle> {
     render() {
         const menus = {
             name: '菜单1',
             items: [
-                { name: '菜单1.1', disabled: true},
-                { name: '菜单1.2',
-                  disabled: true,
+                { name: '菜单1.1(/)', disabled: true, url: '/'},
+                { name: '菜单1.2(/company)',
+                  disabled: false,
+                  url: '/company',
                     items: [
-                    {name: '菜单1.2.1',
-                    items: [
-                        {name: '菜单1.2.1.1'},
-                        {name: '菜单1.2.1.2'}
-                    ]
+                    {
+                        name: '菜单1.2.1(/company/list)',
+                        url: '/company/list',
+                        items:
+                        [
+                            {name: '菜单1.2.1.1'},
+                            {name: '菜单1.2.1.2'}
+                        ]
                     },
-                    {name: '菜单1.2.2'}
+                    {
+                        name: '菜单1.2.2(/company/audit)',
+                        url: '/company/audit',
+                    }
                 ]
                 },
                 { name: '菜单1.3',
@@ -56,7 +89,10 @@ class Goods extends React.Component {
 
     contextMenu = (contextMenu: ContextMenuNode) => {
         console.log(JSON.stringify(contextMenu));
+        this.props.route(contextMenu.url);
+        this.props.refresh(contextMenu.url);
     }
 }
 
-export default Goods;
+export default connect<ViewProps, ViewHandle, {}>(mapStateToPropsParam, mapDispatchToPropsParam)(Goods);
+// export default Goods;
