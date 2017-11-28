@@ -11,37 +11,38 @@ const MyLoadingComponent = ({isLoading, error}: LoadingComponentProps) => {
     // Handle the loading state
     if (isLoading) {
       return <div>Loading...</div>;
-    }
-    // Handle the error state
-    else if (error) {
+    } else if (error) {
       return <div>Sorry, there was a problem loading the page.</div>;
-    }
-    else {
+    } else {
       return null;
     }
   };
 
 const AsyncGoods = Loadable({
-    loader: () => import("../goods/Goods"),
+    loader: () => import('../goods/Goods'),
     loading: MyLoadingComponent,
     delay: 10000
-  });
-  const AsyncCompany = Loadable({
-    loader: () => import("../agency/Company"),
+});
+
+const AsyncCompany = Loadable({
+    loader: () => import('../agency/Company'),
     loading: MyLoadingComponent
-  });
-  const AsyncCatalog = Loadable({
-    loader: () => import("../catalog/Catalog"),
+});
+
+const AsyncCatalog = Loadable({
+    loader: () => import('../catalog/Catalog'),
     loading: MyLoadingComponent
-  });
-  const AsyncOrder = Loadable({
-    loader: () => import("../order/Order"),
+});
+
+const AsyncOrder = Loadable({
+    loader: () => import('../order/Order'),
     loading: MyLoadingComponent
-  });
-  const AsyncStorage = Loadable({
-    loader: () => import("../storage/Storage"),
+});
+
+const AsyncStorage = Loadable({
+    loader: () => import('../storage/Storage'),
     loading: MyLoadingComponent
-  });
+});
 // const AsyncGoods = asyncComponent(() => import("../goods/Goods"));
 // const AsyncGoods = asyncComponent("../goods/Goods");
 

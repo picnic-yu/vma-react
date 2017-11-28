@@ -18,11 +18,13 @@ const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}, {}> = (state: St
     
 interface ViewHandle {
     refresh: (activeMenuURL: string) => void;
+    toggleRefresh: (toggleMenu: boolean) => void;
 }
 
-const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispatch) => {
+const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewProps & ViewHandle, {}> = (dispatch) => {
     return {
         refresh: (activeMenuURL: string) => dispatch(ConfigAction.activeMenuRefresh(activeMenuURL)),
+        toggleRefresh: (toggleMenu: boolean) => dispatch(ConfigAction.toggleRefresh(toggleMenu))
     };
 };
 
@@ -64,6 +66,7 @@ class Menu extends React.Component<MenuAction.Menu & ViewProps & ViewHandle, Men
         }
         this.setState({active: true});
         this.props.refresh(this.props.url);
+        this.props.toggleRefresh(false);
     }
 
     renderSub = (menuItem: MenuAction.Menu): JSX.Element => {

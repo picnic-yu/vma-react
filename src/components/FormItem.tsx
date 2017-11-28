@@ -21,8 +21,7 @@ export class FormItem extends React.Component<LabelProps> {
     state: FormItemState<boolean> = {value: true};
     errorMsg: string = '请提供数据';
     render() {
-        let { label, width = '100px' } = this.props;
-        let marginLeft = width;
+        let { label } = this.props;
         let parentProps: ParentProps = {};
         if (this.props.required !== undefined) {
             Object.assign(parentProps, {required: this.props.required});
@@ -51,8 +50,8 @@ export class FormItem extends React.Component<LabelProps> {
                 {'is-required': this.props.required}, 
                 {'vma-form-item-error': !this.state.value})}
         >
-            <label className="vma-form-label" style={{width}}>{label}</label>
-            <div className={ClassName('vma-wapper')} style={{marginLeft}}>
+            <label className="vma-form-label">{label}</label>
+            <div className={ClassName('vma-wapper')}>
               {children}
               {!this.state.value && 
               <div className="vma-form-item-error">{this.errorMsg}</div>

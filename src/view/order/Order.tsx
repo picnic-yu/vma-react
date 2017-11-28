@@ -6,10 +6,10 @@ class Order extends React.Component {
     render() {
         const files = 
         [
-            'http://lorempixel.com/300/200/sports/', 
-            'http://lorempixel.com/300/200/sports/', 
-            'http://lorempixel.com/300/200/sports/', 
-            'http://lorempixel.com/300/200/sports/'
+            'http://lorempixel.com/200/200/sports/', 
+            'http://lorempixel.com/200/200/sports/', 
+            'http://lorempixel.com/200/200/sports/', 
+            'http://lorempixel.com/200/200/sports/'
         ];
         return (
             <div>

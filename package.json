@@ -46,5 +46,6 @@
         "tsConfigFile": "tsconfig.json"
       }
     }
-  }
+  },
+  "homepage": "http://vma.com/"
 }

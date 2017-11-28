@@ -1,12 +1,13 @@
 import * as React from 'react';
+import * as ClassName from 'classnames';
 
-class DropMenu extends React.Component {
-    state = {  };
+class DropMenu extends React.Component<React.CSSProperties> {
+    state = {showSubMenu:  false};
     render() {
+        let { style } = this.props;
         return (
-        <div className="pull-right">
-            <ul className="notifyBar">
-                <li>
+            <ul className={ClassName('notifyBar', this.props.className)} style={style}>
+                <li className={ClassName({'active': this.state.showSubMenu})} onTouchEnd={this.toogleSubMenu}>
                     <a href="" className="notify notify-grey">
                         <span className="notifyMsg">代办</span>
                         <span className="notifyNumber">5</span>
@@ -51,9 +52,12 @@ class DropMenu extends React.Component {
                     </ul>
                 </li>
             </ul>
-        </div>
-                  
         );
+    }
+
+    toogleSubMenu = (event: React.TouchEvent<HTMLElement>) => {
+        event.preventDefault();
+        this.setState({showSubMenu: !this.state.showSubMenu});
     }
 }
 

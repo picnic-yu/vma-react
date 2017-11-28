@@ -57,7 +57,7 @@ export class Calendar extends React.Component<CalendarProps & Handler<string>, C
             <input 
                 type="text" 
                 className="vma-input"
-                style={{width: 'auto', border: '1px solid #bfcbd9'}}
+                style={{border: '1px solid #bfcbd9'}}
                 name={this.props.name}
                 value={value}
                 required={this.props.required}
@@ -68,7 +68,7 @@ export class Calendar extends React.Component<CalendarProps & Handler<string>, C
             />
             <i 
                 className={ClassName('icon-calendar', {'icon-cross': this.state.canClear === true})} 
-                style={{right: '28px', position: 'relative'}}
+                style={{right: '14px', position: 'absolute', top: '12px'}}
                 onMouseOver={this.setCloseFlag}
                 onClick={this.clearClose}
             />

@@ -36,13 +36,13 @@ class Goods extends React.Component<ViewProps & ViewHandle> {
         const menus = {
             name: '菜单1',
             items: [
-                { name: '菜单1.1(/)', disabled: true, url: '/'},
-                { name: '菜单1.2(/company)',
+                { name: '菜单1.1', disabled: true, url: '/'},
+                { name: '菜单1.2',
                   disabled: false,
                   url: '/company',
                     items: [
                     {
-                        name: '菜单1.2.1(/company/list)',
+                        name: '菜单1.2.1',
                         url: '/company/list',
                         items:
                         [
@@ -51,7 +51,7 @@ class Goods extends React.Component<ViewProps & ViewHandle> {
                         ]
                     },
                     {
-                        name: '菜单1.2.2(/company/audit)',
+                        name: '菜单1.2.2',
                         url: '/company/audit',
                     }
                 ]

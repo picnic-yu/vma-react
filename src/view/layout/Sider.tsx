@@ -12,7 +12,9 @@ import { Root as AppState } from '../../redux/state';
 import { connect, MapStateToPropsParam, MapDispatchToPropsParam } from 'react-redux';
 
 interface ViewProps {
+    toggle?: boolean;
     token: string;
+    activeMenuURL?: string;
     menu: Array<MenuAction.Menu>;
 }
     
@@ -25,6 +27,8 @@ interface ViewHandle {
 
 const mapStateToPropsParam: MapStateToPropsParam<ViewProps, {}, {}> = (appState: AppState) => {
     return {
+        toggle: appState.config.toggle,
+        activeMenuURL: appState.config.activeMenuURL,
         token: appState.auth.token,
         menu: appState.menu
     };
@@ -41,7 +45,6 @@ const mapDispatchToPropsParam: MapDispatchToPropsParam<ViewHandle, {}> = (dispat
 
 class Sider extends React.Component<ViewProps & ViewHandle & ConfigAction.ConfigDispatch> {
     // props: Array<MenuData>;
-    state = { toggle: false, activeMenuURL: ''};
 
     watchValue = (activeMenuURL: string) =>  {
         this.setState({activeMenuURL: activeMenuURL});
@@ -49,8 +52,7 @@ class Sider extends React.Component<ViewProps & ViewHandle & ConfigAction.Config
 
     fold = (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
-        this.setState({toggle: !this.state.toggle});
-        this.props.refresh(!this.state.toggle);
+        this.props.refresh(!this.props.toggle);
     }
 
     renderSub = (menuItem: MenuAction.Menu): JSX.Element => {
@@ -80,15 +82,15 @@ class Sider extends React.Component<ViewProps & ViewHandle & ConfigAction.Config
         // let children = menues[0].children;
         return (
         <div>
-            <div className={ClassName('sider', {'toggle': this.state.toggle})}>
+            <div className={ClassName('sider', {'toggle': this.props.toggle})}>
                 <ul className="menu">
                     {listItems}
                     {/* <Menu key={menuID} menuID={menuID} name={name} url={url} children={children}/> */}
                 </ul>
             </div>
-            <div className={ClassName('split', {'toggle': this.state.toggle})}>
-                <a onClick={this.fold} href="#" >{this.state.toggle ? '>>' : '<<'}</a>
-            </div>
+            {/* <div className={ClassName('split', {'toggle': this.props.toggle})}>
+                <a onClick={this.fold} href="#" >{this.props.toggle ? '>>' : '<<'}</a>
+            </div> */}
         </div>            
         );
     }

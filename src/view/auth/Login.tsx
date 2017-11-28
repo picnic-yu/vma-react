@@ -60,20 +60,18 @@ class Login extends React.Component<ViewProps & ViewHandle> {
         }
         return (
             <div className="col-offset-12 col-6" style={{marginTop: '10%'}}>
-                <FormItem label="用户名" required={true}>
+                <FormItem label="用户名">
                     <Input 
                         type="text" 
                         name="userName" 
-                        minLength={6}
                         value={this.state.userName} 
                         watchValue={this.handleChange}
                     />
                 </FormItem>
-                <FormItem label="密码" required={true}>
+                <FormItem label="密码">
                     <Input 
                         type="password" 
                         name="password" 
-                        minLength={4}
                         value={this.state.password} 
                         watchValue={this.handleChange}
                     />

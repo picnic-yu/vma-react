@@ -209,7 +209,7 @@ export class Menu extends React.Component<MenuProps, MenuState> {
     }
 
     private indent = (curMark?: string): number => {
-        let indent = 28;
+        let indent = 14;
         if (curMark === undefined) {
             return 1 * indent;
         } else {
