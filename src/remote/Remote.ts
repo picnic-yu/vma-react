@@ -38,7 +38,7 @@ export async function postFormData<T>(url: string, headers: {}, param: FormData)
         let response: Response = await fetch(url, {
             credentials: 'include', 
             method: 'POST', 
-            headers: headers, 
+            headers: {'Content-Type': 'multipart/form-data', ...headers},
             body: param});
         let data: IResponse<T> = await response.json();
         result = data;

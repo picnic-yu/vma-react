@@ -68,7 +68,7 @@ const routes = [
     },
     {
         path: '/storage',
-        component: Storage,
+        // component: Storage,
         name: '仓储'
     }
 ];
