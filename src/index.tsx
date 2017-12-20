@@ -10,7 +10,8 @@ import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import App from './App';
 import Login from './view/auth/Login';
 import registerServiceWorker from './registerServiceWorker';
-import './index.css';
+// import './index.css';
+import './vma.css';
 
 import middleware from './middleware';
 import asyncAction from './AsyncAction';

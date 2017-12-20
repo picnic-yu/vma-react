@@ -77,7 +77,7 @@ class Goods extends React.Component<ViewProps & ViewHandle> {
             <div>
                 <p>goods infor</p>
                 <Panel/>
-                <div className="col-8" style={{border: '1px solid #e9e9e9'}}>
+                <div className="col-lg-8" style={{border: '1px solid #e9e9e9'}}>
                     <RouteMenu {...menus}/>
                 </div>
                 <DropDownMenu {...contextMenu} onClick={this.contextMenu}>

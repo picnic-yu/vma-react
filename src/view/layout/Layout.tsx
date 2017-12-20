@@ -31,7 +31,7 @@ class Layout extends React.Component<LayoutProps> {
             <UserHeader/>
             <div className="main-container">
                 <Sider />
-                <div className={ClassName('main-content', {'toggle': this.props.toggle})}>
+                <div className={ClassName('main-content', 'col-lg-19', {'toggle': this.props.toggle})}>
                 {/* <div className={ClassName('main-content')}> */}
                     {/* <LevelBar/> */}
                     <Route path="*" component={LevelBar}/>

@@ -82,7 +82,7 @@ class Sider extends React.Component<ViewProps & ViewHandle & ConfigAction.Config
         // let children = menues[0].children;
         return (
         <div>
-            <div className={ClassName('sider', {'toggle': this.props.toggle})}>
+            <div className={ClassName('sider', 'col-lg-5' , {'toggle': this.props.toggle})}>
                 <ul className="menu">
                     {listItems}
                     {/* <Menu key={menuID} menuID={menuID} name={name} url={url} children={children}/> */}

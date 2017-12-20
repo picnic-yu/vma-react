@@ -36,14 +36,14 @@ class UserHeader extends React.Component<ViewProps & ViewHandle> {
             <div className="header-container">
                 <div className="pull-left">
                     <a className="brand" href="">{companyName}</a>
-                    <button className="sider-toggle" onClick={this.toggleSider}>
+                    <button className={ClassName('sider-toggle', {'toggle': this.props.toggle})} onClick={this.toggleSider}>
                         <span className="icon-bar"/>
                         <span className="icon-bar"/>
                         <span className="icon-bar"/>
                     </button>
                 </div>
                 <div className="pull-right">
-                <button className="navbar-toggle" onClick={this.toggleDropMenu}>
+                <button className={ClassName('navbar-toggle')} onClick={this.toggleDropMenu}>
                         <span className="icon-bar"/>
                         <span className="icon-bar"/>
                         <span className="icon-bar"/>
